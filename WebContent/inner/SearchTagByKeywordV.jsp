@@ -13,21 +13,21 @@ if(SP_REVIEW && !checkLogin.m_bLogin) {
 	return;
 }
 
-SearchTagByKeywordC cResults = new SearchTagByKeywordC();
-cResults.getParam(request);
+SearchTagByKeywordC results = new SearchTagByKeywordC();
+results.getParam(request);
 
-if (cResults.m_strKeyword.indexOf("@") == 0) {
-	response.sendRedirect("https://unrealizm.com/SearchUserByKeyword" + (isApp?"App":"Pc") + "V.jsp?KWD=" + URLEncoder.encode(cResults.m_strKeyword.replaceFirst("@", ""), StandardCharsets.UTF_8));
+if (results.m_strKeyword.indexOf("@") == 0) {
+	response.sendRedirect("https://unrealizm.com/SearchUserByKeyword" + (isApp?"App":"Pc") + "V.jsp?KWD=" + URLEncoder.encode(results.m_strKeyword.replaceFirst("@", ""), StandardCharsets.UTF_8));
 	return;
 }
 
-boolean bRtn = cResults.getResults(checkLogin);
+boolean bRtn = results.getResults(checkLogin);
 %>
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
-		<title><%=Util.toStringHtml(cResults.m_strKeyword)%></title>
+		<title><%=Util.toStringHtml(results.m_strKeyword)%></title>
 		<script>
 			var g_nPage = 1;
 			var g_bAdding = false;
@@ -38,7 +38,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 				$("#IllustThumbList").append($objMessage);
 				$.ajax({
 					"type": "post",
-					"data": {"PG" : g_nPage, "KWD" :  "<%=cResults.m_strKeyword%>"},
+					"data": {"PG" : g_nPage, "KWD" :  "<%=results.m_strKeyword%>"},
 					"url": "/f/SearchTagByKeyword<%=isApp?"App":""%>F.jsp",
 					"success": function(data) {
 						if($.trim(data).length>0) {
@@ -74,12 +74,12 @@ boolean bRtn = cResults.getResults(checkLogin);
 
 		<article class="Wrapper">
 			<header class="SearchResultTitle">
-				<h2 class="Keyword">#<%=Util.toStringHtml(cResults.m_strKeyword)%></h2>
+				<h2 class="Keyword">#<%=Util.toStringHtml(results.m_strKeyword)%></h2>
 			</header>
 			<section id="IllustThumbList" class="IllustItemList">
 				<%int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;%>
-				<%for(int nCnt = 0; nCnt<cResults.tagList.size(); nCnt++) {
-					CTag cTag = cResults.tagList.get(nCnt);%>
+				<%for(int nCnt = 0; nCnt<results.tagList.size(); nCnt++) {
+					CTag cTag = results.tagList.get(nCnt);%>
 					<%=CCnv.toHtml(cTag, CCnv.MODE_SP, _TEX, nSpMode)%>
 					<%if((nCnt+1)%9==0) {%>
 					<%@ include file="/inner/TAd336x280_mid.jsp"%>

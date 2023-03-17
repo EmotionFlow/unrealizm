@@ -70,13 +70,13 @@
 		<div class="SettingListTitle"><%=_TEX.T("EditSettingV.DeleteAccount")%>
 		</div>
 		<div class="SettingBody">
-			<%if (!(cResults.m_cPassport.status == Passport.Status.NotYet || cResults.m_cPassport.status == Passport.Status.InActive)) {%>
+			<%if (!(results.m_cPassport.status == Passport.Status.NotYet || results.m_cPassport.status == Passport.Status.InActive)) {%>
 			ポイパス購入中のため、退会処理ができません。まずポイパスの定期購入を解除していただいたのち、会員期間が終わりましたら、再度こちらのページへアクセスしてください。
-			<%} else if (cResults.m_bCardInfoExist) {%>
+			<%} else if (results.m_bCardInfoExist) {%>
 			支払いカード情報が登録されているため、退会処理ができません。支払情報画面からカード情報を削除していただいたのち、再度こちらのページへアクセスしてください。
-			<%} else if (cResults.m_hasJustDeliveredRequest) {%>
+			<%} else if (results.m_hasJustDeliveredRequest) {%>
 			リクエストを最後に納品してから３０日以内は、退会処理ができません。
-			<%} else if (cResults.m_hasInProgressRequests) {%>
+			<%} else if (results.m_hasInProgressRequests) {%>
 			作業中または納品待ちのリクエストがあるため、退会処理ができません。
 			<%} else {%>
 			<%=_TEX.T("EditSettingV.DeleteAccount.Message")%>

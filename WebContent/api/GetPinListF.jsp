@@ -17,12 +17,12 @@
 CheckLogin checkLogin = new CheckLogin(request, response);
 if (!checkLogin.m_bLogin) return;
 
-GetPinListC cResults = new GetPinListC();
-cResults.getParam(request);
+GetPinListC results = new GetPinListC();
+results.getParam(request);
 
-boolean result = cResults.getResults(checkLogin);
+boolean result = results.getResults(checkLogin);
 
-List<JsonPin> jsonPins = cResults.pins.stream()
+List<JsonPin> jsonPins = results.pins.stream()
 		.map( e -> new JsonPin(e.dispOrder, e.contentId))
 		.collect(Collectors.toList());
 

@@ -29,9 +29,9 @@ myBookmarkC.noContents = true;
 if (isApp) checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 myBookmarkC.getResults(checkLogin, false);
 
-MyBookmarkC cResults = new MyBookmarkC();
-cResults.getParam(request);
-boolean bRtn = cResults.getResults(checkLogin);
+MyBookmarkC results = new MyBookmarkC();
+results.getParam(request);
+boolean bRtn = results.getResults(checkLogin);
 %>
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">

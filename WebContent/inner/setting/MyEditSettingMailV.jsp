@@ -12,7 +12,7 @@ enum EmailStatus {
 EmailStatus emailState = EmailStatus.UNDEF;
 boolean bNotEmailAddress = false;
 
-if (cResults.m_cUser.m_strEmail.contains("@")) {
+if (results.m_cUser.m_strEmail.contains("@")) {
 	bNotEmailAddress = false;
 	emailState = EmailStatus.REGISTED;
 } else {
@@ -21,8 +21,8 @@ if (cResults.m_cUser.m_strEmail.contains("@")) {
 }
 
 String strEmailState = "";
-if (cResults.m_bUpdate) {
-	strEmailState = _TEX.T("EditSettingV.Email.EmailState.Confirmation") + cResults.m_strNewEmail;
+if (results.m_bUpdate) {
+	strEmailState = _TEX.T("EditSettingV.Email.EmailState.Confirmation") + results.m_strNewEmail;
 	emailState = EmailStatus.COMFIRMATION;
 }
 %>
@@ -152,7 +152,7 @@ if (cResults.m_bUpdate) {
 		<div class="SettingBody">
 			<%=_TEX.T("EditSettingV.Email.Message.Info")%>
 			<input id="EM" class="SettingBodyTxt" type="text"
-				   value="<%=bNotEmailAddress?"":Util.toStringHtmlTextarea(cResults.m_cUser.m_strEmail)%>"/>
+				   value="<%=bNotEmailAddress?"":Util.toStringHtmlTextarea(results.m_cUser.m_strEmail)%>"/>
 			<div class="SettingBodyCmd">
 				<div id="MailAdressMessage" class="RegistMessage" style="color: red;"><%=strEmailState%>
 				</div>
@@ -196,7 +196,7 @@ if (cResults.m_bUpdate) {
 			<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
 				<div class="RegistMessage" >
 					<div class="onoffswitch OnOff">
-						<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="SendEmailMode" value="0" <%if(cResults.m_cUser.m_nSendEmailMode==CUser.SEND_EMAIL_ON){%>checked="checked"<%}%> />
+						<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="SendEmailMode" value="0" <%if(results.m_cUser.m_nSendEmailMode==CUser.SEND_EMAIL_ON){%>checked="checked"<%}%> />
 						<label class="onoffswitch-label" for="SendEmailMode">
 							<span class="onoffswitch-inner"></span>
 							<span class="onoffswitch-switch"></span>

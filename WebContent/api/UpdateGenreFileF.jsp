@@ -7,10 +7,10 @@
 CheckLogin checkLogin = new CheckLogin(request, response);
 
 int nRtn = UpdateGenreFileC.ERR_UNKNOWN;
-UpdateGenreFileC cResults = new UpdateGenreFileC();
-nRtn = cResults.getParam(request);
+UpdateGenreFileC results = new UpdateGenreFileC();
+nRtn = results.getParam(request);
 if(nRtn==UpdateGenreFileC.OK_PARAM) {
-	nRtn = cResults.getResults(checkLogin, getServletContext());
+	nRtn = results.getResults(checkLogin, getServletContext());
 }
 
 String strMessage = "";
@@ -38,7 +38,7 @@ ObjectMapper mapper = null;
 try {
 	root = new HashMap<String, Object>();
 	root.put("result", nRtn);
-	root.put("genre_id", cResults.genreId);
+	root.put("genre_id", results.genreId);
 	root.put("message", strMessage);
 	mapper = new ObjectMapper();
 	out.print(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(root));

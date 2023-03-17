@@ -9,8 +9,8 @@ cParam.GetParam(request);
 
 boolean bRtn = false;
 if( checkLogin.m_bLogin && cParam.m_nUserId == checkLogin.m_nUserId ) {
-	DeleteCreditCardC cResults = new DeleteCreditCardC();
-	bRtn = cResults.GetResults(cParam);
+	DeleteCreditCardC results = new DeleteCreditCardC();
+	bRtn = results.GetResults(cParam);
 }else{
 	Log.d(String.format("Invalid user %b, %d, %d", checkLogin.m_bLogin, cParam.m_nUserId, checkLogin.m_nUserId));
 }

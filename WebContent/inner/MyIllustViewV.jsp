@@ -8,31 +8,31 @@ if(Util.isBot(request)) {
 }
 boolean bSmartPhone = Util.isSmartPhone(request);
 
-IllustViewC cResults = new IllustViewC();
-cResults.getParam(request);
+IllustViewC results = new IllustViewC();
+results.getParam(request);
 
-if(!checkLogin.m_bLogin || checkLogin.m_nUserId!=cResults.m_nUserId){
-	response.sendRedirect(String.format("https://unrealizm.com/%d/%d.html", cResults.m_nUserId, cResults.m_nContentId));
+if(!checkLogin.m_bLogin || checkLogin.m_nUserId!=results.m_nUserId){
+	response.sendRedirect(String.format("https://unrealizm.com/%d/%d.html", results.m_nUserId, results.m_nContentId));
 	return;
 }
 
-boolean bRet = cResults.getResults(checkLogin);
-if(!bRet || (bRet&&cResults.m_cUser.m_nUserId!=checkLogin.m_nUserId)) {
+boolean bRet = results.getResults(checkLogin);
+if(!bRet || (bRet&&results.m_cUser.m_nUserId!=checkLogin.m_nUserId)) {
 	response.sendRedirect("/NotFoundPcV.jsp");
 	return;
 }
 
 // R18によるアドの切り替え
-g_nSafeFilter = cResults.m_cContent.getAdSwitchId();
+g_nSafeFilter = results.m_cContent.getAdSwitchId();
 
-cResults.m_cContent.setThumb();
-final String strFileUrl = cResults.m_cContent.thumbImgUrl;
-final boolean bHidden = cResults.m_cContent.isHideThumbImg;	// テキスト用カバー画像表示フラグ
+results.m_cContent.setThumb();
+final String strFileUrl = results.m_cContent.thumbImgUrl;
+final boolean bHidden = results.m_cContent.isHideThumbImg;	// テキスト用カバー画像表示フラグ
 
-String strDesc = Util.deleteCrLf(cResults.m_cContent.m_strDescription);
-String strTitle = CTweet.generateState(cResults.m_cContent, _TEX) +  CTweet.generateFileNum(cResults.m_cContent, _TEX) + " " + Util.subStrNum(strDesc, 10) + " " + String.format(_TEX.T("Tweet.Title"), cResults.m_cContent.m_cUser.m_strNickName) + " | " + _TEX.T("THeader.Title");;
-strDesc = Util.deleteCrLf(strDesc) + String.format(_TEX.T("Tweet.Title"), cResults.m_cContent.m_cUser.m_strNickName);
-String strUrl = "https://unrealizm.com/"+cResults.m_cContent.m_nUserId+"/"+cResults.m_cContent.m_nContentId+".html";
+String strDesc = Util.deleteCrLf(results.m_cContent.m_strDescription);
+String strTitle = CTweet.generateState(results.m_cContent, _TEX) +  CTweet.generateFileNum(results.m_cContent, _TEX) + " " + Util.subStrNum(strDesc, 10) + " " + String.format(_TEX.T("Tweet.Title"), results.m_cContent.m_cUser.m_strNickName) + " | " + _TEX.T("THeader.Title");;
+strDesc = Util.deleteCrLf(strDesc) + String.format(_TEX.T("Tweet.Title"), results.m_cContent.m_cUser.m_strNickName);
+String strUrl = "https://unrealizm.com/"+results.m_cContent.m_nUserId+"/"+results.m_cContent.m_nContentId+".html";
 ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 %>
 <!DOCTYPE html>
@@ -51,8 +51,8 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 	<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:site" content="@pipajp" />
-	<meta name="twitter:title" content="<%=CTweet.generateMetaTwitterTitle(cResults.m_cContent, _TEX)%>" />
-	<meta name="twitter:description" content="<%=CTweet.generateMetaTwitterDesc(cResults.m_cContent, _TEX)%>" />
+	<meta name="twitter:title" content="<%=CTweet.generateMetaTwitterTitle(results.m_cContent, _TEX)%>" />
+	<meta name="twitter:description" content="<%=CTweet.generateMetaTwitterDesc(results.m_cContent, _TEX)%>" />
 	<meta name="twitter:image" content="https://<%=Common.GetUrl(strFileUrl)%>" />
 	<link rel="canonical" href="<%=strUrl%>" />
 	<link rel="alternate" media="only screen and (max-width: 640px)" href="<%=strUrl%>" />
@@ -77,9 +77,9 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 
 	<script type="text/javascript">
 		$(function(){
-			<%if(!bHidden && cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {%>
-			var frame_height = $('#IllustItemText_'+ <%=cResults.m_cContent.m_nContentId%> ).height();
-			var text_height = $('#IllustItemText_'+ <%=cResults.m_cContent.m_nContentId%> + ' .IllustItemThumbText').height();
+			<%if(!bHidden && results.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {%>
+			var frame_height = $('#IllustItemText_'+ <%=results.m_cContent.m_nContentId%> ).height();
+			var text_height = $('#IllustItemText_'+ <%=results.m_cContent.m_nContentId%> + ' .IllustItemThumbText').height();
 			if(frame_height>=text_height) {
 				$('.IllustItemExpandBtn').hide();
 			}
@@ -100,11 +100,11 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 			$.ajax({
 				"type": "post",
 				"data": {
-					"ID" : <%=cResults.m_cContent.m_nUserId%>,
-					"TD" : <%=cResults.m_cContent.m_nContentId%>,
+					"ID" : <%=results.m_cContent.m_nUserId%>,
+					"TD" : <%=results.m_cContent.m_nContentId%>,
 					"PG" : g_nPage,
 					"MD" : <%=CCnv.MODE_PC%>,
-					"ADF" : <%=cResults.m_cContent.m_nSafeFilter%>},
+					"ADF" : <%=results.m_cContent.m_nSafeFilter%>},
 				"url": "/f/MyIllustView<%=isApp?"App":""%>F.jsp",
 				"success": function(data) {
 					if($.trim(data).length>0) {
@@ -135,7 +135,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 					addContents();
 				}
 			});
-			$("#AnalogicoInfo .AnalogicoInfoSubTitle").html('<%=String.format(_TEX.T("IllustListPc.Title.Desc"), Util.toStringHtml(cResults.m_cUser.m_strNickName), cResults.m_nContentsNumTotal)%>');
+			$("#AnalogicoInfo .AnalogicoInfoSubTitle").html('<%=String.format(_TEX.T("IllustListPc.Title.Desc"), Util.toStringHtml(results.m_cUser.m_strNickName), results.m_nContentsNumTotal)%>');
 			<%if(!bSmartPhone) {%>
 			$("#AnalogicoInfo .AnalogicoMoreInfo").html('<%=_TEX.T("Unrealizm.Info.RegistNow")%>');
 			<%}%>
@@ -143,8 +143,8 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 	</script>
 
 	<style>
-		<%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>
-		.UserInfo {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');}
+		<%if(!results.m_cUser.m_strHeaderFileName.isEmpty()){%>
+		.UserInfo {background-image: url('<%=Common.GetUrl(results.m_cUser.m_strHeaderFileName)%>');}
 		<%}%>
 		<%if(!bSmartPhone) {%>
 		.Wrapper.ViewPc {flex-flow: row-reverse wrap;}
@@ -191,9 +191,9 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 
 	<section id="IllustItemList" class="IllustItemList">
 		<%if(isApp){%>
-		<%=CCnv.MyContent2Html(cResults.m_cContent, checkLogin, CCnv.MODE_SP, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_APP)%>
+		<%=CCnv.MyContent2Html(results.m_cContent, checkLogin, CCnv.MODE_SP, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_APP)%>
 		<%}else{%>
-		<%=CCnv.MyContent2Html(cResults.m_cContent, checkLogin, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_WVIEW)%>
+		<%=CCnv.MyContent2Html(results.m_cContent, checkLogin, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_WVIEW)%>
 		<%}%>
 	</section>
 

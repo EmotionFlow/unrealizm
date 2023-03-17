@@ -6,9 +6,9 @@
 CheckLogin checkLogin = new CheckLogin(request, response);
 if (!checkLogin.m_bLogin) return;
 
-UpdatePinC cResults = new UpdatePinC();
-cResults.getParam(request);
-int result = cResults.getResults(checkLogin);
+UpdatePinC results = new UpdatePinC();
+results.getParam(request);
+int result = results.getResults(checkLogin);
 String msg = "";
 switch(result) {
 	case UpdatePinC.PIN_ADDED:

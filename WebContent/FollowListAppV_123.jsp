@@ -9,9 +9,9 @@ if(!checkLogin.m_bLogin) {
 	return;
 }
 
-FollowListC cResults = new FollowListC();
-cResults.getParam(request);
-boolean bRtn = cResults.getResults(checkLogin);
+FollowListC results = new FollowListC();
+results.getParam(request);
+boolean bRtn = results.getResults(checkLogin);
 %>
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
@@ -20,7 +20,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 		<title><%=_TEX.T("IllustListV.Follow")%></title>
 		<script>
 			var g_nPage = 1;
-			var g_nMode = <%=cResults.m_nMode%>;
+			var g_nMode = <%=results.m_nMode%>;
 			var g_bAdding = false;
 			function addContents() {
 				if(g_bAdding) return;
@@ -64,8 +64,8 @@ boolean bRtn = cResults.getResults(checkLogin);
 	<body style="background: #fff;">
 		<article class="Wrapper GridList">
 			<div id="IllustThumbList" class="IllustThumbList">
-				<%for(int nCnt = 0; nCnt<cResults.userList.size(); nCnt++) {
-					CUser cUser = cResults.userList.get(nCnt);%>
+				<%for(int nCnt = 0; nCnt<results.userList.size(); nCnt++) {
+					CUser cUser = results.userList.get(nCnt);%>
 					<%=CCnv.toHtmlUser(cUser, CCnv.MODE_SP, _TEX, CCnv.SP_MODE_APP)%>
 					<%if((nCnt+1)%9==0) {%>
 					<%@ include file="/inner/TAd336x280_mid.jsp"%>

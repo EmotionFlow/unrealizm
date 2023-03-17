@@ -32,7 +32,7 @@ public class IllustViewListC {
 
 	public int SELECT_MAX_GALLERY = 10;
 	public int SELECT_MAX_EMOJI = GridUtil.SELECT_MAX_EMOJI;
-	public ArrayList<CContent> m_vContentList = new ArrayList<>();
+	public ArrayList<CContent> contentList = new ArrayList<>();
 	public boolean getResults(CheckLogin checkLogin) {
 		boolean bRtn = false;
 		Connection cConn = null;
@@ -112,7 +112,7 @@ public class IllustViewListC {
 				cContent.m_cUser.m_strFileName	= cUser.m_strFileName;
 				cContent.m_cUser.m_nFollowing	= m_nFollow;
 				cContent.m_cUser.m_nReaction	= cUser.m_nReaction;
-				m_vContentList.add(cContent);
+				contentList.add(cContent);
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
@@ -121,11 +121,11 @@ public class IllustViewListC {
 
 			// Each Comment
 			if(cUser.m_nReaction==CUser.REACTION_SHOW) {
-				GridUtil.getEachComment(cConn, m_vContentList);
+				GridUtil.getEachComment(cConn, contentList);
 			}
 
 			// Bookmark
-			GridUtil.getEachBookmark(cConn, m_vContentList, checkLogin);
+			GridUtil.getEachBookmark(cConn, contentList, checkLogin);
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();

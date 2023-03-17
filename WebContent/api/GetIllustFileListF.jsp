@@ -107,9 +107,9 @@ GetIllustFileListCParam cParam = new GetIllustFileListCParam();
 cParam.m_nUserId = checkLogin.m_nUserId;
 nRtn = cParam.GetParam(request);
 
-GetIllustFileListC cResults = new GetIllustFileListC();
+GetIllustFileListC results = new GetIllustFileListC();
 if (checkLogin.m_bLogin && cParam.m_nUserId==checkLogin.m_nUserId && nRtn==0) {
-	nRtn = cResults.GetResults(cParam, _TEX);
+	nRtn = results.GetResults(cParam, _TEX);
 }
 
 //オブジェクト配列をJSONに変換
@@ -125,20 +125,20 @@ try {
 		}
 		content.put("user_id", cParam.m_nUserId);
 		content.put("content_id", cParam.m_nContentId);
-		content.put("category", cResults.m_cContent.m_nCategoryId);
-		content.put("description", Util.toString(cResults.m_cContent.m_strDescription));
-		content.put("password", Util.toString(cResults.m_cContent.m_strPassword));
-		content.put("tag_list", Util.toString(cResults.m_cContent.m_strTagList));
-		content.put("open_id", cResults.m_cContent.m_nOpenId);
-		content.put("publish_id", cResults.m_cContent.m_nPublishId);
-		content.put("not_recently", cResults.m_cContent.m_bNotRecently);
-		content.put("limited_time_publish", cResults.m_cContent.m_bLimitedTimePublish);
-		content.put("start_date", Util.toYMDHMString(cResults.m_cContent.m_timeUploadDate));
-		content.put("end_date", Util.toYMDHMString(cResults.m_cContent.m_timeEndDate));
-		content.put("tweet_when_published", cResults.m_cContent.m_nTweetWhenPublished);
-		content.put("twitter_list_id", Util.toString(cResults.m_cContent.m_strListId));
-		content.put("tweeted", cResults.m_cContent.m_strTweetId!=null && !cResults.m_cContent.m_strTweetId.isEmpty());
-		content.put("files", cResults.m_vContent);
+		content.put("category", results.m_cContent.m_nCategoryId);
+		content.put("description", Util.toString(results.m_cContent.m_strDescription));
+		content.put("password", Util.toString(results.m_cContent.m_strPassword));
+		content.put("tag_list", Util.toString(results.m_cContent.m_strTagList));
+		content.put("open_id", results.m_cContent.m_nOpenId);
+		content.put("publish_id", results.m_cContent.m_nPublishId);
+		content.put("not_recently", results.m_cContent.m_bNotRecently);
+		content.put("limited_time_publish", results.m_cContent.m_bLimitedTimePublish);
+		content.put("start_date", Util.toYMDHMString(results.m_cContent.m_timeUploadDate));
+		content.put("end_date", Util.toYMDHMString(results.m_cContent.m_timeEndDate));
+		content.put("tweet_when_published", results.m_cContent.m_nTweetWhenPublished);
+		content.put("twitter_list_id", Util.toString(results.m_cContent.m_strListId));
+		content.put("tweeted", results.m_cContent.m_strTweetId!=null && !results.m_cContent.m_strTweetId.isEmpty());
+		content.put("files", results.m_vContent);
 	}
 	mapper = new ObjectMapper();
 	String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(content);

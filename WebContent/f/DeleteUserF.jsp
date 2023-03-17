@@ -3,13 +3,13 @@
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 
-DeleteUserC cResults = new DeleteUserC();
-cResults.GetParam(request);
+DeleteUserC results = new DeleteUserC();
+results.GetParam(request);
 
 int nRtn = 0;
-if( checkLogin.m_bLogin && cResults.m_nUserId == checkLogin.m_nUserId ) {
-	nRtn = cResults.GetResults(checkLogin, request);
+if( checkLogin.m_bLogin && results.m_nUserId == checkLogin.m_nUserId ) {
+	nRtn = results.GetResults(checkLogin, request);
 }else{
-	Log.d(String.format("DeleteUserF invalid user:%b, %d, %d", checkLogin.m_bLogin, cResults.m_nUserId, checkLogin.m_nUserId));
+	Log.d(String.format("DeleteUserF invalid user:%b, %d, %d", checkLogin.m_bLogin, results.m_nUserId, checkLogin.m_nUserId));
 }
 %>{"result":<%=nRtn%>}

@@ -44,12 +44,12 @@ public final class DownloadImageFile extends HttpServlet {
 		CheckLogin checkLogin = new CheckLogin(request, response);
 		if(!checkLogin.m_bLogin) return;
 
-		CDownloadImageFile cResults = new CDownloadImageFile();
+		CDownloadImageFile results = new CDownloadImageFile();
 
-		if(!cResults.getParam(request)) return;
-		if(!cResults.getResults(checkLogin)) return;
+		if(!results.getParam(request)) return;
+		if(!results.getResults(checkLogin)) return;
 
-		String file_name_full = getServletContext().getRealPath(cResults.fileName);
+		String file_name_full = getServletContext().getRealPath(results.fileName);
 		File file = new File(file_name_full);
 		if(!file.exists()) return;
 		String ext = ImageUtil.getExt(file_name_full);

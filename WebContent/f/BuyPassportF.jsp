@@ -7,9 +7,9 @@ if(!checkLogin.m_bLogin) return;
 BuyPassportCParam cParam = new BuyPassportCParam();
 cParam.GetParam(request);
 
-BuyPassportC cResults = new BuyPassportC();
-boolean bRtn = cResults.getResults(checkLogin, cParam);
+BuyPassportC results = new BuyPassportC();
+boolean bRtn = results.getResults(checkLogin, cParam);
 %>{
 "result" : <%=(bRtn)?1:0%>,
-"error_code" : <%=cResults.errorCode%>
+"error_code" : <%=results.errorCode%>
 }

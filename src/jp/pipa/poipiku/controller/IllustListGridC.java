@@ -32,7 +32,7 @@ public class IllustListGridC {
 	}
 
 	public CUser m_cUser = new CUser();
-	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
+	public ArrayList<CContent> contentList = new ArrayList<CContent>();
 	public ArrayList<CTag> m_vCategoryList = new ArrayList<CTag>();
 	public int SELECT_MAX_GALLERY = 24;
 	public boolean m_bOwner = false;
@@ -231,7 +231,7 @@ public class IllustListGridC {
 				cContent.m_cUser.m_nReaction	= user.reaction;
 				if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
 				cContent.m_cUser.m_nFollowing = (m_bOwner)?CUser.FOLLOW_HIDE:(m_bFollow)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
-				m_vContentList.add(cContent);
+				contentList.add(cContent);
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
@@ -239,10 +239,10 @@ public class IllustListGridC {
 			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
 
 			// Each Comment
-			GridUtil.getEachComment(connection, m_vContentList);
+			GridUtil.getEachComment(connection, contentList);
 
 			// Bookmark
-			m_vContentList = GridUtil.getEachBookmark(connection, m_vContentList, checkLogin);
+			contentList = GridUtil.getEachBookmark(connection, contentList, checkLogin);
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();

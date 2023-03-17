@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-String strCheerPointTotal = String.format("%,d",cResults.m_nCheerPoint);
-String strPaymentYenTotal = String.format("%,d",cResults.m_nCheerPoint-300);
-CheerPointExchangeRequest exchangeRequest = cResults.exchangeRequest;
+String strCheerPointTotal = String.format("%,d",results.m_nCheerPoint);
+String strPaymentYenTotal = String.format("%,d",results.m_nCheerPoint-300);
+CheerPointExchangeRequest exchangeRequest = results.exchangeRequest;
 %>
 <script>
 const LOCAL_STORAGE_KEY_RECV_ACC_INFO = 'RECV_ACC_INFO';
@@ -141,7 +141,7 @@ function ReceiveCheerPoint() {
 				'ACTYPE': $("#ACTYPE").val(),
 				'ACCD': $("#ACCD").val(),
 				'ACNM': $("#ACNM").val(),
-				'PT': <%=cResults.m_nCheerPoint%>,
+				'PT': <%=results.m_nCheerPoint%>,
 			}
 			if (!checkEmptySwal(formData.FCD, '金融機関コード')) return false;
 			if (!checkNumberOnlySwal(formData.FCD, '金融機関コード')) return false;
@@ -219,7 +219,7 @@ function ReceiveCheerPoint() {
 			</p>
 			<%if (exchangeRequest.status == CheerPointExchangeRequest.Status.Waiting) {%>
 			<p>
-				<%=cResults.m_nExchangePoint%>ポイント（<%=cResults.m_nExchangeFee%>円分）について、指定口座への振り込み申請を受付中です。
+				<%=results.m_nExchangePoint%>ポイント（<%=results.m_nExchangeFee%>円分）について、指定口座への振り込み申請を受付中です。
 			</p>
 			<p>申請内容について運営よりメールにてお問い合わせすることがありますので、
 				<a href="/MyEditSettingPcV.jsp?MENUID=MAIL" style="text-decoration: underline;">メールログイン設定画面にて、メールアドレスの登録・確認</a>をお願いいたします。
@@ -228,7 +228,7 @@ function ReceiveCheerPoint() {
 				<a style="text-decoration: underline;" href="javascript:void(0);" onclick="dispAccountInfo();">申請内容を確認する</a>
 			</div>
 			<%} else {%>
-			<%if (cResults.m_nCheerPoint >= 400) {%>
+			<%if (results.m_nCheerPoint >= 400) {%>
 			<div style="text-align: center">
 				<a id="CheerPointExRequest" class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)"
 				   onclick="ReceiveCheerPoint()">

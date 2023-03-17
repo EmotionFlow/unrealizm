@@ -82,7 +82,7 @@ cParam.GetParam(request);
 
 int nRtn = -1;
 if( checkLogin.m_bLogin && cParam.m_nUserId == checkLogin.m_nUserId ) {
-	UpdateBlockC cResults = new UpdateBlockC();
-	nRtn = cResults.GetResults(cParam, _TEX);
+	UpdateBlockC results = new UpdateBlockC();
+	nRtn = results.GetResults(cParam, _TEX);
 }
 %>{"result":<%=nRtn%>}

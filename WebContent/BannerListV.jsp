@@ -2,7 +2,7 @@
 <%@include file="/inner/Common.jsp"%>
 <%!
 class BannerListC {
-	public Vector<CContent> m_vContentList = new Vector<CContent>();
+	public Vector<CContent> contentList = new Vector<CContent>();
 	int m_nEndId = -1;
 	public int SELECT_MAX_GALLERY = 0;
 
@@ -30,7 +30,7 @@ class BannerListC {
 				while (cResSet.next()) {
 					CContent cContent = new CContent(cResSet);
 					m_nEndId = cContent.m_nContentId;
-					m_vContentList.addElement(cContent);
+					contentList.addElement(cContent);
 				}
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
@@ -60,14 +60,14 @@ if(nImgNum<0) nImgNum=4;
 
 CheckLogin checkLogin = new CheckLogin(request, response);
 
-BannerListC cResults = new BannerListC();
-cResults.SELECT_MAX_GALLERY = nImgNum;
-boolean bRtn = cResults.GetResults();
+BannerListC results = new BannerListC();
+results.SELECT_MAX_GALLERY = nImgNum;
+boolean bRtn = results.GetResults();
 %>
 <!DOCTYPE html>
 <html style="height: <%=nImgWidth%>px;">
 	<body style="margin:0; padding:0; width: <%=nBodyWidth%>px;">
-		<%for(CContent cContent : cResults.m_vContentList) {%>
+		<%for(CContent cContent : results.contentList) {%>
 		<a style="display: block; float: left;" href="https://unrealizm.com/<%=cContent.m_nUserId%>/<%=cContent.m_nContentId%>.html" target="_blank">
 			<img style="display: block; float: left; width: <%=nImgWidth%>px; height: <%=nImgWidth%>px;" src="<%=Common.GetUrl(cContent.m_strFileName)%>_360.jpg">
 		</a>

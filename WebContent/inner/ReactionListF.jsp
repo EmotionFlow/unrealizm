@@ -4,10 +4,10 @@
 CheckLogin checkLogin = new CheckLogin(request, response);
 if(!checkLogin.m_bLogin) return;
 
-ReactionListC cResults = new ReactionListC();
-cResults.getParam(request);
+ReactionListC results = new ReactionListC();
+results.getParam(request);
 
-cResults.getResults(checkLogin);
-String html = CCnv.toReactionDetailListHtml(cResults.reactionDetails, checkLogin, _TEX, Util.isSmartPhone(request));
+results.getResults(checkLogin);
+String html = CCnv.toReactionDetailListHtml(results.reactionDetails, checkLogin, _TEX, Util.isSmartPhone(request));
 %>
-{"end_id":<%=cResults.endId%>,"html":"<%=CEnc.E(html)%>"}
+{"end_id":<%=results.endId%>,"html":"<%=CEnc.E(html)%>"}

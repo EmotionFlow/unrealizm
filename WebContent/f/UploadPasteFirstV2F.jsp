@@ -10,8 +10,8 @@ cParam.userId = checkLogin.m_nUserId;
 nRtn = cParam.GetParam(request);
 
 if(checkLogin.m_bLogin && cParam.userId ==checkLogin.m_nUserId && nRtn==0){
-	UploadFileFirstC cResults = new UploadFileFirstC(getServletContext());
-	nRtn = cResults.GetResults(cParam);
+	UploadFileFirstC results = new UploadFileFirstC(getServletContext());
+	nRtn = results.GetResults(cParam);
 }
 %>
 {"content_id":<%=nRtn%>}

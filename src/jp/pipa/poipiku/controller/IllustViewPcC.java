@@ -56,7 +56,7 @@ public final class IllustViewPcC {
 	public int selectMaxGallery = 9;
 	public int selectMaxRelatedGallery = 9;
 	public int selectMaxRecommendedGallery = 9;
-	public ArrayList<CContent> m_vContentList = new ArrayList<>();
+	public ArrayList<CContent> contentList = new ArrayList<>();
 	public ArrayList<CContent> m_vRelatedContentList = new ArrayList<>();
 	public ArrayList<CContent> m_vRecommendedList = new ArrayList<>();
 	public int SELECT_MAX_EMOJI = GridUtil.SELECT_MAX_EMOJI;
@@ -308,7 +308,7 @@ public final class IllustViewPcC {
 			if(!m_bIsBot) {
 				// Owner Contents
 				if(selectMaxGallery >0) {
-					m_vContentList = RelatedContents.getUserContentList(ownerUserId, selectMaxGallery, checkLogin, connection);
+					contentList = RelatedContents.getUserContentList(ownerUserId, selectMaxGallery, checkLogin, connection);
 				}
 
 				final int h = LocalDateTime.now().getHour();

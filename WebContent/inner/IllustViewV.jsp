@@ -9,56 +9,56 @@ if(!Util.isSmartPhone(request)) {
 final String referer = Util.toString(request.getHeader("Referer"));
 final boolean fromIllustList = referer.matches("^https://poipiku\\.com/[0-9]+/$");
 
-IllustViewPcC cResults = new IllustViewPcC();
-cResults.getParam(request);
-cResults.selectMaxGallery = 0;
-cResults.selectMaxRelatedGallery = 0;
-cResults.selectMaxRecommendedGallery = 0;
+IllustViewPcC results = new IllustViewPcC();
+results.getParam(request);
+results.selectMaxGallery = 0;
+results.selectMaxRelatedGallery = 0;
+results.selectMaxRecommendedGallery = 0;
 
 final CheckLogin checkLogin = new CheckLogin(request, response);
-if(!cResults.getResults(checkLogin)) {
-	if (cResults.m_bBlocked || cResults.m_bBlocking) {
-		response.sendRedirect(String.format("/%d/", cResults.ownerUserId));
-	} else if (cResults.m_nNewContentId==null || cResults.m_nNewContentId==cResults.contentId) {
+if(!results.getResults(checkLogin)) {
+	if (results.m_bBlocked || results.m_bBlocking) {
+		response.sendRedirect(String.format("/%d/", results.ownerUserId));
+	} else if (results.m_nNewContentId==null || results.m_nNewContentId==results.contentId) {
 		response.sendRedirect("/NotFoundPcV.jsp");
 	} else {
-		response.sendRedirect(Common.GetUnrealizmUrl(String.format("/%d/%d.html", cResults.ownerUserId, cResults.m_nNewContentId)));
+		response.sendRedirect(Common.GetUnrealizmUrl(String.format("/%d/%d.html", results.ownerUserId, results.m_nNewContentId)));
 	}
 	return;
 }
 
-if(cResults.m_cContent.m_nPublishId!=Common.PUBLISH_ID_ALL && Util.isBot(request)) {
+if(results.m_cContent.m_nPublishId!=Common.PUBLISH_ID_ALL && Util.isBot(request)) {
 	response.sendRedirect("/NotFoundPcV.jsp");
 	return;
 }
 
 // R18によるアドの切り替え
-g_nSafeFilter = cResults.m_cContent.getAdSwitchId();
+g_nSafeFilter = results.m_cContent.getAdSwitchId();
 
-cResults.m_cContent.setThumb();
-final String strFileUrl = cResults.m_cContent.thumbImgUrl;
-final boolean bHidden = cResults.m_cContent.isHideThumbImg;	// テキスト用カバー画像表示フラグ
+results.m_cContent.setThumb();
+final String strFileUrl = results.m_cContent.thumbImgUrl;
+final boolean bHidden = results.m_cContent.isHideThumbImg;	// テキスト用カバー画像表示フラグ
 
-String strDesc = Util.deleteCrLf(cResults.m_cContent.title);
-strDesc = (strDesc.isEmpty())?Util.deleteCrLf(cResults.m_cContent.m_strDescription):strDesc;
+String strDesc = Util.deleteCrLf(results.m_cContent.title);
+strDesc = (strDesc.isEmpty())?Util.deleteCrLf(results.m_cContent.m_strDescription):strDesc;
 
-final String strTitle = CTweet.generateState(cResults.m_cContent, _TEX)
-		+ CTweet.generateFileNum(cResults.m_cContent, _TEX)
+final String strTitle = CTweet.generateState(results.m_cContent, _TEX)
+		+ CTweet.generateFileNum(results.m_cContent, _TEX)
 		+ " " + Util.subStrNum(strDesc, 15)
-		+ " " + cResults.m_cContent.m_strTagList
-		+ " " + String.format(_TEX.T("Tweet.Title"), cResults.m_cContent.m_cUser.m_strNickName) + " | " + _TEX.T("THeader.Title");
+		+ " " + results.m_cContent.m_strTagList
+		+ " " + String.format(_TEX.T("Tweet.Title"), results.m_cContent.m_cUser.m_strNickName) + " | " + _TEX.T("THeader.Title");
 
-String strUrl = "https://unrealizm.com/"+cResults.m_cContent.m_nUserId+"/"+cResults.m_cContent.m_nContentId+".html";
+String strUrl = "https://unrealizm.com/"+results.m_cContent.m_nUserId+"/"+results.m_cContent.m_nContentId+".html";
 ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
-g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_cUser.m_nAdMode==CUser.AD_MODE_SHOW);
+g_bShowAd = (results.m_cUser.m_nPassportId==Common.PASSPORT_OFF || results.m_cUser.m_nAdMode==CUser.AD_MODE_SHOW);
 boolean bSmartPhone = Util.isSmartPhone(request);
 
-if (cResults.m_bRequestClient) {
-	cResults.m_cContent.setRequestImgThumb();
+if (results.m_bRequestClient) {
+	results.m_cContent.setRequestImgThumb();
 }
 
 //ツイッターカード用:作者の言語でツイッターカードを作るためのResourceBundleControl
-ResourceBundleControl _TEX_TWEET = new ResourceBundleControl(SupportedLocales.findLocale(CacheUsers0000.getInstance().getUser(cResults.m_cContent.m_nUserId).langId));
+ResourceBundleControl _TEX_TWEET = new ResourceBundleControl(SupportedLocales.findLocale(CacheUsers0000.getInstance().getUser(results.m_cContent.m_nUserId).langId));
 
 %>
 <!DOCTYPE html>
@@ -76,7 +76,7 @@ ResourceBundleControl _TEX_TWEET = new ResourceBundleControl(SupportedLocales.fi
 		<%@ include file="/inner/TSendGift.jsp"%>
 
 		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
-		<%if(cResults.m_cContent.isTwitterCardThumbnail()){%>
+		<%if(results.m_cContent.isTwitterCardThumbnail()){%>
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:image" content="<%="https://img.unrealizm.com" + strFileUrl%>" />
 		<%}else{%>
@@ -84,8 +84,8 @@ ResourceBundleControl _TEX_TWEET = new ResourceBundleControl(SupportedLocales.fi
 		<meta name="twitter:image" content="https://img.unrealizm.com/img/icon-512x512.png" />
 		<%}%>
 		<meta name="twitter:site" content="@pipajp" />
-		<meta name="twitter:title" content="<%=CTweet.generateMetaTwitterTitle(cResults.m_cContent, _TEX_TWEET)%>" />
-		<meta name="twitter:description" content="<%=CTweet.generateMetaTwitterDesc(cResults.m_cContent, _TEX_TWEET)%>" />
+		<meta name="twitter:title" content="<%=CTweet.generateMetaTwitterTitle(results.m_cContent, _TEX_TWEET)%>" />
+		<meta name="twitter:description" content="<%=CTweet.generateMetaTwitterDesc(results.m_cContent, _TEX_TWEET)%>" />
 		<link rel="canonical" href="<%=strUrl%>" />
 		<link rel="alternate" media="only screen and (max-width: 640px)" href="<%=strUrl%>" />
 		<title><%=Util.toDescString(strTitle)%></title>
@@ -96,7 +96,7 @@ ResourceBundleControl _TEX_TWEET = new ResourceBundleControl(SupportedLocales.fi
 			"itemListElement":[
 				{"@type":"ListItem", "position":1, "url":"<%=strUrl%>",
 				 "name": "<%=Util.toDescString(strTitle)%>",
-				 <%if(cResults.m_cContent.isTwitterCardThumbnail()){%>
+				 <%if(results.m_cContent.isTwitterCardThumbnail()){%>
 				 "image": "<%="https://img.unrealizm.com" + strFileUrl%>"
 				 <%}else{%>
 				 "image": "https://unrealizm.com/img/icon-512x512.png"
@@ -117,7 +117,7 @@ ResourceBundleControl _TEX_TWEET = new ResourceBundleControl(SupportedLocales.fi
 				});
 			});
 
-			let lastContentId = <%=cResults.contentId%>;
+			let lastContentId = <%=results.contentId%>;
 			let page = 0;
 
 			const loadingSpinner = {
@@ -156,7 +156,7 @@ ResourceBundleControl _TEX_TWEET = new ResourceBundleControl(SupportedLocales.fi
 
 			$(function(){
 				initContents();
-				<%if(!fromIllustList && cResults.contentId < cResults.latestContentId){%>
+				<%if(!fromIllustList && results.contentId < results.latestContentId){%>
 				const moveDist = 55;
 				const $IllustViewGoLatestBtn = $("#IllustViewGoLatestBtn");
 				setTimeout(()=>{
@@ -181,16 +181,16 @@ ResourceBundleControl _TEX_TWEET = new ResourceBundleControl(SupportedLocales.fi
 		<%@ include file="/inner/TTwitterFollowerLimitInfo.jsp"%>
 		<script type="text/javascript">
 			$(function(){
-				<%if(!cResults.m_bOwner){%>
+				<%if(!results.m_bOwner){%>
 				$('body, .Wrapper').each(function(index, element){
 					$(element).on("drag dragstart",function(e){return false;});
 				});
 				<%}%>
-				$("#AnalogicoInfo .AnalogicoInfoSubTitle").html('<%=String.format(_TEX.T("IllustListPc.Title.Desc"), Util.toStringHtml(cResults.m_cUser.m_strNickName), cResults.m_nContentsNumTotal)%>');
+				$("#AnalogicoInfo .AnalogicoInfoSubTitle").html('<%=String.format(_TEX.T("IllustListPc.Title.Desc"), Util.toStringHtml(results.m_cUser.m_strNickName), results.m_nContentsNumTotal)%>');
 
-				<%if(!bHidden && cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {%>
-				const frame_height = $('#IllustItemText_'+ <%=cResults.m_cContent.m_nContentId%> ).height();
-				const text_height = $('#IllustItemText_'+ <%=cResults.m_cContent.m_nContentId%> + ' .IllustItemThumbText').height();
+				<%if(!bHidden && results.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {%>
+				const frame_height = $('#IllustItemText_'+ <%=results.m_cContent.m_nContentId%> ).height();
+				const text_height = $('#IllustItemText_'+ <%=results.m_cContent.m_nContentId%> + ' .IllustItemThumbText').height();
 				if(frame_height>=text_height) {
 					$('.IllustItemExpandBtn').hide();
 				}
@@ -202,15 +202,15 @@ ResourceBundleControl _TEX_TWEET = new ResourceBundleControl(SupportedLocales.fi
 			.IllustItemList.Related {margin-bottom: 6px;}
 			.IllustItemList.Related .SearchResultTitle {height: auto; margin: 10px 0 0 0;}
 			.IllustItemList.Related .SearchResultTitle .IllustItem {margin-bottom: 0;}
-			<%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>
-			.UserInfo {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');}
+			<%if(!results.m_cUser.m_strHeaderFileName.isEmpty()){%>
+			.UserInfo {background-image: url('<%=Common.GetUrl(results.m_cUser.m_strHeaderFileName)%>');}
 			<%}%>
 		</style>
 
-		<%if(cResults.m_cUser.m_nPassportId>=Common.PASSPORT_ON && !cResults.m_cUser.m_strBgFileName.isEmpty()) {%>
+		<%if(results.m_cUser.m_nPassportId>=Common.PASSPORT_ON && !results.m_cUser.m_strBgFileName.isEmpty()) {%>
 		<style>
 			body {
-				background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strBgFileName)%>');
+				background-image: url('<%=Common.GetUrl(results.m_cUser.m_strBgFileName)%>');
 				background-repeat: repeat;
 				background-position: 50% top;
 				background-attachment: fixed;
@@ -223,7 +223,7 @@ ResourceBundleControl _TEX_TWEET = new ResourceBundleControl(SupportedLocales.fi
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<div id="IllustViewGoLatestBtn" style="display: none;">
-			<a href="/<%=cResults.ownerUserId%>/latest.html">
+			<a href="/<%=results.ownerUserId%>/latest.html">
 				<i class="fas fa-arrow-up"></i> <%=_TEX.T("IllustView.GoLatestBtn")%>
 			</a>
 		</div>
@@ -231,9 +231,7 @@ ResourceBundleControl _TEX_TWEET = new ResourceBundleControl(SupportedLocales.fi
 
 		<%{%>
 		<article class="Wrapper" style="width: 100%;">
-			<div class="UserInfo Float">
-				<%@ include file="TUserInfo.jsp"%>
-			</div>
+			<%@ include file="TUserInfo.jsp"%>
 		</article>
 		<%}%>
 
@@ -246,9 +244,9 @@ ResourceBundleControl _TEX_TWEET = new ResourceBundleControl(SupportedLocales.fi
 
 			<section id="IllustItemList" class="IllustItemList">
 				<%= CCnv.Content2Html(
-						cResults.m_cContent, checkLogin, bSmartPhone?CCnv.MODE_SP:CCnv.MODE_PC,
+						results.m_cContent, checkLogin, bSmartPhone?CCnv.MODE_SP:CCnv.MODE_PC,
 						_TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_WVIEW,
-						cResults.m_bOwner ? CCnv.PageCategory.MY_ILLUST_LIST : CCnv.PageCategory.DEFAULT)%>
+						results.m_bOwner ? CCnv.PageCategory.MY_ILLUST_LIST : CCnv.PageCategory.DEFAULT)%>
 				<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd && false) {%>
 				<span style="display: flex; flex-flow: row nowrap; justify-content: space-around; align-items: center; float: left; width: 100%; margin-bottom: 17px;">
 				<%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%>

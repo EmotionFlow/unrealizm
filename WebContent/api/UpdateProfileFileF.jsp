@@ -10,11 +10,11 @@
 CheckLogin checkLogin = new CheckLogin(request, response);
 
 int nRtn = 0;
-UpdateProfileFileC cResults = new UpdateProfileFileC();
-nRtn = cResults.GetParam(request);
+UpdateProfileFileC results = new UpdateProfileFileC();
+nRtn = results.GetParam(request);
 
-if(checkLogin.m_bLogin && cResults.m_nUserId==checkLogin.m_nUserId && nRtn==0) {
-	nRtn = cResults.GetResults(checkLogin, getServletContext());
+if(checkLogin.m_bLogin && results.m_nUserId==checkLogin.m_nUserId && nRtn==0) {
+	nRtn = results.GetResults(checkLogin, getServletContext());
 }
 %>{
 "result" : <%=nRtn%>

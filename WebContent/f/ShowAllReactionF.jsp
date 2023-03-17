@@ -5,13 +5,13 @@ int nRtn = 0;
 String strHtml = _TEX.T("Common.NeedLogin");
 CheckLogin checkLogin = new CheckLogin(request, response);
 if(checkLogin.m_bLogin) {
-	ShowAllReactionC cResults = new ShowAllReactionC();
-	cResults.getParam(request);
-	cResults.getResults();
+	ShowAllReactionC results = new ShowAllReactionC();
+	results.getParam(request);
+	results.getResults();
 	StringBuilder strRtn = new StringBuilder();
 
-	CCnv.appendResEmoji(strRtn, cResults.contentUserId,
-			cResults.comments, cResults.lastCommentId, checkLogin.m_nUserId, false);
+	CCnv.appendResEmoji(strRtn, results.contentUserId,
+			results.comments, results.lastCommentId, checkLogin.m_nUserId, false);
 
 	strHtml = strRtn.toString();
 	nRtn = 1;

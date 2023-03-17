@@ -4,15 +4,15 @@
 CheckLogin checkLogin = new CheckLogin(request, response);
 if(!checkLogin.m_bLogin) return;
 
-FollowListC cResults = new FollowListC();
-cResults.getParam(request);
-cResults.m_nMode = followMode;
+FollowListC results = new FollowListC();
+results.getParam(request);
+results.m_nMode = followMode;
 
-cResults.getResults(checkLogin, true);
+results.getResults(checkLogin, true);
 
 StringBuilder sbHtml = new StringBuilder();
-for(int nCnt = 0; nCnt<cResults.userList.size(); nCnt++) {
-	CUser cUser = cResults.userList.get(nCnt);
+for(int nCnt = 0; nCnt<results.userList.size(); nCnt++) {
+	CUser cUser = results.userList.get(nCnt);
 	if (Util.isSmartPhone(request)) {
 		if (isApp) {
 	sbHtml.append(CCnv.toHtmlUserMini(cUser, CCnv.MODE_SP, _TEX, CCnv.SP_MODE_APP));
@@ -25,4 +25,4 @@ for(int nCnt = 0; nCnt<cResults.userList.size(); nCnt++) {
 }
 
 %>
-{"end_id":<%=cResults.endId%>,"html":"<%=CEnc.E(sbHtml.toString())%>"}
+{"end_id":<%=results.endId%>,"html":"<%=CEnc.E(sbHtml.toString())%>"}

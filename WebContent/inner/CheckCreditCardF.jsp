@@ -7,8 +7,8 @@
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 if(!checkLogin.m_bLogin) return;
-CheckCreditCardC cResults = new CheckCreditCardC();
-int nResult = cResults.getResults(checkLogin);
+CheckCreditCardC results = new CheckCreditCardC();
+int nResult = results.getResults(checkLogin);
 //JSON元データを格納する連想配列
 Map<String, Object> root = null;
 ObjectMapper mapper = null;

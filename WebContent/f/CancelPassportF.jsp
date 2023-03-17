@@ -10,8 +10,8 @@ int errorCode;
 CancelPassportCParam cParam = new CancelPassportCParam();
 cParam.GetParam(request);
 
-CancelPassportC cResults = new CancelPassportC();
-bRtn = cResults.getResults(checkLogin, cParam);
-errorCode = cResults.m_nErrCode;
+CancelPassportC results = new CancelPassportC();
+bRtn = results.getResults(checkLogin, cParam);
+errorCode = results.m_nErrCode;
 
 %>{"result" : <%=(bRtn)?1:0%>, "error_code" : <%=errorCode%>}

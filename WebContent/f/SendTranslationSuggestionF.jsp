@@ -2,7 +2,7 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
-SendTranslationSuggestionC cResults = new SendTranslationSuggestionC();
-cResults.getParam(request);
-boolean bRtn = cResults.getResults(checkLogin);
+SendTranslationSuggestionC results = new SendTranslationSuggestionC();
+results.getParam(request);
+boolean bRtn = results.getResults(checkLogin);
 %>{"result" : <%=bRtn?Common.API_OK:Common.API_NG%>}

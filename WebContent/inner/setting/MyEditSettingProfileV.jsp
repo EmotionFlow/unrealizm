@@ -82,7 +82,7 @@
 	<div class="SettingListItem">
 		<div class="SettingListTitle"><%=_TEX.T("EditSettingV.NickName")%></div>
 		<div class="SettingBody">
-			<input id="RegistUserName" class="SettingBodyTxt" type="text" placeholder="<%=_TEX.T("EditSettingV.NickName.PlaceHolder")%>" value="<%=Util.toStringHtml(cResults.m_cUser.m_strNickName)%>" maxlength="16" />
+			<input id="RegistUserName" class="SettingBodyTxt" type="text" placeholder="<%=_TEX.T("EditSettingV.NickName.PlaceHolder")%>" value="<%=Util.toStringHtml(results.m_cUser.m_strNickName)%>" maxlength="16" />
 			<div id="RegistUserNameMessage" class="RegistMessage" ><%=_TEX.T("EditSettingV.NickName.Message.Empty")%></div>
 			<div class="SettingBodyCmd">
 				<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateNickName()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
@@ -94,10 +94,10 @@
 		<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Image")%></div>
 		<div class="SettingBody">
 			<div class="PreviewImgFrame">
-				<%if(cResults.m_cUser.m_strFileName.equals("/img/default_user.jpg")) {%>
+				<%if(results.m_cUser.m_strFileName.equals("/img/default_user.jpg")) {%>
 				<span class="PreviewMessage"><%=_TEX.T("EditSettingV.Image.NoImage")%></span>
 				<%} else {%>
-				<img class="PreviewImg" src="<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>" />
+				<img class="PreviewImg" src="<%=Common.GetUrl(results.m_cUser.m_strFileName)%>" />
 				<%}%>
 			</div>
 			<div id="RegistPreviewImgMessage" class="RegistMessage" ><%=_TEX.T("EditSettingV.Image.Format")%></div>
@@ -114,7 +114,7 @@
 	<div class="SettingListItem">
 		<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Bio")%></div>
 		<div class="SettingBody">
-			<textarea id="EditBio" class="SettingBodyTxt" rows="6" onkeyup="DispDescCharNum()" maxlength="1000"><%=Util.toStringHtmlTextarea(cResults.m_cUser.m_strProfile)%></textarea>
+			<textarea id="EditBio" class="SettingBodyTxt" rows="6" onkeyup="DispDescCharNum()" maxlength="1000"><%=Util.toStringHtmlTextarea(results.m_cUser.m_strProfile)%></textarea>
 			<div class="SettingBodyCmd">
 				<div id="ProfileTextMessage" class="RegistMessage" >1000</div>
 				<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateProfileTxt()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
@@ -129,7 +129,7 @@
 			<div class="SettingBodyCmd">
 				<div class="RegistMessage" >
 					<div class="onoffswitch OnOff">
-						<input type="checkbox" name="AutoTweet" class="onoffswitch-checkbox" id="PublishAccount" value="1" <%if(cResults.m_cUser.m_nTwitterAccountPublicMode==CUser.TW_PUBLIC_ON){%>checked="checked"<%}%> />
+						<input type="checkbox" name="AutoTweet" class="onoffswitch-checkbox" id="PublishAccount" value="1" <%if(results.m_cUser.m_nTwitterAccountPublicMode==CUser.TW_PUBLIC_ON){%>checked="checked"<%}%> />
 						<label class="onoffswitch-label" for="PublishAccount">
 							<span class="onoffswitch-inner"></span>
 							<span class="onoffswitch-switch"></span>

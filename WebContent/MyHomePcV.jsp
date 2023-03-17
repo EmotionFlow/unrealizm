@@ -10,27 +10,27 @@ if(!bSmartPhone) {
 	return;
 }
 
-MyHomePcC cResults = new MyHomePcC();
-cResults.getParam(request);
+MyHomePcC results = new MyHomePcC();
+results.getParam(request);
 
 String cookieLang = Util.getCookie(request, "UR_LANG");
 if (cookieLang == null) {
 	cookieLang = "ja";
 	Util.setCookie(response, "UR_LANG", "ja", Integer.MAX_VALUE);
 }
-cResults.cookieLangId = SupportedLocales.findId(cookieLang);
+results.cookieLangId = SupportedLocales.findId(cookieLang);
 
 if(!checkLogin.m_bLogin) {
-	if(cResults.n_nUserId>0) {
-		response.sendRedirect("/"+cResults.n_nUserId+"/");
+	if(results.n_nUserId>0) {
+		response.sendRedirect("/"+results.n_nUserId+"/");
 	} else {
 		getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp?MSG=MyHome").forward(request,response);
 	}
 	return;
 }
 
-cResults.m_bNoContents = true;
-cResults.getResults(checkLogin);
+results.m_bNoContents = true;
+results.getResults(checkLogin);
 %>
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
@@ -172,12 +172,12 @@ cResults.getResults(checkLogin);
 		</nav>
 
 		<div class="ThumbListHeader" style="display: none">
-		<%if(cResults.m_cSystemInfo!=null) {%>
-		<div class="SystemInfo" id="SystemInfo_<%=cResults.m_cSystemInfo.m_nContentId%>">
-			<a class="SystemInfoTitle" href="/2/<%=cResults.m_cSystemInfo.m_nContentId%>.html"><i class="fas fa-bullhorn"></i></a>
-			<a class="SystemInfoDate" href="/2/<%=cResults.m_cSystemInfo.m_nContentId%>.html"><%=(new SimpleDateFormat("yyyy MM/dd")).format(cResults.m_cSystemInfo.m_timeUploadDate)%></a>
-			<a class="SystemInfoDesc" href="/2/<%=cResults.m_cSystemInfo.m_nContentId%>.html"><%=Util.toStringHtml(cResults.m_cSystemInfo.m_strDescription)%></a>
-			<a class="SystemInfoClose" href="javascript:void(0)" onclick="$('#SystemInfo_<%=cResults.m_cSystemInfo.m_nContentId%>').hide();setCookie('<%=Common.UNREALIZM_INFO%>', '<%=cResults.m_cSystemInfo.m_nContentId%>')"><i class="fas fa-times"></i></a>
+		<%if(results.m_cSystemInfo!=null) {%>
+		<div class="SystemInfo" id="SystemInfo_<%=results.m_cSystemInfo.m_nContentId%>">
+			<a class="SystemInfoTitle" href="/2/<%=results.m_cSystemInfo.m_nContentId%>.html"><i class="fas fa-bullhorn"></i></a>
+			<a class="SystemInfoDate" href="/2/<%=results.m_cSystemInfo.m_nContentId%>.html"><%=(new SimpleDateFormat("yyyy MM/dd")).format(results.m_cSystemInfo.m_timeUploadDate)%></a>
+			<a class="SystemInfoDesc" href="/2/<%=results.m_cSystemInfo.m_nContentId%>.html"><%=Util.toStringHtml(results.m_cSystemInfo.m_strDescription)%></a>
+			<a class="SystemInfoClose" href="javascript:void(0)" onclick="$('#SystemInfo_<%=results.m_cSystemInfo.m_nContentId%>').hide();setCookie('<%=Common.UNREALIZM_INFO%>', '<%=results.m_cSystemInfo.m_nContentId%>')"><i class="fas fa-times"></i></a>
 		</div>
 		<%}%>
 
@@ -190,7 +190,7 @@ cResults.getResults(checkLogin);
 			</div>
 
 			<section id="IllustItemList" class="IllustItemList">
-				<%if(!(cResults.followUserNum > 1 || cResults.m_nContentsNumTotal > 1)) {%>
+				<%if(!(results.followUserNum > 1 || results.m_nContentsNumTotal > 1)) {%>
 				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 20px 10px 20px 10px; text-align: center; box-sizing: border-box;">
 					<%=_TEX.T("MyHome.FirstMsg")%>
 					<br />

@@ -11,18 +11,18 @@ if(!checkLogin.m_bLogin) {
 	return;
 }
 
-IllustViewC cResults = new IllustViewC();
-cResults.getParam(request);
+IllustViewC results = new IllustViewC();
+results.getParam(request);
 
-if(!cResults.getResults(checkLogin)) {
+if(!results.getResults(checkLogin)) {
 	response.sendRedirect("/NotFoundPcV.jsp");
 	return;
 }
 
-final CContent content = cResults.m_cContent;
+final CContent content = results.m_cContent;
 
 Request poipikuRequest = new Request();
-poipikuRequest.selectByContentId(cResults.m_nContentId, null);
+poipikuRequest.selectByContentId(results.m_nContentId, null);
 // 納品済かつ納品期限を過ぎている
 boolean noContentModification = false;
 if (poipikuRequest.id > 0 &&
@@ -99,7 +99,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.unrealizm.com");
 					'default': '',
 					<%
 					for(UserLocale userLocale: SupportedLocales.list) {
-						String transTxt = cResults.descTransList.get(userLocale.id);
+						String transTxt = results.descTransList.get(userLocale.id);
 						if (transTxt == null) {
 							transTxt = "";
 						}
@@ -128,7 +128,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.unrealizm.com");
 				UpdateFile(user_id, <%=content.m_nContentId%>);
 			}
 			$(function() {
-				initUpdateFile(<%=Common.UPLOAD_FILE_MAX[checkLogin.m_nPassportId]%>, <%=Common.UPLOAD_FILE_TOTAL_SIZE[checkLogin.m_nPassportId]%>, <%=cResults.m_nUserId%>, <%=cResults.m_nContentId%>);
+				initUpdateFile(<%=Common.UPLOAD_FILE_MAX[checkLogin.m_nPassportId]%>, <%=Common.UPLOAD_FILE_TOTAL_SIZE[checkLogin.m_nPassportId]%>, <%=results.m_nUserId%>, <%=results.m_nContentId%>);
 				<%if(noContentModification){%>
 				multiFileUploader._options.callbacks.onValidateBatch = (arr, btn) => {return false;};
 				<%}%>
@@ -139,7 +139,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.unrealizm.com");
 			}
 			$(function() {
 				$('#PasteZone').sortable();
-				initUpdatePaste(<%=cResults.m_nUserId%>, <%=cResults.m_nContentId%>);
+				initUpdatePaste(<%=results.m_nUserId%>, <%=results.m_nContentId%>);
 			});
 			<%} else if(nEditorId==Common.EDITOR_TEXT){%>
 			function UpdateTextCheck(user_id) {
@@ -239,17 +239,17 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.unrealizm.com");
 		<nav class="TabMenuWrapper">
 			<ul class="TabMenu">
 			<%if(nEditorId==Common.EDITOR_UPLOAD){%>
-				<li><a class="TabMenuItem Selected" href="/UpdateFilePcV2.jsp?ID=<%=cResults.m_nUserId%>&TD=<%=cResults.m_cContent.m_nContentId%>"><%=_TEX.T("UploadFilePc.Tab.File")%></a></li>
+				<li><a class="TabMenuItem Selected" href="/UpdateFilePcV2.jsp?ID=<%=results.m_nUserId%>&TD=<%=results.m_cContent.m_nContentId%>"><%=_TEX.T("UploadFilePc.Tab.File")%></a></li>
 <%--				<li><span class="TabMenuItem"><%=_TEX.T("UploadFilePc.Tab.Text")%></span></li>--%>
 				<li><span class="TabMenuItem"><%=_TEX.T("UploadFilePc.Tab.Paste")%></span></li>
 <%--			<%}else if(nEditorId==Common.EDITOR_TEXT){%>--%>
 <%--				<li><span class="TabMenuItem"><%=_TEX.T("UploadFilePc.Tab.File")%></span></li>--%>
-<%--				<li><a class="TabMenuItem Selected" href="/UpdateTextPcV2.jsp?ID=<%=cResults.m_nUserId%>&TD=<%=cResults.m_nContentId%>"><%=_TEX.T("UploadFilePc.Tab.Text")%></a></li>--%>
+<%--				<li><a class="TabMenuItem Selected" href="/UpdateTextPcV2.jsp?ID=<%=results.m_nUserId%>&TD=<%=results.m_nContentId%>"><%=_TEX.T("UploadFilePc.Tab.Text")%></a></li>--%>
 <%--				<li><span class="TabMenuItem"><%=_TEX.T("UploadFilePc.Tab.Paste")%></span></li>--%>
 			<%}else if(nEditorId==Common.EDITOR_PASTE){%>
 				<li><span class="TabMenuItem"><%=_TEX.T("UploadFilePc.Tab.File")%></span></li>
 <%--				<li><span class="TabMenuItem"><%=_TEX.T("UploadFilePc.Tab.Text")%></span></li>--%>
-				<li><a class="TabMenuItem Selected" href="/UpdatePastePcV2.jsp?ID=<%=cResults.m_nUserId%>&TD=<%=cResults.m_nContentId%>"><%=_TEX.T("UploadFilePc.Tab.Paste")%></a></li>
+				<li><a class="TabMenuItem Selected" href="/UpdatePastePcV2.jsp?ID=<%=results.m_nUserId%>&TD=<%=results.m_nContentId%>"><%=_TEX.T("UploadFilePc.Tab.Paste")%></a></li>
 			<%}%>
 			</ul>
 		</nav>
@@ -277,7 +277,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.unrealizm.com");
 				<div id="FineUploaderPane" class="TimeLineIllustCmd">
 					<span id="file-drop-area"></span>
 					<span id="TotalSize" class="TotalSize">(jpeg|png|gif, <%=Common.UPLOAD_FILE_MAX[checkLogin.m_nPassportId]%>files, total <%=Common.UPLOAD_FILE_TOTAL_SIZE[checkLogin.m_nPassportId]%>MByte)</span>
-					<a id="TimeLineAddImage" class="SelectImageBtn BtnBase Rev" href="javascript:void(0)">
+					<a id="TimeLineAddImage" class="SelectImageBtn BtnBase" href="javascript:void(0)">
 						<i class="far fa-images"></i>
 						<span id="UploadBtn"><%=_TEX.T("UploadFilePc.SelectImg")%></span>
 					</a>
@@ -286,7 +286,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.unrealizm.com");
 				<div class="TimeLineIllustCmd">
 					<div id="PasteZone" class="PasteZone"></div>
 					<span id="TotalSize" class="TotalSize">(multi ver. 0.2beta. 10pastes)</span>
-					<div id="TimeLineAddImage" class="SelectImageBtn BtnBase Rev" contenteditable>
+					<div id="TimeLineAddImage" class="SelectImageBtn BtnBase" contenteditable>
 						<i class="fas fa-paste"></i>
 						<%=(Util.isSmartPhone(request))?_TEX.T("UploadFilePc.PasteImg.SP"):_TEX.T("UploadFilePc.PasteImg")%>
 					</div>
@@ -298,7 +298,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.unrealizm.com");
 						<label id="EditCategoryLabel" for="EditCategory"><i class="fas fa-terminal"></i></label>
 						<select id="EditCategory">
 							<%for(int nCategoryId : Common.CATEGORY_ID) {%>
-							<option value="<%=nCategoryId%>" <%if(nCategoryId==cResults.m_cContent.m_nCategoryId){%>selected<%}%>><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></option>
+							<option value="<%=nCategoryId%>" <%if(nCategoryId==results.m_cContent.m_nCategoryId){%>selected<%}%>><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></option>
 							<%}%>
 						</select>
 					</span>
@@ -311,26 +311,26 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.unrealizm.com");
 						privateNote.setSummaryElement($("#PrivateNoteSummary"));
 						privateNote.setPlaceholder('<%=_TEX.T("PrivateNote.Placeholder")%>');
 						privateNote.setFooter('<%=_TEX.T("PrivateNote.Footer")%>');
-						<%if(cResults.m_cContent.privateNote.isEmpty()){%>
+						<%if(results.m_cContent.privateNote.isEmpty()){%>
 						$("#PrivateNoteSummary").text('<%=_TEX.T("PrivateNote")%>');
 						<%}else{%>
-						privateNote.setText('<%=Util.toQuotedString(cResults.m_cContent.privateNote, "'")%>');
+						privateNote.setText('<%=Util.toQuotedString(results.m_cContent.privateNote, "'")%>');
 						<%}%>
 					</script>
 				</div>
 
 				<div class="Prompt">
-					<textarea id="EditPrompt" class="EditPrompt" maxlength="<%=Common.EDITOR_PROMPT_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.Prompt.Add")%>" onkeyup="DispPromptCharNum()"><%=Util.toDescString(cResults.m_cContent.aiPrompt)%></textarea>
+					<textarea id="EditPrompt" class="EditPrompt" maxlength="<%=Common.EDITOR_PROMPT_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.Prompt.Add")%>" onkeyup="DispPromptCharNum()"><%=Util.toDescString(results.m_cContent.aiPrompt)%></textarea>
 					<div id="PromptCharNum" class="PromptCharNum"><%=Common.EDITOR_PROMPT_MAX[nEditorId][checkLogin.m_nPassportId]%></div>
 				</div>
 
 				<div class="Prompt">
-					<textarea id="EditNegativePrompt" class="EditNegativePrompt" maxlength="<%=Common.EDITOR_PROMPT_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.NegativePrompt.Add")%>" onkeyup="DispNegativePromptCharNum()"><%=Util.toDescString(cResults.m_cContent.aiNegativePrompt)%></textarea>
+					<textarea id="EditNegativePrompt" class="EditNegativePrompt" maxlength="<%=Common.EDITOR_PROMPT_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.NegativePrompt.Add")%>" onkeyup="DispNegativePromptCharNum()"><%=Util.toDescString(results.m_cContent.aiNegativePrompt)%></textarea>
 					<div id="NegativePromptCharNum" class="PromptCharNum"><%=Common.EDITOR_PROMPT_MAX[nEditorId][checkLogin.m_nPassportId]%></div>
 				</div>
 
 				<div class="OtherParams">
-					<textarea id="EditOtherParams" class="EditOtherParams" type="text" maxlength="<%=Common.EDITOR_OTHER_PARAMS_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.OtherParams.Add")%>" onkeyup="DispOtherParamsCharNum()"><%=Util.toStringHtml(cResults.m_cContent.aiOtherParams)%></textarea>
+					<textarea id="EditOtherParams" class="EditOtherParams" type="text" maxlength="<%=Common.EDITOR_OTHER_PARAMS_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.OtherParams.Add")%>" onkeyup="DispOtherParamsCharNum()"><%=Util.toStringHtml(results.m_cContent.aiOtherParams)%></textarea>
 					<div class="OtherParamsCharNum"><span id="OtherParamsCharNum"><%=Common.EDITOR_OTHER_PARAMS_MAX[nEditorId][checkLogin.m_nPassportId]%></span></div>
 				</div>
 
@@ -347,7 +347,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.unrealizm.com");
 							</select>
 						</span>
 					</div>
-					<textarea id="EditDescription" class="EditDescription" maxlength="<%=Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.Description.Add")%>" onkeyup="DispDescCharNum()"><%=Util.toDescString(cResults.m_cContent.m_strDescription)%></textarea>
+					<textarea id="EditDescription" class="EditDescription" maxlength="<%=Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.Description.Add")%>" onkeyup="DispDescCharNum()"><%=Util.toDescString(results.m_cContent.m_strDescription)%></textarea>
 					<div id="DescriptionCharNum" class="DescriptionCharNum"><%=Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPassportId]%></div>
 				</div>
 
@@ -360,8 +360,8 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.unrealizm.com");
 				</div>
 				<%}%>
 				<div class="TextBody">
-					<input <%if(noContentModification){%>readonly<%}%> id="EditTextTitle" class="EditTextTitle" type="text" maxlength="50" placeholder="<%=_TEX.T("UploadFilePc.Text.Title")%>" value="<%=Util.toStringHtml(cResults.m_cContent.title)%>" />
-					<textarea <%if(noContentModification){%>readonly<%}%> id="EditTextBody" class="EditTextBody" maxlength="<%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.Description.AddText")%>" onkeyup="DispTextCharNum()"><%=Util.toDescString(cResults.m_cContent.m_strTextBody)%></textarea>
+					<input <%if(noContentModification){%>readonly<%}%> id="EditTextTitle" class="EditTextTitle" type="text" maxlength="50" placeholder="<%=_TEX.T("UploadFilePc.Text.Title")%>" value="<%=Util.toStringHtml(results.m_cContent.title)%>" />
+					<textarea <%if(noContentModification){%>readonly<%}%> id="EditTextBody" class="EditTextBody" maxlength="<%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.Description.AddText")%>" onkeyup="DispTextCharNum()"><%=Util.toDescString(results.m_cContent.m_strTextBody)%></textarea>
 					<div id="TextBodyCharNum" class="TextBodyCharNum"><%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPassportId]%></div>
 				</div>
 				<div class="OptionItem">
@@ -373,10 +373,10 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.unrealizm.com");
 				<%}%>
 
 				<div class="TagList">
-					<input id="EditTagList" class="EditTagList" type="text" placeholder="<%=_TEX.T("IllustV.Description.Tag")%>" <%if(!cResults.m_cContent.m_strTagList.isEmpty()){%>value="<%=Util.toStringHtml(cResults.m_cContent.m_strTagList)%>"<%}%> readonly onclick="showSetTagDlg({placeholder: '<%=_TEX.T("IllustV.Description.Tag.Info")%>', header: '<%=_TEX.T("IllustV.Description.Tag.ListHeader")%>', addTag: '<%=_TEX.T("IllustV.Description.Tag.Add")%>', blankMsg: '<%=_TEX.T("IllustV.Description.Tag.Blank")%>', doneMsg: '<%=_TEX.T("IllustV.Description.Tag.Done")%>'})" data-tag-max-num="<%=Common.TAG_MAX_NUM%>" data-tag-max-length="<%=Common.TAG_MAX_LENGTH%>"/>
+					<input id="EditTagList" class="EditTagList" type="text" placeholder="<%=_TEX.T("IllustV.Description.Tag")%>" <%if(!results.m_cContent.m_strTagList.isEmpty()){%>value="<%=Util.toStringHtml(results.m_cContent.m_strTagList)%>"<%}%> readonly onclick="showSetTagDlg({placeholder: '<%=_TEX.T("IllustV.Description.Tag.Info")%>', header: '<%=_TEX.T("IllustV.Description.Tag.ListHeader")%>', addTag: '<%=_TEX.T("IllustV.Description.Tag.Add")%>', blankMsg: '<%=_TEX.T("IllustV.Description.Tag.Blank")%>', doneMsg: '<%=_TEX.T("IllustV.Description.Tag.Done")%>'})" data-tag-max-num="<%=Common.TAG_MAX_NUM%>" data-tag-max-length="<%=Common.TAG_MAX_LENGTH%>"/>
 				</div>
 				<div class="UoloadCmdOption">
-					<input id="ContentOpenId" value="<%=cResults.m_cContent.m_nOpenId%>" type="hidden"/>
+					<input id="ContentOpenId" value="<%=results.m_cContent.m_nOpenId%>" type="hidden"/>
 
 					<%@include file="UpCmdOptions.jsp"%>
 

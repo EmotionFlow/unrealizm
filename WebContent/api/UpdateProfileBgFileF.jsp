@@ -9,11 +9,11 @@
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 
-UpdateProfileBgFileC cResults = new UpdateProfileBgFileC();
-int nRtn = cResults.GetParam(request);
+UpdateProfileBgFileC results = new UpdateProfileBgFileC();
+int nRtn = results.GetParam(request);
 
-if(checkLogin.m_bLogin && cResults.m_nUserId==checkLogin.m_nUserId && nRtn==0) {
-	nRtn = cResults.GetResults(checkLogin, getServletContext());
+if(checkLogin.m_bLogin && results.m_nUserId==checkLogin.m_nUserId && nRtn==0) {
+	nRtn = results.GetResults(checkLogin, getServletContext());
 }
 %>{
 "result" : <%=nRtn%>

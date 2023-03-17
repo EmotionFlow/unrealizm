@@ -5,16 +5,16 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 boolean isApp = false;
 
 int nRtn = 0;
-UpdateFileOrderC cResults = new UpdateFileOrderC(getServletContext());
-cResults.userId = checkLogin.m_nUserId;
-nRtn = cResults.GetParam(request);
+UpdateFileOrderC results = new UpdateFileOrderC(getServletContext());
+results.userId = checkLogin.m_nUserId;
+nRtn = results.GetParam(request);
 
 final int RETRY_MAX = 3;
 
-if (checkLogin.m_bLogin && cResults.userId ==checkLogin.m_nUserId && nRtn==0) {
+if (checkLogin.m_bLogin && results.userId ==checkLogin.m_nUserId && nRtn==0) {
 	for (int retryCnt=0; retryCnt<RETRY_MAX; retryCnt++) {
-		nRtn = cResults.GetResults(checkLogin, isApp);
-		if (nRtn == -1 && cResults.errorKind == Controller.ErrorKind.DoRetry) {
+		nRtn = results.GetResults(checkLogin, isApp);
+		if (nRtn == -1 && results.errorKind == Controller.ErrorKind.DoRetry) {
 			try {
 				Log.d("write back file 作業中");
 				Thread.sleep(500);

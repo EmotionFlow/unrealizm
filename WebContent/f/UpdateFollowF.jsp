@@ -8,7 +8,7 @@ cParam.GetParam(request);
 
 int nRtn = -1;
 if( checkLogin.m_bLogin && cParam.m_nUserId == checkLogin.m_nUserId ) {
-	UpdateFollowC cResults = new UpdateFollowC();
-	nRtn = cResults.GetResults(cParam, _TEX);
+	UpdateFollowC results = new UpdateFollowC();
+	nRtn = results.GetResults(cParam, _TEX);
 }
 %>{"result":<%=nRtn%>}

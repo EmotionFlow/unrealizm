@@ -41,9 +41,9 @@ public class DownloadRouletteFile extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CheckLogin checkLogin = new CheckLogin(request, response);
-		CDownloadImageFile cResults = new CDownloadImageFile();
-		if(!cResults.getParam(request)) return;
-		BufferedImage imgFile = cResults.getResults(checkLogin);
+		CDownloadImageFile results = new CDownloadImageFile();
+		if(!results.getParam(request)) return;
+		BufferedImage imgFile = results.getResults(checkLogin);
 		if(imgFile == null) return;
 
 		response.setHeader("Cache-Control", "public");

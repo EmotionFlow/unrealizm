@@ -4,9 +4,9 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
-UpdateBookmarkC cResults = new UpdateBookmarkC();
-cResults.getParam(request);
-int result = cResults.getResults(checkLogin);
+UpdateBookmarkC results = new UpdateBookmarkC();
+results.getParam(request);
+int result = results.getResults(checkLogin);
 String msg = "";
 switch(result) {
 case UpdateBookmarkC.BOOKMARK_BOOKMARKING:

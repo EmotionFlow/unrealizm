@@ -17,13 +17,13 @@ if(!checkLogin.m_bLogin) {
 
 //パラメータの取得
 //検索結果の取得
-MyEditSettingC cResults = new MyEditSettingC();
-cResults.getParam(request);
-cResults.getResults(checkLogin);
+MyEditSettingC results = new MyEditSettingC();
+results.getParam(request);
+results.getResults(checkLogin);
 
 String strEmailState = "";
-if(cResults.m_bUpdate) {
-	strEmailState = _TEX.T("EditSettingV.Email.EmailState.Confirmation") + cResults.m_strNewEmail;
+if(results.m_bUpdate) {
+	strEmailState = _TEX.T("EditSettingV.Email.EmailState.Confirmation") + results.m_strNewEmail;
 }
 %>
 <!DOCTYPE html>
@@ -381,8 +381,8 @@ if(cResults.m_bUpdate) {
 				DispMuteCharNum();
 				DispAutoTweetCharNum();
 
-				<%if(cResults.m_strMessage.length()>0) {%>
-				DispMsg("<%=Util.toStringHtml(cResults.m_strMessage)%>");
+				<%if(results.m_strMessage.length()>0) {%>
+				DispMsg("<%=Util.toStringHtml(results.m_strMessage)%>");
 				<%}%>
 			});
 		</script>
@@ -399,7 +399,7 @@ if(cResults.m_bUpdate) {
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.NickName")%></div>
 					<div class="SettingBody">
-						<input id="RegistUserName" class="SettingBodyTxt" type="text" placeholder="<%=_TEX.T("EditSettingV.NickName.PlaceHolder")%>" value="<%=Util.toStringHtml(cResults.m_cUser.m_strNickName)%>" maxlength="16" onkeyup="CheckInput()" />
+						<input id="RegistUserName" class="SettingBodyTxt" type="text" placeholder="<%=_TEX.T("EditSettingV.NickName.PlaceHolder")%>" value="<%=Util.toStringHtml(results.m_cUser.m_strNickName)%>" maxlength="16" onkeyup="CheckInput()" />
 						<div class="SettingBodyCmd">
 							<div id="UserNameMessage" class="RegistMessage" style="color: red;">&nbsp;</div>
 							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateNickName()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
@@ -411,11 +411,11 @@ if(cResults.m_bUpdate) {
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Image")%></div>
 					<div class="SettingBody">
 						<div class="FileSelectFrame" style="width: 124px;height: 124px;border: solid 2px #eee; margin: 0 0 5px 108px;border-radius: 120px; overflow: hidden;">
-							<%if(!cResults.m_cUser.m_strFileName.equals("/img/default_user.jpg")) {%>
-							<div style="position: absolute; top:0; left: 0; width: 100%; height: 100%; background-size: 124px 124px;border-radius: 120px; overflow: hidden; background-size: cover; background-position: 50% 50%; background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>?<%=Math.random()%>');"></div>
+							<%if(!results.m_cUser.m_strFileName.equals("/img/default_user.jpg")) {%>
+							<div style="position: absolute; top:0; left: 0; width: 100%; height: 100%; background-size: 124px 124px;border-radius: 120px; overflow: hidden; background-size: cover; background-position: 50% 50%; background-image: url('<%=Common.GetUrl(results.m_cUser.m_strFileName)%>?<%=Math.random()%>');"></div>
 							<%}%>
 							<input class="SelectFile" type="file" name="file_thumb" id="file_thumb" onchange="UpdateProfileFile(this)" />
-							<%if(cResults.m_cUser.m_strFileName.equals("/img/default_user.jpg")) {%>
+							<%if(results.m_cUser.m_strFileName.equals("/img/default_user.jpg")) {%>
 							<span class="typcn typcn-plus-outline"></span>
 							<%} else {%>
 							<span style="text-shadow: none; color: #000;"><%=_TEX.T("EditSettingV.Image.Saving")%></span>
@@ -423,7 +423,7 @@ if(cResults.m_bUpdate) {
 						</div>
 						<div class="SettingBodyCmd">
 							<div id="ProfileImageMessage" class="RegistMessage" ><%=_TEX.T("EditSettingV.Image.Format")%></div>
-							<%if(!cResults.m_cUser.m_strFileName.equals("/img/default_user.jpg")) {%>
+							<%if(!results.m_cUser.m_strFileName.equals("/img/default_user.jpg")) {%>
 							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="ResetProfileFile(1)"><%=_TEX.T("EditSettingV.Image.Default")%></a>
 							<%}%>
 						</div>
@@ -434,9 +434,9 @@ if(cResults.m_bUpdate) {
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.HeaderImage")%></div>
 					<div class="SettingBody">
 						<div class="FileSelectFrame" style="border: solid 1px #eee;">
-							<div style="position: absolute; top:0; left: 0; width: 100%; height: 100%; background-size: 100% auto; background-repeat: no-repeat; background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>?<%=Math.random()%>');"></div>
+							<div style="position: absolute; top:0; left: 0; width: 100%; height: 100%; background-size: 100% auto; background-repeat: no-repeat; background-image: url('<%=Common.GetUrl(results.m_cUser.m_strHeaderFileName)%>?<%=Math.random()%>');"></div>
 							<input class="SelectFile" type="file" name="file_header" id="file_header" onchange="UpdateProfileHeaderFile(this)" />
-							<%if(cResults.m_cUser.m_strHeaderFileName.equals("/img/default_transparency.gif")) {%>
+							<%if(results.m_cUser.m_strHeaderFileName.equals("/img/default_transparency.gif")) {%>
 							<span class="typcn typcn-plus-outline"></span>
 							<%} else {%>
 							<span style="text-shadow: none; color: #000;"><%=_TEX.T("EditSettingV.Image.Saving")%></span>
@@ -444,7 +444,7 @@ if(cResults.m_bUpdate) {
 						</div>
 						<div class="SettingBodyCmd">
 							<div id="ProfileImageMessage" class="RegistMessage" ><%=_TEX.T("EditSettingV.HeaderImage.Format")%></div>
-							<%if(!cResults.m_cUser.m_strHeaderFileName.equals("/img/default_transparency.gif")) {%>
+							<%if(!results.m_cUser.m_strHeaderFileName.equals("/img/default_transparency.gif")) {%>
 							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="ResetProfileFile(2)"><%=_TEX.T("EditSettingV.Image.Default")%></a>
 							<%}%>
 						</div>
@@ -454,7 +454,7 @@ if(cResults.m_bUpdate) {
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Bio")%></div>
 					<div class="SettingBody">
-						<textarea id="EditBio" class="SettingBodyTxt" rows="6" onkeyup="DispDescCharNum()" maxlength="1000"><%=Util.toStringHtmlTextarea(cResults.m_cUser.m_strProfile)%></textarea>
+						<textarea id="EditBio" class="SettingBodyTxt" rows="6" onkeyup="DispDescCharNum()" maxlength="1000"><%=Util.toStringHtmlTextarea(results.m_cUser.m_strProfile)%></textarea>
 						<div class="SettingBodyCmd">
 							<div id="ProfileTextMessage" class="RegistMessage" >1000</div>
 							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateProfileTxt()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
@@ -467,7 +467,7 @@ if(cResults.m_bUpdate) {
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.MuteKeyowrd")%></div>
 					<div class="SettingBody">
 						<%=_TEX.T("EditSettingV.MuteKeyowrd.Message")%>
-						<textarea id="MuteKeywordText" class="SettingBodyTxt" rows="6" onkeyup="DispMuteCharNum()" maxlength="100" placeholder="<%=_TEX.T("EditSettingV.MuteKeyowrd.PlaceHolder")%>"><%=Util.toStringHtmlTextarea(cResults.m_cUser.m_strMuteKeyword)%></textarea>
+						<textarea id="MuteKeywordText" class="SettingBodyTxt" rows="6" onkeyup="DispMuteCharNum()" maxlength="100" placeholder="<%=_TEX.T("EditSettingV.MuteKeyowrd.PlaceHolder")%>"><%=Util.toStringHtmlTextarea(results.m_cUser.m_strMuteKeyword)%></textarea>
 						<div class="SettingBodyCmd">
 							<div id="MuteKeywordTextNum" class="RegistMessage" >100</div>
 							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateMuteKeyword()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
@@ -483,7 +483,7 @@ if(cResults.m_bUpdate) {
 						<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
 							<div class="RegistMessage" >
 								<div class="onoffswitch OnOff">
-									<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="NgReaction" value="0" <%if(cResults.m_cUser.m_nReaction!=CUser.REACTION_SHOW){%>checked="checked"<%}%> />
+									<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="NgReaction" value="0" <%if(results.m_cUser.m_nReaction!=CUser.REACTION_SHOW){%>checked="checked"<%}%> />
 									<label class="onoffswitch-label" for="NgReaction">
 										<span class="onoffswitch-inner"></span>
 										<span class="onoffswitch-switch"></span>
@@ -506,11 +506,11 @@ if(cResults.m_bUpdate) {
 					<div class="SettingBody">
 						<%=_TEX.T("EditSettingV.Twitter.Info1")%>
 						<div class="SettingBodyCmd">
-							<div class="RegistMessage" >[<%=(cResults.m_cUser.m_bTweet)?String.format(_TEX.T("EditSettingV.Twitter.Info.State.On"), cResults.m_cUser.m_strTwitterScreenName):_TEX.T("EditSettingV.Twitter.Info.State.Off")%>]</div>
+							<div class="RegistMessage" >[<%=(results.m_cUser.m_bTweet)?String.format(_TEX.T("EditSettingV.Twitter.Info.State.On"), results.m_cUser.m_strTwitterScreenName):_TEX.T("EditSettingV.Twitter.Info.State.Off")%>]</div>
 							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="location.href='/TokenFormTwitter.jsp'"><%=_TEX.T("EditSettingV.Twitter.Button")%></a>
 						</div>
 						<%
-							if(cResults.m_cUser.m_bTweet){
+							if(results.m_cUser.m_bTweet){
 						%>
 						<!--
 						<div class="SettingBodyCmd">
@@ -523,14 +523,14 @@ if(cResults.m_bUpdate) {
 					</div>
 				</div>
 
-				<%if(cResults.m_cUser.m_bTweet && checkLogin.m_nPassportId >=Common.PASSPORT_ON) {%>
+				<%if(results.m_cUser.m_bTweet && checkLogin.m_nPassportId >=Common.PASSPORT_ON) {%>
 				<div id="SectionAutoTweet" class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Twitter.Auto")%></div>
 					<div class="SettingBody">
 						<%=_TEX.T("EditSettingV.Twitter.Auto.Info")%>
 						<div class="SettingBodyCmd">
 							<div class="onoffswitch OnOff">
-								<input type="checkbox" name="AutoTweet" class="onoffswitch-checkbox" id="AutoTweet" value="1" <%if(cResults.m_cUser.m_nAutoTweetTime>=0){%>checked="checked"<%}%> />
+								<input type="checkbox" name="AutoTweet" class="onoffswitch-checkbox" id="AutoTweet" value="1" <%if(results.m_cUser.m_nAutoTweetTime>=0){%>checked="checked"<%}%> />
 								<label class="onoffswitch-label" for="AutoTweet">
 									<span class="onoffswitch-inner"></span>
 									<span class="onoffswitch-switch"></span>
@@ -548,22 +548,22 @@ if(cResults.m_bUpdate) {
 							</script>
 						</div>
 						<div class="SettingBodyCmd">
-							<select id="AutoTweetWeekDay" class="AutoTweetPullDown" <%if(cResults.m_cUser.m_nAutoTweetTime<0){%>disabled="disabled"<%}%>>
+							<select id="AutoTweetWeekDay" class="AutoTweetPullDown" <%if(results.m_cUser.m_nAutoTweetTime<0){%>disabled="disabled"<%}%>>
 								<%
 									for(int nTime=0; nTime<7; nTime++) {
 								%>
-								<option value="<%=nTime%>" <%if(cResults.m_cUser.m_nAutoTweetWeekDay==nTime){%>selected="selected"<%}%>><%=_TEX.T(String.format("EditSettingV.Twitter.Auto.WeekDay.Day%d", nTime))%></option>
+								<option value="<%=nTime%>" <%if(results.m_cUser.m_nAutoTweetWeekDay==nTime){%>selected="selected"<%}%>><%=_TEX.T(String.format("EditSettingV.Twitter.Auto.WeekDay.Day%d", nTime))%></option>
 								<%
 									}
 								%>
 							</select>
 						</div>
 						<div class="SettingBodyCmd">
-							<select id="AutoTweetTime" class="AutoTweetPullDown" <%if(cResults.m_cUser.m_nAutoTweetTime<0){%>disabled="disabled"<%}%>>
+							<select id="AutoTweetTime" class="AutoTweetPullDown" <%if(results.m_cUser.m_nAutoTweetTime<0){%>disabled="disabled"<%}%>>
 								<%
 									for(int nTime=0; nTime<24; nTime++) {
 								%>
-								<option value="<%=nTime%>" <%if(cResults.m_cUser.m_nAutoTweetTime==nTime){%>selected="selected"<%}%>><%=nTime%><%=_TEX.T("EditSettingV.Twitter.Auto.Unit")%></option>
+								<option value="<%=nTime%>" <%if(results.m_cUser.m_nAutoTweetTime==nTime){%>selected="selected"<%}%>><%=nTime%><%=_TEX.T("EditSettingV.Twitter.Auto.Unit")%></option>
 								<%
 									}
 								%>
@@ -571,16 +571,16 @@ if(cResults.m_bUpdate) {
 						</div>
 						<div class="SettingBodyCmd">
 							<%
-								if(cResults.m_cUser.m_strAutoTweetDesc.isEmpty()) {
-													cResults.m_cUser.m_strAutoTweetDesc = String.format("%s%s%s https://unrealizm.com/%d/ #%s",
+								if(results.m_cUser.m_strAutoTweetDesc.isEmpty()) {
+													results.m_cUser.m_strAutoTweetDesc = String.format("%s%s%s https://unrealizm.com/%d/ #%s",
 															_TEX.T("EditSettingV.Twitter.Auto.AutoTxt"),
-															cResults.m_cUser.m_strNickName,
+															results.m_cUser.m_strNickName,
 															_TEX.T("Twitter.UserAddition"),
-															cResults.m_cUser.m_nUserId,
+															results.m_cUser.m_nUserId,
 															_TEX.T("Common.Title"));
 												}
 							%>
-							<textarea id="AutoTweetTxt" class="SettingBodyTxt" rows="6" onkeyup="DispAutoTweetCharNum()" maxlength="100"><%=Util.toStringHtmlTextarea(cResults.m_cUser.m_strAutoTweetDesc)%></textarea>
+							<textarea id="AutoTweetTxt" class="SettingBodyTxt" rows="6" onkeyup="DispAutoTweetCharNum()" maxlength="100"><%=Util.toStringHtmlTextarea(results.m_cUser.m_strAutoTweetDesc)%></textarea>
 						</div>
 						<div class="SettingBodyCmd">
 							<div id="AutoTweetTxtNum" class="RegistMessage" >100</div>
@@ -588,7 +588,7 @@ if(cResults.m_bUpdate) {
 						<div class="SettingBodyCmd">
 							<%=_TEX.T("EditSettingV.Twitter.Auto.ThumbNum")%>&nbsp;
 							<div class="onoffswitch OnOff">
-								<input type="checkbox" name="AutoTweetThumb" class="onoffswitch-checkbox" id="AutoTweetThumb" value="1" <%if(cResults.m_cUser.m_nAutoTweetThumbNum>0){%>checked="checked"<%}%> />
+								<input type="checkbox" name="AutoTweetThumb" class="onoffswitch-checkbox" id="AutoTweetThumb" value="1" <%if(results.m_cUser.m_nAutoTweetThumbNum>0){%>checked="checked"<%}%> />
 								<label class="onoffswitch-label" for="AutoTweetThumb">
 									<span class="onoffswitch-inner"></span>
 									<span class="onoffswitch-switch"></span>
@@ -619,12 +619,12 @@ if(cResults.m_bUpdate) {
 				</div>
 
 				<%
-					if(cResults.m_cUser.m_strEmail.contains("@")) {
+					if(results.m_cUser.m_strEmail.contains("@")) {
 				%>
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Email.Address")%></div>
 					<div class="SettingBody">
-						<input id="EM" class="SettingBodyTxt" type="text" value="<%=Util.toStringHtmlTextarea(cResults.m_cUser.m_strEmail)%>" />
+						<input id="EM" class="SettingBodyTxt" type="text" value="<%=Util.toStringHtmlTextarea(results.m_cUser.m_strEmail)%>" />
 						<div class="SettingBodyCmd">
 							<div id="MailAdressMessage" class="RegistMessage" style="color: red;"><%=strEmailState%></div>
 							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateEmailAddress()"><%=_TEX.T("EditSettingV.Button.Update")%></a>

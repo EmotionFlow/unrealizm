@@ -289,7 +289,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 	<div class="SettingListItem">
 		<div class="SettingListTitle"><%=_TEX.T("MyEditSettingPassportV.Title")%></div>
 		<%{
-			Passport.Status passportStatus = cResults.m_cPassport.status;
+			Passport.Status passportStatus = results.m_cPassport.status;
 			boolean isNotMember = passportStatus == Passport.Status.NotYet || passportStatus == Passport.Status.InActive;
 		%>
 		<div class="SettingBody">
@@ -495,6 +495,6 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 				</div>
 				<%}%>
 			</div>
-		<%}//Passport.Status passportStatus = cResults.m_cPassport.m_status;%>
+		<%}//Passport.Status passportStatus = results.m_cPassport.m_status;%>
 	</div>
 </div>

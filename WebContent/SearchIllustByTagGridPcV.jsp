@@ -13,6 +13,11 @@ final String tagName = (results.transTagName != null && !results.transTagName.is
 final String strTitle = String.format(_TEX.T("SearchIllustByTag.Title"), tagName);
 final String strDesc = String.format(_TEX.T("SearchIllustByTag.Title.Desc"), tagName, results.contentsNum);
 final String strUrl = "https://unrealizm.com/SearchIllustByTagPcV.jsp?GD="+results.genreId;
+
+boolean bSmartPhone = Util.isSmartPhone(request);
+boolean isApp = false;
+ArrayList<String> emojiList = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
+final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 %>
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
@@ -73,26 +78,20 @@ final String strUrl = "https://unrealizm.com/SearchIllustByTagPcV.jsp?GD="+resul
 				<%}%>
 				<div class="SearchGenreCmd">
 					<%if(!checkLogin.m_bLogin) {%>
-					<a class="CmdBtn BtnBase Rev TitleCmdFollow" href="/"><i class="fas fa-tag"></i> <%=_TEX.T("IllustV.Tag.Follow")%></a>
+					<a class="CmdBtn BtnBase TitleCmdFollow" href="/"><i class="fas fa-tag"></i> <%=_TEX.T("IllustV.Tag.Follow")%></a>
 					<%} else if(!results.following) {%>
-					<a class="CmdBtn BtnBase Rev TitleCmdFollow" href="javascript:void(0)" onclick="UpdateFollowTag(<%=checkLogin.m_nUserId%>, '<%=Util.toStringHtml(results.keyword)%>')"><i class="far fa-star"></i> <%=_TEX.T("IllustV.Tag.Follow")%></a>
+					<a class="CmdBtn BtnBase TitleCmdFollow" href="javascript:void(0)" onclick="UpdateFollowTag(<%=checkLogin.m_nUserId%>, '<%=Util.toStringHtml(results.keyword)%>')"><i class="far fa-star"></i> <%=_TEX.T("IllustV.Tag.Follow")%></a>
 					<%} else {%>
-					<a class="CmdBtn BtnBase Rev TitleCmdFollow Selected" href="javascript:void(0)" onclick="UpdateFollowTag(<%=checkLogin.m_nUserId%>, '<%=Util.toStringHtml(results.keyword)%>')"><i class="far fa-star"></i> <%=_TEX.T("IllustV.Tag.UnFollow")%></a>
+					<a class="CmdBtn BtnBase TitleCmdFollow Selected" href="javascript:void(0)" onclick="UpdateFollowTag(<%=checkLogin.m_nUserId%>, '<%=Util.toStringHtml(results.keyword)%>')"><i class="far fa-star"></i> <%=_TEX.T("IllustV.Tag.UnFollow")%></a>
 					<%}%>
 				</div>
 			</div>
 		</header>
 
 		<article class="Wrapper GridList">
-			<section id="IllustThumbList" class="IllustThumbList">
-				<%
-					for(int nCnt=0; nCnt<results.contentList.size(); nCnt++) {
-							CContent cContent = results.contentList.get(nCnt);
-				%>
-					<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX)%>
-					<%if(nCnt==3){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_1.jsp"%><%}%>
-					<%if(nCnt==19){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_2.jsp"%><%}%>
-					<%if(nCnt==35){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_3.jsp"%><%}%>
+			<section id="IllustThumbList" class="IllustItemList2Column">
+				<%for(CContent cContent: results.contentList) {%>
+					<%=CCnv.Content2Html2Column(cContent, checkLogin, bSmartPhone?CCnv.MODE_SP:CCnv.MODE_PC, _TEX, emojiList, CCnv.VIEW_DETAIL, nSpMode)%>
 				<%}%>
 			</section>
 

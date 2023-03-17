@@ -15,7 +15,7 @@ public class NewArrivalC {
 
 
 	public int SELECT_MAX_GALLERY = 15;
-	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
+	public ArrayList<CContent> contentList = new ArrayList<CContent>();
 	int m_nEndId = -1;
 	public int m_nContentsNum = 0;
 
@@ -91,7 +91,7 @@ public class NewArrivalC {
 				cContent.m_cUser.m_nReaction	= user.reaction;
 				if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
 				m_nEndId = cContent.m_nContentId;
-				m_vContentList.add(cContent);
+				contentList.add(cContent);
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
@@ -112,12 +112,12 @@ public class NewArrivalC {
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 
-NewArrivalC cResults = new NewArrivalC();
-cResults.getParam(request);
-boolean bRtn = cResults.getResults(checkLogin, true);
+NewArrivalC results = new NewArrivalC();
+results.getParam(request);
+boolean bRtn = results.getResults(checkLogin, true);
 %>
-<%for(int nCnt = 0; nCnt<cResults.contentList.size(); nCnt++) {
-	CContent cContent = cResults.contentList.get(nCnt);%>
+<%for(int nCnt = 0; nCnt<results.contentList.size(); nCnt++) {
+	CContent cContent = results.contentList.get(nCnt);%>
 	<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX)%>
 <%}%>
 <%@ include file="/inner/TAd336x280_mid.jsp"%>

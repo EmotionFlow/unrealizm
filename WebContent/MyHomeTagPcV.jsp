@@ -15,10 +15,10 @@ if(!checkLogin.m_bLogin) {
 	return;
 }
 
-MyHomeTagPcC cResults = new MyHomeTagPcC();
-cResults.getParam(request);
-cResults.m_bNoContents = true;
-cResults.getResults(checkLogin);
+MyHomeTagPcC results = new MyHomeTagPcC();
+results.getParam(request);
+results.m_bNoContents = true;
+results.getResults(checkLogin);
 %>
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
@@ -152,7 +152,7 @@ cResults.getResults(checkLogin);
 			</div>
 
 			<section id="IllustItemList" class="IllustItemList">
-				<%if(cResults.m_vContentList.size()<=0) {%>
+				<%if(results.contentList.size()<=0) {%>
 				<div id="InfoMsg" style="display: none; margin-top:30px; text-align: center;">
 					<h3><%=_TEX.T("FollowingTag.Info01")%></h3>
 					<div style="text-decoration: underline; margin-top: 15px;">

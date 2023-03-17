@@ -9,10 +9,10 @@ if (Util.isBot(request)) return;
 if (!checkLogin.m_bLogin) {
 	sb.append("<span class=\"ReplyListMsg\">").append(_TEX.T("Common.NeedLogin")).append("</span>");
 } else {
-	GetReplyEmojiListC cResults = new GetReplyEmojiListC();
-	cResults.getParam(request);
+	GetReplyEmojiListC results = new GetReplyEmojiListC();
+	results.getParam(request);
 
-	List<String> replies = cResults.getResults(checkLogin);
+	List<String> replies = results.getResults(checkLogin);
 
 	if (replies != null && !replies.isEmpty()) {
 		for(String emoji : replies) {

@@ -78,11 +78,11 @@ String strFileUrl = results.repFileName;
 				</div>
 				<div class="SearchGenreCmd">
 					<%if(!checkLogin.m_bLogin) {%>
-					<a class="CmdBtn BtnBase Rev TitleCmdFollow" href="/"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
+					<a class="CmdBtn BtnBase TitleCmdFollow" href="/"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
 					<%} else if(!results.following) {%>
-					<a class="CmdBtn BtnBase Rev TitleCmdFollow" href="javascript:void(0)" onclick="UpdateFollowGenre(<%=checkLogin.m_nUserId%>, <%=results.genreId%>)"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
+					<a class="CmdBtn BtnBase TitleCmdFollow" href="javascript:void(0)" onclick="UpdateFollowGenre(<%=checkLogin.m_nUserId%>, <%=results.genreId%>)"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
 					<%} else {%>
-					<a class="CmdBtn BtnBase Rev TitleCmdFollow Selected" href="javascript:void(0)" onclick="UpdateFollowGenre(<%=checkLogin.m_nUserId%>, <%=results.genreId%>)"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
+					<a class="CmdBtn BtnBase TitleCmdFollow Selected" href="javascript:void(0)" onclick="UpdateFollowGenre(<%=checkLogin.m_nUserId%>, <%=results.genreId%>)"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
 					<%}%>
 				</div>
 			</div>

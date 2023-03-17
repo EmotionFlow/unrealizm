@@ -3,10 +3,10 @@
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 
-GetAccountCodeC cResults = new GetAccountCodeC();
-cResults.GetParam(request);
+GetAccountCodeC results = new GetAccountCodeC();
+results.GetParam(request);
 
-if(checkLogin.m_bLogin && checkLogin.m_nUserId==cResults.m_nUserId) {
-	cResults.GetResults(checkLogin);
+if(checkLogin.m_bLogin && checkLogin.m_nUserId==results.m_nUserId) {
+	results.GetResults(checkLogin);
 }
-%>{"account_code":"<%=cResults.m_strPassWord%>"}
+%>{"account_code":"<%=results.m_strPassWord%>"}

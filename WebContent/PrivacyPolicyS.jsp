@@ -1,30 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/inner/Common.jsp"%>
-<%CheckLogin checkLogin = new CheckLogin(request, response);%>
+<%@include file="/inner/Common.jsp"%>
+<%
+CheckLogin checkLogin = new CheckLogin(request, response);
+%>
 <!DOCTYPE html>
 <html lang="ja">
 	<head>
-		<%@ include file="/inner/THeaderCommon.jsp"%>
-		<title>プライバシーポリシー</title>
+		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<title><%=_TEX.T("THeader.Title")%> - プライバシーポリシー</title>
 		<style>
+			.AnalogicoInfo {display: none;}
 			.SettingList .SettingListItem {color: #000;}
 		</style>
 	</head>
 	<body>
 		<div id="DispMsg"></div>
+		<%@ include file="/inner/TMenuPc.jsp"%>
+
 		<article class="Wrapper">
 			<div class="SettingList">
 				<div class="SettingListItem">
 					<div class="SettingListTitle" style="text-align: center; font-size: 18px;">「unrealizm」プライバシーポリシー</div>
 					<div class="SettingBody">
-						pipa.jpは、個人情報の保護のため法令を遵守するとともに、このプライバシーポリシーを公開し、これに従うことを宣言いたします。<br />
+						EmotionFlowは、個人情報の保護のため法令を遵守するとともに、このプライバシーポリシーを公開し、これに従うことを宣言いたします。<br />
 					</div>
 				</div>
 
 				<div class="SettingListItem">
 					<div class="SettingListTitle">1.個人情報の取得</div>
 					<div class="SettingBody">
-pipa.jpがサービスを提供するために必要な範囲でのみユーザーの個人情報 (氏名、住所、電話番号等の情報を単一または複数組み合わせることにより特定の個人を識別できる情報)を取得いたします。<br />
+EmotionFlowがサービスを提供するために必要な範囲でのみユーザーの個人情報 (氏名、住所、電話番号等の情報を単一または複数組み合わせることにより特定の個人を識別できる情報)を取得いたします。<br />
 個人情報を不正な手段により取得いたしません。<br />
 					</div>
 				</div>
@@ -67,10 +72,12 @@ pipa.jpがサービスを提供するために必要な範囲でのみユーザ�
 
 				<div class="SettingListItem Additional">
 					<div class="SettingBody">
-						(最終更新日 2016/1/14)
+						(最終更新日 2022/11/17)
 					</div>
 				</div>
 			</div>
 		</article><!--Wrapper-->
+
+		<%@ include file="/inner/TFooterBase.jsp"%>
 	</body>
 </html>

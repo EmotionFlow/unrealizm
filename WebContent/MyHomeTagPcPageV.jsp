@@ -15,9 +15,9 @@ if(!checkLogin.m_bLogin) {
 	return;
 }
 
-MyHomeTagPcC cResults = new MyHomeTagPcC();
-cResults.getParam(request);
-boolean bRtn = cResults.getResults(checkLogin);
+MyHomeTagPcC results = new MyHomeTagPcC();
+results.getParam(request);
+boolean bRtn = results.getResults(checkLogin);
 ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 %>
 <!DOCTYPE html>
@@ -79,14 +79,14 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 			</div>
 
 			<section id="IllustItemList" class="IllustItemList">
-				<%if(cResults.m_vContentList.size()<=0) {%>
+				<%if(results.contentList.size()<=0) {%>
 				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 150px 10px 50px 10px; text-align: center; box-sizing: border-box;">
 					<%=_TEX.T("MyHomeTag.FirstMsg")%>
 				</div>
 				<%}%>
 
-				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-					CContent cContent = cResults.m_vContentList.get(nCnt);%>
+				<%for(int nCnt=0; nCnt<results.contentList.size(); nCnt++) {
+					CContent cContent = results.contentList.get(nCnt);%>
 					<%= CCnv.Content2Html(cContent, checkLogin, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_WVIEW)%>
 					<%if(nCnt==4) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
 					<%if(nCnt==9) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
@@ -94,7 +94,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 			</section>
 
 			<nav class="PageBar">
-				<%=CPageBar.CreatePageBarSp("/MyHomeTagPcV.jsp", "", cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%=CPageBar.CreatePageBarSp("/MyHomeTagPcV.jsp", "", results.m_nPage, results.m_nContentsNum, results.SELECT_MAX_GALLERY)%>
 			</nav>
 		</article>
 		<%@ include file="/inner/TShowDetail.jsp"%>

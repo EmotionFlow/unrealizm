@@ -39,7 +39,7 @@
 			<%=_TEX.T("EditSettingV.MuteKeyowrd.Message")%>
 			<%if (checkLogin.m_nPassportId >= Common.PASSPORT_ON) {%>
 			<textarea id="MuteKeywordText" class="SettingBodyTxt" rows="6" onkeyup="DispMuteCharNum()" maxlength="100"
-					  placeholder="<%=_TEX.T("EditSettingV.MuteKeyowrd.PlaceHolder")%>"><%=Util.toStringHtmlTextarea(cResults.m_cUser.m_strMuteKeyword)%></textarea>
+					  placeholder="<%=_TEX.T("EditSettingV.MuteKeyowrd.PlaceHolder")%>"><%=Util.toStringHtmlTextarea(results.m_cUser.m_strMuteKeyword)%></textarea>
 			<div class="SettingBodyCmd">
 				<div id="MuteKeywordTextNum" class="RegistMessage">100</div>
 				<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)"

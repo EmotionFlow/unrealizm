@@ -3,11 +3,11 @@
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 
-UpdateNgDownloadC cResults = new UpdateNgDownloadC();
-cResults.getParam(request);
+UpdateNgDownloadC results = new UpdateNgDownloadC();
+results.getParam(request);
 
 int nMode = CUser.DOWNLOAD_OFF;
-if(checkLogin.m_bLogin && cResults.m_nUserId == checkLogin.m_nUserId) {
-	nMode = cResults.getResults(checkLogin);
+if(checkLogin.m_bLogin && results.m_nUserId == checkLogin.m_nUserId) {
+	nMode = results.getResults(checkLogin);
 }
 %>{"result": <%=nMode%>}

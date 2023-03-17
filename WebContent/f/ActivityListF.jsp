@@ -8,21 +8,21 @@ if(!checkLogin.m_bLogin) {
 	return;
 }
 
-ActivityListC cResults = new ActivityListC();
+ActivityListC results = new ActivityListC();
 //パラメータの取得
-cResults.getParam(request);
-cResults.userId = checkLogin.m_nUserId;
+results.getParam(request);
+results.userId = checkLogin.m_nUserId;
 //検索結果の取得
-cResults.getResults(checkLogin);
+results.getResults(checkLogin);
 %>
-<%if(cResults.activities.size()==0) {%>
+<%if(results.activities.size()==0) {%>
 	<div style="display:block; width: 100%; padding: 250px 0; text-align: center;">
 		<%=_TEX.T("ActivityList.Message.Default.Recive")%>
 	</div>
 	<%@ include file="/inner/TAd728x90_mid.jsp"%>
 <%} else {%>
-	<%for(int nCnt = 0; nCnt<cResults.activities.size(); nCnt++) {
-		final InfoList activityInfo = cResults.activities.get(nCnt);
+	<%for(int nCnt = 0; nCnt<results.activities.size(); nCnt++) {
+		final InfoList activityInfo = results.activities.get(nCnt);
 		final InfoList.InfoType infoType = InfoList.InfoType.byCode(activityInfo.infoType);
 		final InfoList.ContentType contentType = InfoList.ContentType.byCode(activityInfo.contentType);
 	%>
@@ -57,7 +57,7 @@ cResults.getResults(checkLogin);
 
 		<span class="ActivityListBody">
 			<span class="ActivityListTitle">
-				<span class="Date"><%=cResults.timestampFormat.format(activityInfo.infoDate)%></span>
+				<span class="Date"><%=results.timestampFormat.format(activityInfo.infoDate)%></span>
 				<span class="Title">
 					<%if(infoType == InfoList.InfoType.Emoji){%>
 						<%=_TEX.T("ActivityList.Message.Comment")%>
@@ -99,7 +99,7 @@ cResults.getResults(checkLogin);
 				</span>
 			<span class="ActivityListBody">
 				<span class="ActivityListTitle">
-				<span class="Date"><%=cResults.timestampFormat.format(activityInfo.infoDate)%></span>
+				<span class="Date"><%=results.timestampFormat.format(activityInfo.infoDate)%></span>
 					<span class="Title"><%=infoDescLines[0]%></span>
 				</span>
 				<span class="ActivityListDesc">

@@ -51,9 +51,9 @@ try {
 
 		//画像の情報(配列)
 		List<Map<String, Object>> imglist = new ArrayList<Map<String, Object>>();
-		cListResults.m_vContentList.set(0, cViewResults.m_cContent);
+		cListResults.contentList.set(0, cViewResults.m_cContent);
 
-		for(CContent cContent : cListResults.m_vContentList) {
+		for(CContent cContent : cListResults.contentList) {
 			//カテゴリ名設定
 			String strCategory = "";
 			for(int nCategoryId : Common.CATEGORY_ID) {

@@ -3,45 +3,45 @@
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 
-IllustListC cResults = new IllustListC();
-cResults.getParam(request);
+IllustListC results = new IllustListC();
+results.getParam(request);
 
-if(cResults.m_nUserId==-1) {
+if(results.m_nUserId==-1) {
 	if(!checkLogin.m_bLogin) {
 		getServletContext().getRequestDispatcher("/StartUnrealizmAppV.jsp").forward(request,response);
 		return;
 	} else {
-		cResults.m_nUserId = checkLogin.m_nUserId;
+		results.m_nUserId = checkLogin.m_nUserId;
 	}
 }
 
 boolean isApp = true;
 
-if(checkLogin.m_nUserId != cResults.m_nUserId) {
+if(checkLogin.m_nUserId != results.m_nUserId) {
 	// 他人のリスト
-	cResults.m_bDispUnPublished = false;
+	results.m_bDispUnPublished = false;
 } else {
 	// 自分のリスト
 	CAppVersion cAppVersion = new CAppVersion(request.getCookies());
 	Log.d(String.format("COOKIE: %d", cAppVersion.m_nNum));
 	if(cAppVersion.isValid()){
 		if(cAppVersion.isAndroid() && cAppVersion.m_nNum >= 225){
-			cResults.m_bDispUnPublished = false;
+			results.m_bDispUnPublished = false;
 		} else {
-			cResults.m_bDispUnPublished = true;
+			results.m_bDispUnPublished = true;
 		}
 	}else{
 		// 古いアプリはCookieにバージョン番号が含まれていないため取得できない。
-		cResults.m_bDispUnPublished = true;
+		results.m_bDispUnPublished = true;
 	}
 }
 
 checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
-if(!cResults.getResults(checkLogin)) {
+if(!results.getResults(checkLogin)) {
 	response.sendRedirect("/NotFoundV.jsp");
 	return;
 }
-g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_cUser.m_nAdMode==CUser.AD_MODE_SHOW);
+g_bShowAd = (results.m_cUser.m_nPassportId==Common.PASSPORT_OFF || results.m_cUser.m_nAdMode==CUser.AD_MODE_SHOW);
 
 %>
 <!DOCTYPE html>
@@ -52,10 +52,10 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		<%@ include file="/inner/TSendEmoji.jsp"%>
 		<%@ include file="/inner/TReplyEmoji.jsp"%>
 		<%@ include file="/inner/TSendGift.jsp"%>
-		<title><%=cResults.m_cUser.m_strNickName%></title>
+		<title><%=results.m_cUser.m_strNickName%></title>
 		<script>
 			var g_nPage = 1; // start 1
-			var g_strKeyword = '<%=cResults.m_strTagKeyword%>';
+			var g_strKeyword = '<%=results.m_strTagKeyword%>';
 			var g_bAdding = false;
 			function addContents() {
 				if(g_bAdding) return;
@@ -64,7 +64,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 				$("#IllustThumbList").append($objMessage);
 				$.ajax({
 					"type": "post",
-					"data": {"ID": <%=cResults.m_nUserId%>, "KWD": g_strKeyword,  "PG" : g_nPage},
+					"data": {"ID": <%=results.m_nUserId%>, "KWD": g_strKeyword,  "PG" : g_nPage},
 					"url": "/f/IllustListAppF.jsp",
 					"success": function(data) {
 						if($.trim(data).length>0) {
@@ -93,7 +93,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 				$(elm).addClass('Selected');
 				updateCategoryMenuPos(300);
 				$(window).unbind("scroll.addContents");
-				<%if(!cResults.m_bBlocking && !cResults.m_bBlocked){%>
+				<%if(!results.m_bBlocking && !results.m_bBlocked){%>
 				$(window).bind("scroll.addContents", function() {
 					$(window).height();
 					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 400) {
@@ -105,7 +105,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 			}
 
 			$(function(){
-				<%if(!cResults.m_bBlocking && !cResults.m_bBlocked){%>
+				<%if(!results.m_bBlocking && !results.m_bBlocked){%>
 				$(window).bind("scroll.addContents", function() {
 					$(window).height();
 					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 400) {
@@ -120,16 +120,16 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 			});
 		</script>
 		<style>
-		<%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>
-		.UserInfo {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');}
+		<%if(!results.m_cUser.m_strHeaderFileName.isEmpty()){%>
+		.UserInfo {background-image: url('<%=Common.GetUrl(results.m_cUser.m_strHeaderFileName)%>');}
 		<%}%>
 		.NoContents {display: block; padding: 130px 0; width: 100%; text-align: center;}
 		</style>
 
-		<%if(cResults.m_cUser.m_nPassportId>=Common.PASSPORT_ON && !cResults.m_cUser.m_strBgFileName.isEmpty()) {%>
+		<%if(results.m_cUser.m_nPassportId>=Common.PASSPORT_ON && !results.m_cUser.m_strBgFileName.isEmpty()) {%>
 		<style>
 			body {
-				background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strBgFileName)%>');
+				background-image: url('<%=Common.GetUrl(results.m_cUser.m_strBgFileName)%>');
 				background-repeat: repeat;
 				background-position: 50% top;
 				background-attachment: fixed;
@@ -147,37 +147,37 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 				<%@ include file="inner/IllustVBlockButton.jsp"%>
 				<div class="UserInfoBg"></div>
 				<section class="UserInfoUser">
-					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/IllustListAppV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"></a>
-					<h2 class="UserInfoUserName"><a href="/IllustListAppV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"><%=cResults.m_cUser.m_strNickName%></a></h2>
-					<h3 class="UserInfoProfile"><%=Common.AutoLink(Util.toStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_SP)%></h3>
+					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(results.m_cUser.m_strFileName)%>')" href="/IllustListAppV.jsp?ID=<%=results.m_cUser.m_nUserId%>"></a>
+					<h2 class="UserInfoUserName"><a href="/IllustListAppV.jsp?ID=<%=results.m_cUser.m_nUserId%>"><%=results.m_cUser.m_strNickName%></a></h2>
+					<h3 class="UserInfoProfile"><%=Common.AutoLink(Util.toStringHtml(results.m_cUser.m_strProfile), results.m_cUser.m_nUserId, CCnv.MODE_SP)%></h3>
 					<span class="UserInfoCmd">
 						<%
 						String strTwitterUrl=String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
 								URLEncoder.encode(String.format("%s%s %s #%s",
-										cResults.m_cUser.m_strNickName,
+										results.m_cUser.m_strNickName,
 										_TEX.T("Twitter.UserAddition"),
-										String.format(_TEX.T("Twitter.UserPostNum"), cResults.m_nContentsNumTotal),
+										String.format(_TEX.T("Twitter.UserPostNum"), results.m_nContentsNumTotal),
 										_TEX.T("Common.HashTag")), "UTF-8"),
-								URLEncoder.encode("https://unrealizm.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"));
+								URLEncoder.encode("https://unrealizm.com/"+results.m_cUser.m_nUserId+"/", "UTF-8"));
 						%>
-						<%if(cResults.m_bOwner) {%>
+						<%if(results.m_bOwner) {%>
 							<a class="BtnBase UserInfoCmdFollow" href="myurlscheme://openSetting"><i class="fas fa-cog"></i> <%=_TEX.T("MyEditSetting.Title.Setting")%></a>
 							<a class="BtnBase UserInfoCmdFollow" href="<%=strTwitterUrl%>"><i class="fab fa-twitter"></i> <%=_TEX.T("Twitter.Share.MyUrl.Btn")%></a>
-						<%} else if(cResults.m_bBlocking){ // ブロックしている %>
-							<span class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>"
-								  style="display: none;" onclick="UpdateFollowUser(<%=checkLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)">
+						<%} else if(results.m_bBlocking){ // ブロックしている %>
+							<span class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=results.m_cUser.m_nUserId%>"
+								  style="display: none;" onclick="UpdateFollowUser(<%=checkLogin.m_nUserId%>, <%=results.m_cUser.m_nUserId%>)">
 								<%=_TEX.T("IllustV.Follow")%>
 							</span>
-						<%} else if(cResults.m_bBlocked){%>
-						<%} else if(cResults.m_bFollow){%>
-							<span class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%> Selected" onclick="UpdateFollowUser(<%=checkLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Following")%></span>
+						<%} else if(results.m_bBlocked){%>
+						<%} else if(results.m_bFollow){%>
+							<span class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=results.m_cUser.m_nUserId%> Selected" onclick="UpdateFollowUser(<%=checkLogin.m_nUserId%>, <%=results.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Following")%></span>
 						<%} else {%>
-							<span class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>" onclick="UpdateFollowUser(<%=checkLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
+							<span class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=results.m_cUser.m_nUserId%>" onclick="UpdateFollowUser(<%=checkLogin.m_nUserId%>, <%=results.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
 						<%}%>
 
 						<%@ include file="inner/IllustBrowserVRequestButton.jsp"%>
 
-						<%if(!cResults.m_bOwner) {%>
+						<%if(!results.m_bOwner) {%>
 						<span class="IllustItemCommandSub">
 							<a class="IllustItemCommandTweet fab fa-twitter-square" href="<%=strTwitterUrl%>"></a>
 						</span>
@@ -187,22 +187,22 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 
 				</section>
 				<section class="UserInfoState">
-					<a class="UserInfoStateItem Selected" href="/IllustListAppV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>">
-						<%if(!cResults.m_bBlocked) {%>
+					<a class="UserInfoStateItem Selected" href="/IllustListAppV.jsp?ID=<%=results.m_cUser.m_nUserId%>">
+						<%if(!results.m_bBlocked) {%>
 						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.ContentNum")%></span>
-						<span class="UserInfoStateItemNum"><%=cResults.m_nContentsNumTotal%></span>
+						<span class="UserInfoStateItemNum"><%=results.m_nContentsNumTotal%></span>
 						<%}%>
 					</a>
 					<a class="UserInfoStateItem" href="/FollowListAppV.jsp">
-						<%if(!cResults.m_bBlocked) {%>
+						<%if(!results.m_bBlocked) {%>
 						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.Follow")%></span>
-						<span class="UserInfoStateItemNum"><%=cResults.m_cUser.m_nFollowNum%></span>
+						<span class="UserInfoStateItemNum"><%=results.m_cUser.m_nFollowNum%></span>
 						<%}%>
 					</a>
 					<a class="UserInfoStateItem" href="/FollowerListAppV.jsp">
-						<%if(!cResults.m_bBlocked) {%>
+						<%if(!results.m_bBlocked) {%>
 						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.Follower")%></span>
-						<span class="UserInfoStateItemNum"><%=cResults.m_cUser.m_nFollowerNum%></span>
+						<span class="UserInfoStateItemNum"><%=results.m_cUser.m_nFollowerNum%></span>
 						<%}%>
 					</a>
 				</section>
@@ -210,33 +210,33 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		</article>
 
 		<article class="Wrapper">
-			<%if(cResults.m_vCategoryList.size()>0) {%>
+			<%if(results.m_vCategoryList.size()>0) {%>
 			<nav id="CategoryMenu" class="CategoryMenu">
-				<span class="BtnBase CategoryBtn <%if(cResults.m_strTagKeyword.isEmpty()){%> Selected<%}%>" onclick="changeCategory(this, '')"><%=_TEX.T("Category.All")%></span>
-				<%for(CTag cTag : cResults.m_vCategoryList) {%>
-				<span class="BtnBase CategoryBtn <%if(cTag.m_strTagTxt.equals(cResults.m_strTagKeyword)){%> Selected<%}%>" onclick="changeCategory(this, '<%=cTag.m_strTagTxt%>')"><%=Util.toDescString(cTag.m_strTagTxt)%></span>
+				<span class="BtnBase CategoryBtn <%if(results.m_strTagKeyword.isEmpty()){%> Selected<%}%>" onclick="changeCategory(this, '')"><%=_TEX.T("Category.All")%></span>
+				<%for(CTag cTag : results.m_vCategoryList) {%>
+				<span class="BtnBase CategoryBtn <%if(cTag.m_strTagTxt.equals(results.m_strTagKeyword)){%> Selected<%}%>" onclick="changeCategory(this, '<%=cTag.m_strTagTxt%>')"><%=Util.toDescString(cTag.m_strTagTxt)%></span>
 				<%}%>
 			</nav>
 			<%}%>
 
 			<section id="IllustThumbList" class="IllustThumbList">
-				<%if(checkLogin.m_nUserId != cResults.m_nUserId){%>
-					<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-						CContent cContent = cResults.m_vContentList.get(nCnt);%>
+				<%if(checkLogin.m_nUserId != results.m_nUserId){%>
+					<%for(int nCnt=0; nCnt<results.contentList.size(); nCnt++) {
+						CContent cContent = results.contentList.get(nCnt);%>
 				<%if(cContent.pinOrder == 1){%>
 				<%= CCnv.Content2Html(
 						cContent, checkLogin, CCnv.MODE_SP,
 						_TEX, Emoji.getDefaultEmoji(checkLogin.m_nUserId), CCnv.VIEW_DETAIL, CCnv.SP_MODE_WVIEW,
-						cResults.m_bOwner ? CCnv.PageCategory.MY_ILLUST_LIST : CCnv.PageCategory.DEFAULT)%>
+						results.m_bOwner ? CCnv.PageCategory.MY_ILLUST_LIST : CCnv.PageCategory.DEFAULT)%>
 				<%}else{%>
 
 				<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_APP, _TEX)%>
 				<%}%>
 					<%}%>
 				<%}else{%>
-					<%if(cResults.m_vContentList.size()>0){%>
-						<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-							CContent cContent = cResults.m_vContentList.get(nCnt);%>
+					<%if(results.contentList.size()>0){%>
+						<%for(int nCnt=0; nCnt<results.contentList.size(); nCnt++) {
+							CContent cContent = results.contentList.get(nCnt);%>
 							<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_APP, _TEX)%>
 						<%}%>
 					<%}else{%>

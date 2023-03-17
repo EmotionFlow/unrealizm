@@ -7,35 +7,30 @@ if (Util.isBot(request)) return;
 CheckLogin checkLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
 
-if(!bSmartPhone) {
-	getServletContext().getRequestDispatcher("/SearchIllustByKeywordGridPcV.jsp").forward(request,response);
-	return;
-}
-
 ArrayList<String> emojiList = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
-SearchIllustByKeywordC cResults = new SearchIllustByKeywordC();
-cResults.getParam(request);
+SearchIllustByKeywordC results = new SearchIllustByKeywordC();
+results.getParam(request);
 if (isApp) {
 	checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 }
 
 
-if (cResults.keyword.indexOf("#") == 0) {
-	response.sendRedirect("https://unrealizm.com/SearchTagByKeywordPcV.jsp?KWD=" + URLEncoder.encode(cResults.keyword.replaceFirst("#", ""), StandardCharsets.UTF_8));
+if (results.keyword.indexOf("#") == 0) {
+	response.sendRedirect("https://unrealizm.com/SearchTagByKeywordPcV.jsp?KWD=" + URLEncoder.encode(results.keyword.replaceFirst("#", ""), StandardCharsets.UTF_8));
 	return;
-} else if (cResults.keyword.indexOf("@") == 0) {
-	response.sendRedirect("https://unrealizm.com/SearchUserByKeywordPcV.jsp?KWD=" + URLEncoder.encode(cResults.keyword.replaceFirst("@", ""), StandardCharsets.UTF_8));
+} else if (results.keyword.indexOf("@") == 0) {
+	response.sendRedirect("https://unrealizm.com/SearchUserByKeywordPcV.jsp?KWD=" + URLEncoder.encode(results.keyword.replaceFirst("@", ""), StandardCharsets.UTF_8));
 	return;
 }
 
-cResults.selectMaxGallery = 10;
-boolean bRtn = cResults.getResults(checkLogin);
-g_strSearchWord = cResults.keyword;
-String strTitle = cResults.keyword + " | " + _TEX.T("THeader.Title");
-String strDesc = String.format(_TEX.T("SearchIllustByTag.Title.Desc"), cResults.keyword, cResults.m_nContentsNum);
-String strUrl = "https://unrealizm.com/SearchIllustByKeywordPcV.jsp?KWD="+cResults.encodedKeyword;
-String strFileUrl = cResults.m_strRepFileName;
+results.selectMaxGallery = 10;
+boolean bRtn = results.getResults(checkLogin);
+g_strSearchWord = results.keyword;
+String strTitle = results.keyword + " | " + _TEX.T("THeader.Title");
+String strDesc = String.format(_TEX.T("SearchIllustByTag.Title.Desc"), results.keyword, results.m_nContentsNum);
+String strUrl = "https://unrealizm.com/SearchIllustByKeywordPcV.jsp?KWD="+results.encodedKeyword;
+String strFileUrl = results.m_strRepFileName;
 
 %>
 <!DOCTYPE html>
@@ -62,7 +57,6 @@ String strFileUrl = cResults.m_strRepFileName;
 	<link rel="alternate" media="only screen and (max-width: 640px)" href="<%=strUrl%>" />
 	<title><%=Util.toDescString(strTitle)%></title>
 
-	<script src="/js/masonry.pkgd.min.js"></script>
 	<script src="/js/imagesloaded.pkgd.min.js"></script>
 
 	<script type="text/javascript">
@@ -72,7 +66,7 @@ String strFileUrl = cResults.m_strRepFileName;
 		});
 		<%}%>
 
-		let lastContentId = <%=cResults.contentList.size()>0 ? cResults.contentList.get(cResults.contentList.size()-1).m_nContentId : -1%>;
+		let lastContentId = <%=results.contentList.size()>0 ? results.contentList.get(results.contentList.size()-1).m_nContentId : -1%>;
 		let page = 0;
 
 		const loadingSpinner = {
@@ -88,7 +82,7 @@ String strFileUrl = cResults.m_strRepFileName;
 				"type": "post",
 				"data": {
 					"PG": page,
-					"KWD": "<%=cResults.keyword%>",
+					"KWD": "<%=results.keyword%>",
 					"MD": <%=CCnv.MODE_SP%>,
 					"VD": <%=CCnv.VIEW_DETAIL%>,
 					"SD": lastContentId,
@@ -108,7 +102,7 @@ String strFileUrl = cResults.m_strRepFileName;
 					$('#IllustItemList').imagesLoaded(function(){
 					<%}%>
 					$newElems.animate({ opacity: 1 });
-					$('#IllustItemList').masonry('appended', $newElems, true);
+//					$('#IllustItemList').masonry('appended', $newElems, true);
 						<%if (!Common.isDevEnv()){ %>
 					});
 					<%}%>
@@ -152,12 +146,12 @@ String strFileUrl = cResults.m_strRepFileName;
 			<%}%>
 				let $newElems = $('.IllustItem, .loadingSpinner');
 				$newElems.animate({ opacity: 1 });
-				$('#IllustItemList').masonry({
-					itemSelector: '.IllustItem',
-					columnWidth: _columnWidth,
-					isFitWidth: true,
-					gutterWidth: 0,
-				});
+//				$('#IllustItemList').masonry({
+//					itemSelector: '.IllustItem',
+//					columnWidth: _columnWidth,
+//					isFitWidth: true,
+//					gutterWidth: 0,
+//				});
 			<%if (!Common.isDevEnv()){ %>
 			});
 			<%}%>
@@ -171,9 +165,9 @@ String strFileUrl = cResults.m_strRepFileName;
 <%@ include file="/inner/TMenuPc.jsp"%>
 <nav class="TabMenuWrapper">
 	<ul class="TabMenu">
-		<li><a class="TabMenuItem Selected" href="/SearchIllustByKeywordPcV.jsp?KWD=<%=cResults.encodedKeyword%>"><%=_TEX.T("Search.Cat.Illust")%></a></li>
-		<li><a class="TabMenuItem" href="/SearchTagByKeywordPcV.jsp?KWD=<%=cResults.encodedKeyword%>"><%=_TEX.T("Search.Cat.Tag")%></a></li>
-		<li><a class="TabMenuItem" href="/SearchUserByKeywordPcV.jsp?KWD=<%=cResults.encodedKeyword%>"><%=_TEX.T("Search.Cat.User")%></a></li>
+		<li><a class="TabMenuItem Selected" href="/SearchIllustByKeywordPcV.jsp?KWD=<%=results.encodedKeyword%>"><%=_TEX.T("Search.Cat.Illust")%></a></li>
+		<li><a class="TabMenuItem" href="/SearchTagByKeywordPcV.jsp?KWD=<%=results.encodedKeyword%>"><%=_TEX.T("Search.Cat.Tag")%></a></li>
+		<li><a class="TabMenuItem" href="/SearchUserByKeywordPcV.jsp?KWD=<%=results.encodedKeyword%>"><%=_TEX.T("Search.Cat.User")%></a></li>
 	</ul>
 </nav>
 <%} else {%>
@@ -191,21 +185,12 @@ String strFileUrl = cResults.m_strRepFileName;
 	<%}%>
 
 	<header class="SearchResultTitle">
-		<h2 class="Keyword"><i class="fas fa-search"></i> <%=Util.toStringHtml(cResults.keyword)%></h2>
+		<h2 class="Keyword"><i class="fas fa-search"></i> <%=Util.toStringHtml(results.keyword)%></h2>
 	</header>
 
-	<section
-			id="IllustItemList"
-			class="IllustItemList2Column"
-			style="position: relative; top: <%=checkLogin.m_nPassportId==Common.PASSPORT_OFF?72:48%>px;"
-	>
-		<% for (int cnt = 0; cnt<cResults.contentList.size(); cnt++) { %>
-		<%=CCnv.Content2Html2Column(cResults.contentList.get(cnt), checkLogin, bSmartPhone?CCnv.MODE_SP:CCnv.MODE_PC, _TEX, emojiList, CCnv.VIEW_DETAIL, nSpMode)%>
-		<% if (checkLogin.m_nPassportId==Common.PASSPORT_OFF && (cnt == 3 || cnt == 9) && bSmartPhone){ %>
-		<div class="IllustItem" style="width: 360px; height: 250px; background: none; border: none;">
-		<%=Util.poipiku_336x280_sp_mid(checkLogin, g_nSafeFilter)%>
-		</div>
-		<%}%>
+	<section id="IllustItemList" class="IllustItemList2Column">
+		<%for(CContent cContent: results.contentList) {%>
+			<%=CCnv.Content2Html2Column(cContent, checkLogin, bSmartPhone?CCnv.MODE_SP:CCnv.MODE_PC, _TEX, emojiList, CCnv.VIEW_DETAIL, nSpMode)%>
 		<%}%>
 	</section>
 </article>

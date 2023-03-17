@@ -19,13 +19,13 @@
 					for(let i=0; i<3; i++){s.shift();}
 					$('#login_from_twitter_tfooterbase_callback_00').val("/" + s.join("/"));
 				}</script>
-				<a class="BtnBase Rev AnalogicoInfoRegistBtn" style="width:200px;" href="javascript:login_from_twitter_tfooterbase_00.submit()">
+				<a class="BtnBase AnalogicoInfoRegistBtn" style="width:200px;" href="javascript:login_from_twitter_tfooterbase_00.submit()">
 					<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Unrealizm.Info.Login")%>
 				</a>
 			</form>
 		</div>
 		<div class="AnalogicoInfoRegist">
-			<a class="BtnBase Rev AnalogicoInfoRegistBtn" style="width:200px;" href="/MyHomePcV.jsp">
+			<a class="BtnBase AnalogicoInfoRegistBtn" style="width:200px;" href="/MyHomePcV.jsp">
 				<span class="typcn typcn-mail"></span> <%=_TEX.T("Unrealizm.Info.Login.Mail")%>
 			</a>
 		</div>

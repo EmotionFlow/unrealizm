@@ -7,7 +7,7 @@
 FollowListC cFollowListResults = new FollowListC();
 cFollowListResults.getParam(request);
 cFollowListResults.m_nMode = 0;
-cFollowListResults.m_nPage = cResults.m_nListPage;
+cFollowListResults.m_nPage = results.m_nListPage;
 cFollowListResults.selectMaxGallery = SELECT_MAX_GALLERY;
 cFollowListResults.getResults(checkLogin);
 %>

@@ -106,6 +106,6 @@ int nRtn = 0;
 UpdateTagCParam cParam = new UpdateTagCParam();
 nRtn = cParam.GetParam(request);
 
-UpdateTagC cResults = new UpdateTagC();
-nRtn = cResults.GetResults(cParam);
-%><%=cResults.m_nCountNum%>, <%=cResults.m_nCountNumEnd%>
+UpdateTagC results = new UpdateTagC();
+nRtn = results.GetResults(cParam);
+%><%=results.m_nCountNum%>, <%=results.m_nCountNumEnd%>

@@ -9,7 +9,7 @@ if(Util.isBot(request)) {
 final String referer = Util.toString(request.getHeader("Referer"));
 if (!isApp && !referer.contains("unrealizm.com")) {
 	Log.d("不正アクセス(referer不一致):" + referer);
-	return;
+//	return;
 }
 
 CheckLogin checkLogin = new CheckLogin(request, response);
@@ -28,22 +28,22 @@ if(!Util.isSmartPhone(request)) {
 	return;
 }
 
-SearchUserByKeywordC cResults = new SearchUserByKeywordC();
-cResults.getParam(request);
+SearchUserByKeywordC results = new SearchUserByKeywordC();
+results.getParam(request);
 
-if (cResults.m_strKeyword.indexOf("#") == 0) {
-	response.sendRedirect("https://unrealizm.com/SearchTagByKeyword" + (isApp?"App":"Pc") + "V.jsp?KWD=" + URLEncoder.encode(cResults.m_strKeyword.replaceFirst("#", ""), StandardCharsets.UTF_8));
+if (results.m_strKeyword.indexOf("#") == 0) {
+	response.sendRedirect("https://unrealizm.com/SearchTagByKeyword" + (isApp?"App":"Pc") + "V.jsp?KWD=" + URLEncoder.encode(results.m_strKeyword.replaceFirst("#", ""), StandardCharsets.UTF_8));
 	return;
 }
 
-String strKeywordHan = Util.toSingle(cResults.m_strKeyword);
+String strKeywordHan = Util.toSingle(results.m_strKeyword);
 if(strKeywordHan.matches("^[0-9]+$")) {
 	String strUrl = (isApp ? "/IllustListAppV.jsp?ID=%s" : "/%s/").formatted(strKeywordHan);
 	response.sendRedirect(Common.GetUnrealizmUrl(strUrl));
 	return;
 }
 
-boolean bRtn = cResults.getResults(checkLogin);
+boolean bRtn = results.getResults(checkLogin);
 %>
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
@@ -71,7 +71,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 		</style>
 		<%}%>
 
-		<meta name="description" content="<%=Util.toStringHtml(String.format(_TEX.T("SearchUserByKeyword.Title.Desc"), cResults.m_strKeyword))%>" />
+		<meta name="description" content="<%=Util.toStringHtml(String.format(_TEX.T("SearchUserByKeyword.Title.Desc"), results.m_strKeyword))%>" />
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("SearchUserByKeyword.Title")%></title>
 		<script>
 			var g_nPage = 1;
@@ -83,7 +83,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 				$("#IllustThumbList").append($objMessage);
 				$.ajax({
 					"type": "post",
-					"data": {"PG" : g_nPage, "KWD" :  decodeURIComponent("<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>")},
+					"data": {"PG" : g_nPage, "KWD" :  decodeURIComponent("<%=URLEncoder.encode(results.m_strKeyword, "UTF-8")%>")},
 					"url": "/f/SearchUserByKeyword<%=isApp?"App":""%>F.jsp",
 					"success": function(data) {
 						if($.trim(data).length>0) {
@@ -122,21 +122,21 @@ boolean bRtn = cResults.getResults(checkLogin);
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 		<nav class="TabMenuWrapper">
 			<ul class="TabMenu">
-				<li><a class="TabMenuItem" href="/SearchIllustByKeywordPcV.jsp?KWD=<%=cResults.encodedKeyword%>"><%=_TEX.T("Search.Cat.Illust")%></a></li>
-				<li><a class="TabMenuItem" href="/SearchTagByKeywordPcV.jsp?KWD=<%=cResults.encodedKeyword%>"><%=_TEX.T("Search.Cat.Tag")%></a></li>
-				<li><a class="TabMenuItem Selected" href="/SearchUserByKeywordPcV.jsp?KWD=<%=cResults.encodedKeyword%>"><%=_TEX.T("Search.Cat.User")%></a></li>
+				<li><a class="TabMenuItem" href="/SearchIllustByKeywordPcV.jsp?KWD=<%=results.encodedKeyword%>"><%=_TEX.T("Search.Cat.Illust")%></a></li>
+				<li><a class="TabMenuItem" href="/SearchTagByKeywordPcV.jsp?KWD=<%=results.encodedKeyword%>"><%=_TEX.T("Search.Cat.Tag")%></a></li>
+				<li><a class="TabMenuItem Selected" href="/SearchUserByKeywordPcV.jsp?KWD=<%=results.encodedKeyword%>"><%=_TEX.T("Search.Cat.User")%></a></li>
 			</ul>
 		</nav>
 		<%}%>
 
-		<article class="Wrapper GridList">
+		<article class="Wrapper GridList" style="padding-top: 30px">
 			<header class="SearchResultTitle">
-				<h2 class="Keyword">@<%=Util.toStringHtml(cResults.m_strKeyword)%></h2>
+				<h2 class="Keyword">@<%=Util.toStringHtml(results.m_strKeyword)%></h2>
 			</header>
 			<section id="IllustThumbList" class="IllustThumbList">
 				<%int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;%>
-				<%for(int nCnt = 0; nCnt<cResults.selectByNicknameUsers.size(); nCnt++) {
-					CUser cUser = cResults.selectByNicknameUsers.get(nCnt);%>
+				<%for(int nCnt = 0; nCnt<results.selectByNicknameUsers.size(); nCnt++) {
+					CUser cUser = results.selectByNicknameUsers.get(nCnt);%>
 					<%=CCnv.toHtmlUserMini(cUser, CCnv.MODE_SP, _TEX, nSpMode)%>
 					<%if((nCnt+1)%9==0) {%>
 					<%@ include file="/inner/TAd336x280_mid.jsp"%>

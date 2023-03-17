@@ -9,29 +9,29 @@ if(Util.isBot(request)) {
 boolean bSmartPhone = Util.isSmartPhone(request);
 boolean isApp = true;
 
-IllustViewPcC cResults = new IllustViewPcC();
-cResults.getParam(request);
-if(!cResults.getResults(checkLogin)) {
-	if (cResults.m_bBlocked || cResults.m_bBlocking) {
-		response.sendRedirect(String.format("/IllustListAppV.jsp?ID=%d", cResults.ownerUserId));
-	} else if (cResults.m_nNewContentId==null || cResults.m_nNewContentId==cResults.contentId) {
+IllustViewPcC results = new IllustViewPcC();
+results.getParam(request);
+if(!results.getResults(checkLogin)) {
+	if (results.m_bBlocked || results.m_bBlocking) {
+		response.sendRedirect(String.format("/IllustListAppV.jsp?ID=%d", results.ownerUserId));
+	} else if (results.m_nNewContentId==null || results.m_nNewContentId==results.contentId) {
 		response.sendRedirect("/NotFoundV.jsp");
 	} else {
-		response.sendRedirect(Common.GetUnrealizmUrl(String.format("/IllustViewAppV.jsp?ID=%d&TD=%d", cResults.ownerUserId, cResults.m_nNewContentId)));
+		response.sendRedirect(Common.GetUnrealizmUrl(String.format("/IllustViewAppV.jsp?ID=%d&TD=%d", results.ownerUserId, results.m_nNewContentId)));
 	}
 	return;
 }
 
 //R18によるアドの切り替え
-g_nSafeFilter = cResults.m_cContent.getAdSwitchId();
+g_nSafeFilter = results.m_cContent.getAdSwitchId();
 
-cResults.m_cContent.setThumb();
-final String strFileUrl = cResults.m_cContent.thumbImgUrl;
-final boolean bHidden = cResults.m_cContent.isHideThumbImg;	// テキスト用カバー画像表示フラグ
+results.m_cContent.setThumb();
+final String strFileUrl = results.m_cContent.thumbImgUrl;
+final boolean bHidden = results.m_cContent.isHideThumbImg;	// テキスト用カバー画像表示フラグ
 
-String strTitle = CTweet.generateMetaTwitterTitle(cResults.m_cContent, _TEX);
+String strTitle = CTweet.generateMetaTwitterTitle(results.m_cContent, _TEX);
 ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
-g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_cUser.m_nAdMode==CUser.AD_MODE_SHOW);
+g_bShowAd = (results.m_cUser.m_nPassportId==Common.PASSPORT_OFF || results.m_cUser.m_nAdMode==CUser.AD_MODE_SHOW);
 
 %>
 <!DOCTYPE html>
@@ -63,9 +63,9 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 					$(element).on("drag dragstart",function(e){return false;});
 				});
 
-				<%if(!bHidden && cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {%>
-				var frame_height = $('#IllustItemText_'+ <%=cResults.m_cContent.m_nContentId%> ).height();
-				var text_height = $('#IllustItemText_'+ <%=cResults.m_cContent.m_nContentId%> + ' .IllustItemThumbText').height();
+				<%if(!bHidden && results.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {%>
+				var frame_height = $('#IllustItemText_'+ <%=results.m_cContent.m_nContentId%> ).height();
+				var text_height = $('#IllustItemText_'+ <%=results.m_cContent.m_nContentId%> + ' .IllustItemThumbText').height();
 				if(frame_height>=text_height) {
 					$('.IllustItemExpandBtn').hide();
 				}
@@ -81,15 +81,15 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 			.IllustItemList.Related .AutoLink {display: block; float: left; background-color: #ffffff; color: #3498db; font-size: 15px; line-height: 34px; padding: 0 18px; margin: 4px 2px 0 2px; border-radius: 6px;}
 			.FooterAd {display: block; float: left; width: 100%; margin: 0 auto; box-sizing: border-box;}
 			.FooterAd .SideBarMid {isplay: block; float: left; width: 100%; height: auto;}
-			<%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>
-			.UserInfo {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');}
+			<%if(!results.m_cUser.m_strHeaderFileName.isEmpty()){%>
+			.UserInfo {background-image: url('<%=Common.GetUrl(results.m_cUser.m_strHeaderFileName)%>');}
 			<%}%>
 		</style>
 
-		<%if(cResults.m_cUser.m_nPassportId>=Common.PASSPORT_ON && !cResults.m_cUser.m_strBgFileName.isEmpty()) {%>
+		<%if(results.m_cUser.m_nPassportId>=Common.PASSPORT_ON && !results.m_cUser.m_strBgFileName.isEmpty()) {%>
 		<style>
 			body {
-				background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strBgFileName)%>');
+				background-image: url('<%=Common.GetUrl(results.m_cUser.m_strBgFileName)%>');
 				background-repeat: repeat;
 				background-position: 50% top;
 				background-attachment: fixed;
@@ -108,33 +108,33 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 				<%@ include file="inner/IllustVBlockButton.jsp"%>
 				<div class="UserInfoBg"></div>
 				<section class="UserInfoUser">
-					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/IllustListAppV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"></a>
-					<h2 class="UserInfoUserName"><a href="/IllustListAppV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"><%=cResults.m_cUser.m_strNickName%></a></h2>
-					<h3 class="UserInfoProfile"><%=Common.AutoLink(Util.toStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_SP)%></h3>
+					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(results.m_cUser.m_strFileName)%>')" href="/IllustListAppV.jsp?ID=<%=results.m_cUser.m_nUserId%>"></a>
+					<h2 class="UserInfoUserName"><a href="/IllustListAppV.jsp?ID=<%=results.m_cUser.m_nUserId%>"><%=results.m_cUser.m_strNickName%></a></h2>
+					<h3 class="UserInfoProfile"><%=Common.AutoLink(Util.toStringHtml(results.m_cUser.m_strProfile), results.m_cUser.m_nUserId, CCnv.MODE_SP)%></h3>
 					<span class="UserInfoCmd">
 						<%
 						String strTwitterUrl=String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
 								URLEncoder.encode(String.format("%s%s %s #%s",
-										cResults.m_cUser.m_strNickName,
+										results.m_cUser.m_strNickName,
 										_TEX.T("Twitter.UserAddition"),
-										String.format(_TEX.T("Twitter.UserPostNum"), cResults.m_nContentsNumTotal),
+										String.format(_TEX.T("Twitter.UserPostNum"), results.m_nContentsNumTotal),
 										_TEX.T("Common.HashTag")), "UTF-8"),
-								URLEncoder.encode("https://unrealizm.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"));
+								URLEncoder.encode("https://unrealizm.com/"+results.m_cUser.m_nUserId+"/", "UTF-8"));
 						%>
-						<%if(cResults.m_bOwner) {%>
+						<%if(results.m_bOwner) {%>
 						&nbsp;
-						<%} else if(cResults.m_bBlocking){%>
-						<span class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>" style="display: none;" onclick="UpdateFollowUser(<%=checkLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
-						<%} else if(cResults.m_bBlocked){%>
-						<%} else if(cResults.m_bFollow){%>
-						<span class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%> Selected" onclick="UpdateFollowUser(<%=checkLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Following")%></span>
+						<%} else if(results.m_bBlocking){%>
+						<span class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=results.m_cUser.m_nUserId%>" style="display: none;" onclick="UpdateFollowUser(<%=checkLogin.m_nUserId%>, <%=results.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
+						<%} else if(results.m_bBlocked){%>
+						<%} else if(results.m_bFollow){%>
+						<span class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=results.m_cUser.m_nUserId%> Selected" onclick="UpdateFollowUser(<%=checkLogin.m_nUserId%>, <%=results.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Following")%></span>
 						<%} else {%>
-						<span class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>" onclick="UpdateFollowUser(<%=checkLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
+						<span class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=results.m_cUser.m_nUserId%>" onclick="UpdateFollowUser(<%=checkLogin.m_nUserId%>, <%=results.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
 						<%}%>
 
 						<%@ include file="inner/IllustBrowserVRequestButton.jsp"%>
 
-						<%if(!cResults.m_bOwner) {%>
+						<%if(!results.m_bOwner) {%>
 						<span class="IllustItemCommandSub">
 							<a class="IllustItemCommandTweet fab fa-twitter-square" href="<%=strTwitterUrl%>"></a>
 						</span>
@@ -143,20 +143,20 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 					<%@ include file="/inner/TWaveButtons.jsp"%>
 				</section>
 				<section class="UserInfoState">
-					<a class="UserInfoStateItem Selected" href="/IllustListAppV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>">
+					<a class="UserInfoStateItem Selected" href="/IllustListAppV.jsp?ID=<%=results.m_cUser.m_nUserId%>">
 						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.ContentNum")%></span>
-						<span class="UserInfoStateItemNum"><%=cResults.m_nContentsNumTotal%></span>
+						<span class="UserInfoStateItemNum"><%=results.m_nContentsNumTotal%></span>
 					</a>
 					<a class="UserInfoStateItem" href="/FollowListAppV.jsp">
-						<%if(!cResults.m_bBlocked) {%>
+						<%if(!results.m_bBlocked) {%>
 						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.Follow")%></span>
-						<span class="UserInfoStateItemNum"><%=cResults.m_cUser.m_nFollowNum%></span>
+						<span class="UserInfoStateItemNum"><%=results.m_cUser.m_nFollowNum%></span>
 						<%}%>
 					</a>
 					<a class="UserInfoStateItem" href="/FollowerListAppV.jsp">
-						<%if(!cResults.m_bBlocked) {%>
+						<%if(!results.m_bBlocked) {%>
 						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.Follower")%></span>
-						<span class="UserInfoStateItemNum"><%=cResults.m_cUser.m_nFollowerNum%></span>
+						<span class="UserInfoStateItemNum"><%=results.m_cUser.m_nFollowerNum%></span>
 						<%}%>
 					</a>
 				</section>
@@ -172,9 +172,9 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 			<%}%>
 
 			<section id="IllustItemList" class="IllustItemList">
-				<%=CCnv.Content2Html(cResults.m_cContent, checkLogin, CCnv.MODE_SP,
+				<%=CCnv.Content2Html(results.m_cContent, checkLogin, CCnv.MODE_SP,
 						_TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_APP,
-						cResults.m_bOwner?CCnv.PageCategory.MY_ILLUST_LIST:CCnv.PageCategory.DEFAULT)%>
+						results.m_bOwner?CCnv.PageCategory.MY_ILLUST_LIST:CCnv.PageCategory.DEFAULT)%>
 			</section>
 
 			<%@ include file="/inner/TAdEvent_top_rightV.jsp"%>
@@ -187,8 +187,8 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 
 		<article class="Wrapper GridList">
 			<section id="IllustItemList" class="IllustItemList Related">
-				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-					CContent cContent = cResults.m_vContentList.get(nCnt);%>
+				<%for(int nCnt=0; nCnt<results.contentList.size(); nCnt++) {
+					CContent cContent = results.contentList.get(nCnt);%>
 					<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_APP, _TEX)%>
 				<%
 					}
@@ -196,21 +196,21 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 			</section>
 		</article>
 
-		<%if(!cResults.m_vRelatedContentList.isEmpty()) {%>
+		<%if(!results.m_vRelatedContentList.isEmpty()) {%>
 		<%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%>
 		<article class="Wrapper GridList">
 			<section id="IllustItemList" class="IllustItemList Related">
 				<header class="SearchResultTitle" style="box-sizing: border-box; padding: 0 5px; float: none;">
 					<h2 class="Keyword">
 						<%
-							String keyword = RelatedContents.getTitleTag(cResults.m_cContent.m_nContentId);
+							String keyword = RelatedContents.getTitleTag(results.m_cContent.m_nContentId);
 						%>
 						<a class="AutoLink" href="/SearchIllustByTagAppV.jsp?KWD=<%=URLEncoder.encode(keyword, "UTF-8")%>">#<%=keyword%></a>
 					</h2>
 				</header>
 				<%
-					for(int nCnt=0; nCnt<cResults.m_vRelatedContentList.size(); nCnt++) {
-						CContent cContent = cResults.m_vRelatedContentList.get(nCnt);
+					for(int nCnt=0; nCnt<results.m_vRelatedContentList.size(); nCnt++) {
+						CContent cContent = results.m_vRelatedContentList.get(nCnt);
 				%>
 					<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_APP, _TEX)%>
 				<%}%>

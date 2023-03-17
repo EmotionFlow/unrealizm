@@ -9,8 +9,8 @@ cParam.m_nUserId = checkLogin.m_nUserId;
 nRtn = cParam.GetParam(request);
 
 if( checkLogin.m_bLogin && cParam.m_nUserId==checkLogin.m_nUserId && nRtn==0 ) {
-	UploadFileTweetC cResults = new UploadFileTweetC(getServletContext());
-	nRtn = cResults.GetResults(checkLogin, cParam, _TEX);
+	UploadFileTweetC results = new UploadFileTweetC(getServletContext());
+	nRtn = results.GetResults(checkLogin, cParam, _TEX);
 } else 	if(!checkLogin.m_bLogin || cParam.m_nUserId!=checkLogin.m_nUserId){
 	nRtn = -1;
 }

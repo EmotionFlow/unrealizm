@@ -3,11 +3,11 @@
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 
-UpdateNgAdModeC cResults = new UpdateNgAdModeC();
-cResults.getParam(request);
+UpdateNgAdModeC results = new UpdateNgAdModeC();
+results.getParam(request);
 
 int nMode = CUser.AD_MODE_HIDE;
-if(checkLogin.m_bLogin && cResults.m_nUserId == checkLogin.m_nUserId) {
-	nMode = cResults.getResults(checkLogin);
+if(checkLogin.m_bLogin && results.m_nUserId == checkLogin.m_nUserId) {
+	nMode = results.getResults(checkLogin);
 }
 %>{"result": <%=nMode%>}

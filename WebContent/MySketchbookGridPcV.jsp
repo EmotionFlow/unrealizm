@@ -3,9 +3,9 @@
 <%
 	CheckLogin checkLogin = new CheckLogin(request, response);
 	boolean bSmartPhone = Util.isSmartPhone(request);
-	MySketchbookC cResults = new MySketchbookC();
-	cResults.getParam(request);
-	cResults.getResults(checkLogin);
+	MySketchbookC results = new MySketchbookC();
+	results.getParam(request);
+	results.getResults(checkLogin);
 	ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 	boolean isApp = false;
 %>
@@ -72,7 +72,7 @@
 	</aside>
 
 	<section id="IllustItemList" class="IllustItemList">
-		<%if(cResults.contentList.isEmpty()) {%>
+		<%if(results.contentList.isEmpty()) {%>
 
 		<div style="margin: 30px; text-align: center; color:#fffdb1;border: solid;border-radius: 5px;padding: 20px 0; font-size: 15px;">
 			<i class="fas fa-bullhorn" style="font-size: 30px; margin-bottom: 15px"></i><br> <%=_TEX.T("MySketchbookV.Info01")%><br><%=_TEX.T("MySketchbookV.Info02")%>
@@ -102,15 +102,15 @@
 		<%}%>
 
 		<% int count =0;
-			for(; count<cResults.contentList.size(); count++) {
-				CContent cContent = cResults.contentList.get(count);%>
+			for(; count<results.contentList.size(); count++) {
+				CContent cContent = results.contentList.get(count);%>
 		<%= CCnv.SketchbookContent2Html(cContent, checkLogin, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_WVIEW)%>
 		<%}%>
 
 	</section>
 
 	<nav class="PageBar">
-		<%=CPageBar.CreatePageBarPc("/MyHomePcV.jsp", "", cResults.page, cResults.contentsNum, MyHomePcC.SELECT_MAX_GALLERY)%>
+		<%=CPageBar.CreatePageBarPc("/MyHomePcV.jsp", "", results.page, results.contentsNum, MyHomePcC.SELECT_MAX_GALLERY)%>
 	</nav>
 </article>
 

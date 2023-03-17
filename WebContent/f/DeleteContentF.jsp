@@ -3,11 +3,11 @@
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 
-DeleteContentC cResults = new DeleteContentC();
-cResults.GetParam(request);
+DeleteContentC results = new DeleteContentC();
+results.GetParam(request);
 
 boolean bRtn = false;
-if( checkLogin.m_bLogin && cResults.m_nUserId == checkLogin.m_nUserId ) {
-	bRtn = cResults.GetResults(request.getServletContext());
+if( checkLogin.m_bLogin && results.m_nUserId == checkLogin.m_nUserId ) {
+	bRtn = results.GetResults(request.getServletContext());
 }
 %><%=bRtn%>

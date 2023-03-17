@@ -4,19 +4,19 @@
 CheckLogin checkLogin = new CheckLogin(request, response);
 if(!checkLogin.m_bLogin) return;
 
-IllustListC cResults = new IllustListC();
-cResults.getParam(request);
-if(cResults.m_nUserId==-1) {
-	cResults.m_nUserId = checkLogin.m_nUserId;
-}else if(cResults.m_nUserId==checkLogin.m_nUserId){
-	cResults.m_bDispUnPublished = true;
+IllustListC results = new IllustListC();
+results.getParam(request);
+if(results.m_nUserId==-1) {
+	results.m_nUserId = checkLogin.m_nUserId;
+}else if(results.m_nUserId==checkLogin.m_nUserId){
+	results.m_bDispUnPublished = true;
 }
 
-boolean bRtn = cResults.getResults(checkLogin, true);
+boolean bRtn = results.getResults(checkLogin, true);
 %>
-<%if(cResults.m_vContentList.size()>0) {%>
-	<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-		CContent cContent = cResults.m_vContentList.get(nCnt);%>
+<%if(results.contentList.size()>0) {%>
+	<%for(int nCnt=0; nCnt<results.contentList.size(); nCnt++) {
+		CContent cContent = results.contentList.get(nCnt);%>
 		<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX)%>
 	<%}%>
 	<%@ include file="/inner/TAd336x280_mid.jsp"%>

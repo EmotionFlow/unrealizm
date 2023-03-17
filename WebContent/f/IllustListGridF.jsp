@@ -4,16 +4,16 @@
 CheckLogin checkLogin = new CheckLogin(request, response);
 if(!checkLogin.m_bLogin) return;
 
-IllustListGridC cResults = new IllustListGridC();
-cResults.getParam(request);
-if(cResults.m_nUserId==-1) {
-	cResults.m_nUserId = checkLogin.m_nUserId;
+IllustListGridC results = new IllustListGridC();
+results.getParam(request);
+if(results.m_nUserId==-1) {
+	results.m_nUserId = checkLogin.m_nUserId;
 }
-boolean bRtn = cResults.getResults(checkLogin, true);
+boolean bRtn = results.getResults(checkLogin, true);
 ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 %>
-<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-	CContent cContent = cResults.m_vContentList.get(nCnt);%>
+<%for(int nCnt=0; nCnt<results.contentList.size(); nCnt++) {
+	CContent cContent = results.contentList.get(nCnt);%>
 	<%=CCnv.Content2Html(cContent, checkLogin, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_LIST, CCnv.SP_MODE_WVIEW)%>
 	<%if(nCnt==8) {%>
 	<%@ include file="/inner/TAd336x280_mid.jsp"%>

@@ -11,8 +11,8 @@ cParam.userId = checkLogin.m_nUserId;
 nRtn = cParam.GetParam(request);
 
 if( checkLogin.m_bLogin && cParam.userId==checkLogin.m_nUserId && nRtn==0 ) {
-	UpdateC cResults = new UpdateC();
-	nRtn = cResults.GetResults(cParam, checkLogin);
+	UpdateC results = new UpdateC();
+	nRtn = results.GetResults(cParam, checkLogin);
 }
 %>
 { "content_id":<%=nRtn%> }

@@ -13,8 +13,8 @@ if (Util.isBot(request)) return;
 CheckLogin checkLogin = new CheckLogin(request, response);
 if (!checkLogin.m_bLogin) return;
 
-GetSearchSuggestionC cResults = new GetSearchSuggestionC();
-cResults.getParam(request);
-int nResult = cResults.getResults(checkLogin);
+GetSearchSuggestionC results = new GetSearchSuggestionC();
+results.getParam(request);
+int nResult = results.getResults(checkLogin);
 %>
-{"result": <%=nResult%>,"input": "<%=cResults.searchInput%>", "keywords": [<%=cResults.keywords.stream().map(k -> "\"" + k + "\"").collect(Collectors.joining(","))%>]}
+{"result": <%=nResult%>,"input": "<%=results.searchInput%>", "keywords": [<%=results.keywords.stream().map(k -> "\"" + k + "\"").collect(Collectors.joining(","))%>]}

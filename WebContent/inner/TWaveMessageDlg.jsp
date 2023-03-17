@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <script>
 	const waveMessages = {
-		<%for (UserWave wave : cResults.myWaves) {%><%if (!wave.message.isEmpty()) {%>
+		<%for (UserWave wave : results.myWaves) {%><%if (!wave.message.isEmpty()) {%>
 		'<%=wave.id%>': {
 			'emojiHtml': '<%=CEmoji.parse(wave.emoji)%>',
 			'messageHtml': '<%=Util.toStringHtml(wave.message).replaceAll("'", "\\\\'")%>',
@@ -114,7 +114,7 @@
 	}
 
 	const waveReplies = {
-		<%for (MyIllustListC.ReplyWave reply : cResults.replyWaves) {%>
+		<%for (MyIllustListC.ReplyWave reply : results.replyWaves) {%>
 		'<%=reply.wave.id%>': {
 			'emojiHtml': '<%=CEmoji.parse(reply.wave.emoji)%>',
 			'messageHtml': '<%=Util.toStringHtml(reply.wave.message).replaceAll("'", "\\\\'")%>',

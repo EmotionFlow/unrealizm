@@ -14,10 +14,10 @@ if(!bSmartPhone) {
 	return;
 }
 
-MyBookmarkC cResults = new MyBookmarkC();
-cResults.getParam(request);
-cResults.selectMaxGallery = 45;
-boolean bRtn = cResults.getResults(checkLogin);
+MyBookmarkC results = new MyBookmarkC();
+results.getParam(request);
+results.selectMaxGallery = 45;
+boolean bRtn = results.getResults(checkLogin);
 %>
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
@@ -51,7 +51,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
 		<article class="Wrapper ThumbList">
-			<%if(cResults.m_vContentList.size()<=0) {%>
+			<%if(results.contentList.size()<=0) {%>
 			<div style="padding: 10px; box-sizing: border-box; text-align: center; font-size: 10px;">
 				<%=_TEX.T("MyBookmarkList.LetsMessage")%>
 			</div>
@@ -64,8 +64,8 @@ boolean bRtn = cResults.getResults(checkLogin);
 			<%}%>
 
 			<section id="IllustThumbList" class="IllustThumbList">
-				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-					CContent cContent = cResults.m_vContentList.get(nCnt);%>
+				<%for(int nCnt=0; nCnt<results.contentList.size(); nCnt++) {
+					CContent cContent = results.contentList.get(nCnt);%>
 					<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX)%>
 					<%if(nCnt==14) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
 					<%if(nCnt==29) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
@@ -73,7 +73,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 			</section>
 
 			<nav class="PageBar">
-				<%=CPageBar.CreatePageBarSp("/MyBookmarkListPcV.jsp", "&ID="+checkLogin.m_nUserId, cResults.page, cResults.contentsNum, cResults.selectMaxGallery)%>
+				<%=CPageBar.CreatePageBarSp("/MyBookmarkListPcV.jsp", "&ID="+checkLogin.m_nUserId, results.page, results.contentsNum, results.selectMaxGallery)%>
 			</nav>
 		</article>
 

@@ -1,14 +1,8 @@
 @charset "utf-8";
 
-/* Base */
-.BtnBase:hover {background: #fff;color: #000;}
-a:hover {color: #000;}
-.BtnBase.Disabled:hover, input[type="submit"].Disabled:hover, input[type="button"].Disabled:hover, button.Disabled:hover {border-color: #ebe;color: #ebe;cursor: default;}
-.BtnBase.Rev:hover {border-color: #000; background-color: #ffffff;color: #000;}
-
 body {padding: 51px 0 0 0 !important;}
 .Wrapper {width: 600px; min-height: 60px; position: relative;}
-.Wrapper.ThumbList {width: 1180px;}
+.Wrapper.ThumbList {width: 100%;}
 .Wrapper.ItemList {width: 730px;}
 .Wrapper.ViewPc {width: 930px; position: relative; display: flex; flex-flow: row wrap;}
 .Wrapper.ViewPc .IllustItemList {width: 600px; float: none; flex: 0 0 600px; margin: 0;}
@@ -19,8 +13,6 @@ body {padding: 51px 0 0 0 !important;}
 .SideBarBottom {height: 60px;}
 .CategoryMenu {padding: 24px 0 4px 0;}
 .CategoryMenu .CategoryBtn {padding: 0 12px;height: 24px;line-height: 22px;}
-.UserInfo .UserInfoBg {height: 103px;}
-.UserInfo .UserInfoUser .UserInfoUserThumb {width: 90px; height: 90px; margin: -47px auto 0 auto;}
 .UserInfo .UserInfoCmd .IllustItemCommandSub {bottom: 15px; right: 15px;}
 /* for user list */
 .UserInfo.Thumb {
@@ -76,7 +68,6 @@ body {padding: 51px 0 0 0 !important;}
 
 .IllustThumb .IllustThumbImg {box-sizing: border-box; height: 212px;}
 .IllustThumb .IllustThumbText {box-sizing: border-box; height: 164px; padding: 1px 3px;}
-.IllustItem {margin: 15px;}
 .Wrapper.ViewPc .IllustItem {margin: 0 auto 30px auto; width: 600px; float: none;}
 .Wrapper.ViewPc .IllustItem .IllustItemUser {padding: 10px;}
 .Wrapper.ViewPc .IllustItem .Category {margin: 0px 0 3px 0px;}
@@ -85,8 +76,6 @@ body {padding: 51px 0 0 0 !important;}
 .IllustItem .IllustItemCommand .GenreInfo .GenreImage {flex: 0 40px;width: 40px;height: 40px;}
 .IllustItem .IllustItemTag {-ms-overflow-style: none;}
 .IllustItem .IllustItemTag::-webkit-scrollbar {display:none;}
-
-.IllustItemList2Column .IllustItem {margin: 31px 12px 17px 12px; width: 212px;}
 
 
 .Wrapper.ViewPc .IllustItem .IllustItemCommand .IllustItemCategoryEdit {margin: 0px 0 8px 0px;}
@@ -155,7 +144,7 @@ body {padding: 51px 0 0 0 !important;}
 
 
 /********** GRID ***********/
-.Wrapper.GridList {width: 1180px;}
+.Wrapper.GridList {width: 100%;}
 .Wrapper.GridList .PcSideBarAd {display: flex; flex-flow: column; position: relative; width: 336px; height: 280px; float: right; margin: 31px 12px 12px 12px; background-color: #ffffff; align-items: center; justify-content: center;}
 .Wrapper.GridList .PcSideBarAd .PassAd {display: block; position: absolute; top: -19px; left: 0; width: 100%; height: 19px; max-height: 19px; line-height: 19px; font-size: 13px; color: #000; text-align: right;}
 

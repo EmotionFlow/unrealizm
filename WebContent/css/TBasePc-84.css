@@ -7,7 +7,6 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 
 .Header .HeaderTitleWrapper {
     display: flex;
-    max-width: 600px;
     margin: 0 auto;
     position: relative;
     padding: 10px 0 8px 0;
@@ -27,7 +26,7 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 .Header .HeaderLink .HeaderImg {display: block; height: 32px; padding: 0 0 2px 0;font-size: 10px;}
 .Header .HeaderLoginLabel {font-size: 10px; color: #4B4B4B;}
 .Header .HeaderTitleSearch {display: block; color: #000; width: 30px; height: 30px; line-height: 28px; font-size: 18px; text-align: center; position: absolute; top: 1px; right: 10px; padding: 10px 0;}
-.HeaderSearchWrapper {max-width: 600px; margin: 0 auto; padding: 4px 0; box-sizing: border-box; overflow: hidden;}
+.HeaderSearchWrapper {margin: 0 auto; padding: 4px 0; box-sizing: border-box; overflow: hidden;}
 .Header .HeaderLoginBtn {display: block; width: 118px; height: 7px; line-height: 2px; text-align: center; position: absolute; top: 10px; right: 4px; padding: 11px 6px; font-size: 11px;}
 .Header .HeaderLoginBtnPc {display: block; width: 117px; height: 7px; line-height: 3px; text-align: center; margin: 0; padding: 11px 6px; font-size: 12px;}
 .Header .HeaderSelectLang {color: #000;position: absolute;top: 10px;right: 3px;}
@@ -110,7 +109,7 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
     position: relative;
     display: block;
     float: left;
-    width: 72px;
+    width: 20%;
     height: 50px;
     text-align: center;
     font-size: 0;
@@ -121,7 +120,7 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
     width: 28px;
     height: 28px;
     font-size: 28px;
-    margin: 11px 0;
+    margin: 4px 0;
     position: relative;
     color: #c0c0b5;
 }
@@ -142,7 +141,7 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
     right: 10px;
 }
 
-.FooterMenu .FooterMenuItem .FooterMenuItemName {display: none; width: 100%; height: 10px; line-height: 10px; text-align: center; font-size: 9px; color: #c0c0b5;}
+.FooterMenu .FooterMenuItem .FooterMenuItemName {display: block; width: 100%; height: 10px; line-height: 10px; text-align: center; font-size: 9px; color: #c0c0b5;}
 .FooterMenu .FooterMenuItem.Selected .FooterMenuItemName {color: #000;}
 .FooterMenu .FooterMenuItem:hover .FooterMenuItemName, .FooterMenuWrapper .FooterMenu .FooterMenuItem.Selected .FooterMenuItemName {color: #000;}
 .FooterMenu .TwLoginUnsuccessfulIcon {

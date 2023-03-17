@@ -11,8 +11,8 @@ cParam.userId = checkLogin.m_nUserId;
 nRtn = cParam.GetParam(request);
 
 if( checkLogin.m_bLogin && cParam.userId==checkLogin.m_nUserId && nRtn==0 ) {
-	UploadFileAppendC cResults = new UploadFileAppendC(getServletContext());
-	nRtn = cResults.GetResults(cParam, _TEX, false, isApp);
+	UploadFileAppendC results = new UploadFileAppendC(getServletContext());
+	nRtn = results.GetResults(cParam, _TEX, false, isApp);
 }
 %>
 {"append_id":<%=nRtn%>,"success":true,"reset":false}

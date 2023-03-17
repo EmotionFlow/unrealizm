@@ -3,12 +3,12 @@
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 
-UpdateFollowTagC cResults = new UpdateFollowTagC();
-cResults.getParam(request);
+UpdateFollowTagC results = new UpdateFollowTagC();
+results.getParam(request);
 
 int nRtn = UpdateFollowTagC.ERR_NOT_LOGIN;
-if (checkLogin.m_bLogin && cResults.m_nUserId == checkLogin.m_nUserId) {
-	nRtn = cResults.getResults(checkLogin);
+if (checkLogin.m_bLogin && results.m_nUserId == checkLogin.m_nUserId) {
+	nRtn = results.getResults(checkLogin);
 }
 String strMessage = "";
 if (nRtn < 0) {

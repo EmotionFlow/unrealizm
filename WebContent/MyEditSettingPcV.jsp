@@ -37,9 +37,9 @@ boolean isApp = false;
 
 //パラメータの取得
 //検索結果の取得
-MyEditSettingC cResults = new MyEditSettingC();
-cResults.getParam(request);
-cResults.getResults(checkLogin);
+MyEditSettingC results = new MyEditSettingC();
+results.getParam(request);
+results.getResults(checkLogin);
 
 HashMap<String, String> MENU = new HashMap<>();
 MENU.put("PROFILE", "<i class=\"fas fa-address-card\"></i> " + _TEX.T("EditSettingV.Profile"));
@@ -174,8 +174,8 @@ String[][] menuOrder = {
 			}
 
 			$(function(){
-				<%if(cResults.m_strMessage.length()>0) {%>
-					DispMsg("<%=Util.toStringHtml(cResults.m_strMessage)%>");
+				<%if(results.m_strMessage.length()>0) {%>
+					DispMsg("<%=Util.toStringHtml(results.m_strMessage)%>");
 				<%}%>
 
 				$(".SettingChangePageLink").click((ev)=>{
@@ -188,15 +188,15 @@ String[][] menuOrder = {
 					$("#MenuMe").addClass("Selected");
 					$("#MenuSearch").hide();
 					$("#MenuSettings").show();
-					<%if(cResults.m_strSelectedMenuId.isEmpty()){%>
+					<%if(results.m_strSelectedMenuId.isEmpty()){%>
 						$("#MENUROOT").show();
 					<%}else{%>
-						$("#<%=cResults.m_strSelectedMenuId%>").show();
+						$("#<%=results.m_strSelectedMenuId%>").show();
 					<%}%>
 				<%}else{%>
 					$("#MenuSettings").addClass("Selected");
 					$("#MENUROOT").show();
-					let menuId = "<%=cResults.m_strSelectedMenuId%>";
+					let menuId = "<%=results.m_strSelectedMenuId%>";
 					if(menuId===""){
 						menuId = "PROFILE";
 					}
@@ -334,7 +334,7 @@ String[][] menuOrder = {
 
 			<%
 				String strPageId = "";
-				final String selectedMenuId = cResults.m_strSelectedMenuId;
+				final String selectedMenuId = results.m_strSelectedMenuId;
 			%>
 
 			<%strPageId = "PROFILE";%>

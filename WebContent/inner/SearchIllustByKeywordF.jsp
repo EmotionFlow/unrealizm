@@ -4,13 +4,13 @@
 CheckLogin checkLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
 
-SearchIllustByKeywordC cResults = new SearchIllustByKeywordC();
-cResults.selectMaxGallery = 16;
-cResults.getParam(request);
+SearchIllustByKeywordC results = new SearchIllustByKeywordC();
+results.selectMaxGallery = 16;
+results.getParam(request);
 if (isApp) {
 	checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 }
-cResults.getResults(checkLogin, true);
+results.getResults(checkLogin, true);
 
 ArrayList<String> emojiList = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 
@@ -18,9 +18,9 @@ StringBuilder sbHtml = new StringBuilder();
 final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 
 int nCnt;
-for (nCnt = 0; nCnt < cResults.contentList.size(); nCnt++) {
-	CContent cContent = cResults.contentList.get(nCnt);
-	sbHtml.append(CCnv.Content2Html2Column(cContent, checkLogin, bSmartPhone?CCnv.MODE_SP:CCnv.MODE_PC, _TEX, emojiList, cResults.viewMode, nSpMode));
+for (nCnt = 0; nCnt < results.contentList.size(); nCnt++) {
+	CContent cContent = results.contentList.get(nCnt);
+	sbHtml.append(CCnv.Content2Html2Column(cContent, checkLogin, bSmartPhone?CCnv.MODE_SP:CCnv.MODE_PC, _TEX, emojiList, results.viewMode, nSpMode));
 
 	if (checkLogin.m_nPassportId==Common.PASSPORT_OFF && (nCnt == 3 || nCnt == 9 || nCnt == 15) && bSmartPhone) {
 		sbHtml.append("<div class=\"IllustItem\" style=\"width: 360px; height: 250px; background: none; border: none; opacity: 0\">");
@@ -29,4 +29,4 @@ for (nCnt = 0; nCnt < cResults.contentList.size(); nCnt++) {
 	}
 }
 
-%>{"end_id":<%=cResults.lastContentId%>,"html":"<%=CEnc.E(sbHtml.toString())%>"}
+%>{"end_id":<%=results.lastContentId%>,"html":"<%=CEnc.E(sbHtml.toString())%>"}

@@ -4,9 +4,9 @@
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 if (!checkLogin.m_bLogin) return;
-DeleteSearchLogC cResults = new DeleteSearchLogC();
-cResults.getParam(request);
-int nResult = cResults.getResults(checkLogin);
+DeleteSearchLogC results = new DeleteSearchLogC();
+results.getParam(request);
+int nResult = results.getResults(checkLogin);
 %>
 {
 "result": <%=nResult%>

@@ -10,8 +10,8 @@ UploadTextCParam cParam = new UploadTextCParam();
 nRtn = cParam.GetParam(request);
 
 if( checkLogin.m_bLogin && cParam.userId==checkLogin.m_nUserId && nRtn==0 ) {
-	UploadTextC cResults = new UploadTextC();
-	nRtn = cResults.GetResults(cParam, checkLogin);
+	UploadTextC results = new UploadTextC();
+	nRtn = results.GetResults(cParam, checkLogin);
 }
 %>
 {"content_id":<%=nRtn%>}

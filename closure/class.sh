@@ -4,5 +4,12 @@ if [ ! -f ${ENV_FILE} ]; then
  exit
 fi
 
-rsync -av --delete ../build/classes/jp/ ${WEB_CONTENT}WEB-INF/classes/jp/
+source ${ENV_FILE}
+
+DEPLOY_PATH="${WEB_CONTENT}WEB-INF/classes"
+
+
+echo ${WEB_CONTENT}
+
+rsync -av --delete ../bin/jp/ ${DEPLOY_PATH}/jp/
 #rsync -av --delete ../build/classes/com/ ${WEB_CONTENT}WEB-INF/classes/com/

@@ -5,7 +5,7 @@
     poipikuRequest.clientUserId = checkLogin.m_nUserId;
     final int countOfRequests = poipikuRequest.getCountOfRequestsByStatus(Request.Status.WaitingApproval);
     CreditCard creditCard = null;
-    if (cResults.m_bCardInfoExist) {
+    if (results.m_bCardInfoExist) {
         creditCard = new CreditCard(checkLogin.m_nUserId, Agent.EPSILON);
         creditCard.selectByUserIdAgentId();
     }
@@ -109,7 +109,7 @@
         EpsilonToken.getToken(cardObj , _changeCardEpsilonTrade);
     }
 
-    <%if(cResults.m_cPassport.status == Passport.Status.Active){%>
+    <%if(results.m_cPassport.status == Passport.Status.Active){%>
     function changeCreditCardInfo() {
         let cardInfo = {
             "number": null,
@@ -167,7 +167,7 @@
             <%}%>
         </div>
 
-        <%if(cResults.m_cPassport.status == Passport.Status.Active){%>
+        <%if(results.m_cPassport.status == Passport.Status.Active){%>
         <div class="SettingListTitle"><%=_TEX.T("MyEditSettingPaymentV.ChangeCard.Title")%></div>
         <div class="SettingBody">
             <%=_TEX.T("MyEditSettingPaymentV.ChangeCard.Text")%>

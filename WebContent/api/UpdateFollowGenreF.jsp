@@ -90,12 +90,12 @@
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 
-UpdateFollowGenreC cResults = new UpdateFollowGenreC();
-cResults.getParam(request);
+UpdateFollowGenreC results = new UpdateFollowGenreC();
+results.getParam(request);
 
 int nRtn = UpdateFollowGenreC.ERR_NOT_LOGIN;
-if(checkLogin.m_bLogin && cResults.userId==checkLogin.m_nUserId) {
-	nRtn = cResults.getResults(checkLogin);
+if(checkLogin.m_bLogin && results.userId==checkLogin.m_nUserId) {
+	nRtn = results.getResults(checkLogin);
 }
 String strMessage = "";
 if(nRtn<0) {

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <div id="SwitchUserList" style="display: none">
-	<%for (MyIllustListC.SwitchUser switchUser: cResults.switchUsers) {%>
+	<%for (MyIllustListC.SwitchUser switchUser: results.switchUsers) {%>
 	<div class="SwitchUserItem">
 				<span class="SwitchUserThumb"
 					  style="background-image:url('<%=Common.GetUrl(switchUser.user.m_strFileName)%>')"
@@ -19,7 +19,7 @@
 	<%}%>
 
 	<a id="SwitchUserItemAddUser" class="SwitchUserItem"
-	   style="display: <%=cResults.switchUsers.size()<2?"flex":"none"%>"
+	   style="display: <%=results.switchUsers.size()<2?"flex":"none"%>"
 	   href="javascript: void(0)"
 	   onclick="addSwitchUser(<%=checkLogin.m_nUserId%>)">
 		<span class="SwitchUserNickname" style="text-align: center"><%=_TEX.T("SwitchAccount.Add")%></span>

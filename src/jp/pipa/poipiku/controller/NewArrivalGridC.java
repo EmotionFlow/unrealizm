@@ -27,7 +27,7 @@ public class NewArrivalGridC {
 
 
 	public int SELECT_MAX_GALLERY = 24;
-	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
+	public ArrayList<CContent> contentList = new ArrayList<CContent>();
 	public int m_nEndId = -1;
 	public int m_nContentsNum = 0;
 	public boolean getResults(CheckLogin checkLogin) {
@@ -116,7 +116,7 @@ public class NewArrivalGridC {
 				if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
 				cContent.m_cUser.m_nFollowing = (cContent.m_nUserId == checkLogin.m_nUserId)?CUser.FOLLOW_HIDE:(cResSet.getInt("follow_user_id")>0)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
 				m_nEndId = cContent.m_nContentId-1;
-				m_vContentList.add(cContent);
+				contentList.add(cContent);
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
@@ -124,9 +124,9 @@ public class NewArrivalGridC {
 			bResult = true;
 
 			// Each Comment
-			GridUtil.getEachComment(cConn, m_vContentList);
+			GridUtil.getEachComment(cConn, contentList);
 			// Bookmark
-			m_vContentList = GridUtil.getEachBookmark(cConn, m_vContentList, checkLogin);
+			contentList = GridUtil.getEachBookmark(cConn, contentList, checkLogin);
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();

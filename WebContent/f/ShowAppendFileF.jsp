@@ -33,39 +33,39 @@ if (!referer.contains("unrealizm.com")) {
 CheckLogin checkLogin = new CheckLogin(request, response);
 
 StringBuilder strHtml = new StringBuilder();
-ShowAppendFileC cResults = new ShowAppendFileC();
-cResults.getParam(request);
-int nRtn = cResults.getResults(checkLogin, _TEX);
+ShowAppendFileC results = new ShowAppendFileC();
+results.getParam(request);
+int nRtn = results.getResults(checkLogin, _TEX);
 
 if (nRtn < ShowAppendFileC.OK) {
-	strHtml.append(cResults.errorMessage);
+	strHtml.append(results.errorMessage);
 } else {
-	cResults.content.setThumb(); // isHideThumbImgをセットするために必要
+	results.content.setThumb(); // isHideThumbImgをセットするために必要
 
-	final String illustDetailUrl = (cResults.m_nSpMode==CCnv.SP_MODE_APP)?"/IllustDetailV.jsp":"/IllustDetailPcV.jsp";
-	if (!cResults.isRequestClient && cResults.content.m_nOpenId==Common.OPEN_ID_HIDDEN
-			|| !cResults.content.isHideThumbImg
-			|| cResults.content.publishAllNum == 1) {
+	final String illustDetailUrl = (results.m_nSpMode==CCnv.SP_MODE_APP)?"/IllustDetailV.jsp":"/IllustDetailPcV.jsp";
+	if (!results.isRequestClient && results.content.m_nOpenId==Common.OPEN_ID_HIDDEN
+			|| !results.content.isHideThumbImg
+			|| results.content.publishAllNum == 1) {
 
-		if (cResults.isOwner
-				&& cResults.content.m_nOpenId==Common.OPEN_ID_HIDDEN
-				&& (cResults.content.m_nPublishId != Common.PUBLISH_ID_ALL
-					||  cResults.content.m_nSafeFilter != Common.SAFE_FILTER_ALL
-					||  cResults.content.isPasswordEnabled())
+		if (results.isOwner
+				&& results.content.m_nOpenId==Common.OPEN_ID_HIDDEN
+				&& (results.content.m_nPublishId != Common.PUBLISH_ID_ALL
+					||  results.content.m_nSafeFilter != Common.SAFE_FILTER_ALL
+					||  results.content.isPasswordEnabled())
 		) {
-			nRtn = appendIllustItem(strHtml, illustDetailUrl, cResults.content, nRtn);
+			nRtn = appendIllustItem(strHtml, illustDetailUrl, results.content, nRtn);
 		}
 
-		if (cResults.content.m_nEditorId==Common.EDITOR_TEXT) {
+		if (results.content.m_nEditorId==Common.EDITOR_TEXT) {
 			nRtn=1;
 		}
 	} else {
-		nRtn = appendIllustItem(strHtml, illustDetailUrl, cResults.content, nRtn);
+		nRtn = appendIllustItem(strHtml, illustDetailUrl, results.content, nRtn);
 	}
 
 	// 以降の画像を表示
-	for(CContentAppend contentAppend : cResults.content.m_vContentAppend) {
-		CCnv.appendIllustItemThumb2(strHtml, cResults.content, contentAppend, CCnv.VIEW_DETAIL, null);
+	for(CContentAppend contentAppend : results.content.m_vContentAppend) {
+		CCnv.appendIllustItemThumb2(strHtml, results.content, contentAppend, CCnv.VIEW_DETAIL, null);
 	}
 }
-%>{"result_num":<%=nRtn%>,"html":"<%=CEnc.E(strHtml.toString())%>","tw_friendship":"<%=cResults.m_nTwFriendship%>"}
+%>{"result_num":<%=nRtn%>,"html":"<%=CEnc.E(strHtml.toString())%>","tw_friendship":"<%=results.m_nTwFriendship%>"}

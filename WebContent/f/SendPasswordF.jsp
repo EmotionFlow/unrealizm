@@ -22,9 +22,9 @@ session.removeAttribute("SendPasswordFToken");
 int nUserId = -1;
 if (isPrecheckOK) {
 	CheckLogin checkLogin = new CheckLogin(request, response);
-	SendPasswordC cResults = new SendPasswordC();
-	cResults.getParam(request);
-	nUserId = cResults.getResults(checkLogin, _TEX);
+	SendPasswordC results = new SendPasswordC();
+	results.getParam(request);
+	nUserId = results.getResults(checkLogin, _TEX);
 }
 
 %>{"result" : <%=nUserId%>}

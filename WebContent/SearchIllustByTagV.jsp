@@ -1,5 +1,3 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%
-getServletContext().getRequestDispatcher("/SearchIllustByTagAppV.jsp").forward(request,response);
-return;
-%>
+<% boolean isApp = false; %>
+<%@include file="/inner/SearchIllustByTagV.jsp"%>

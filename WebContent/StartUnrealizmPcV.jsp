@@ -8,10 +8,10 @@ boolean isApp = false;
 ArrayList<String> emojiList = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 
-NewArrivalC cResults = new NewArrivalC();
-cResults.selectMaxGallery = 10;
-cResults.getParam(request);
-cResults.getResults(checkLogin);
+NewArrivalC results = new NewArrivalC();
+results.selectMaxGallery = 10;
+results.getParam(request);
+results.getResults(checkLogin);
 
 String strTitle = _TEX.T("THeader.Title");
 String strDesc =  _TEX.T("THeader.Title.Desc");
@@ -40,7 +40,6 @@ String strDesc =  _TEX.T("THeader.Title.Desc");
 	<link rel="alternate" media="only screen and (max-width: 640px)" href="<%=Common.URL_ROOT%>" />
 	<title><%=Util.toDescString(strTitle)%></title>
 
-	<script src="/js/masonry.pkgd.min.js"></script>
 	<script src="/js/imagesloaded.pkgd.min.js"></script>
 
 	<script type="text/javascript">
@@ -51,7 +50,7 @@ String strDesc =  _TEX.T("THeader.Title.Desc");
 		<%}%>
 
 		let initDone = false;
-		let lastContentId = <%=cResults.contentList.size()>0 ? cResults.contentList.get(cResults.contentList.size()-1).m_nContentId : -1%>;
+		let lastContentId = <%=results.contentList.size()>0 ? results.contentList.get(results.contentList.size()-1).m_nContentId : -1%>;
 		let page = 0;
 
 		const loadingSpinner = {
@@ -85,7 +84,7 @@ String strDesc =  _TEX.T("THeader.Title.Desc");
 					$('#IllustItemList').imagesLoaded(function(){
 					<%}%>
 					$newElems.animate({ opacity: 1 });
-					$('#IllustItemList').masonry('appended', $newElems, true);
+//					$('#IllustItemList').masonry('appended', $newElems, true);
 
 					setTimeout(()=>{
 						observer.observe(contents.lastElementChild);
@@ -114,7 +113,7 @@ String strDesc =  _TEX.T("THeader.Title.Desc");
 	<%if (!isApp) {%>
 	body {padding-top: 51px !important;}
 	<%if (!bSmartPhone){%>
-	.Wrapper.ThumbList {padding-top: 10px; width: 1180px;}
+	.Wrapper.ThumbList {padding-top: 10px;}
 	<%}%>
 	<%} else {%>
 	body {padding-top: 0 !important;}
@@ -132,12 +131,12 @@ String strDesc =  _TEX.T("THeader.Title.Desc");
 				<%}%>
 				let $newElems = $('.IllustItem, .loadingSpinner');
 				$newElems.animate({ opacity: 1 });
-				$('#IllustItemList').masonry({
-					itemSelector: '.IllustItem',
-					columnWidth: _columnWidth,
-					isFitWidth: true,
-					gutterWidth: 0,
-				});
+// 				$('#IllustItemList').masonry({
+// 					itemSelector: '.IllustItem',
+// 					columnWidth: _columnWidth,
+// 					isFitWidth: true,
+// 					gutterWidth: 0,
+// 				});
 
 				setTimeout(()=>{
 					const contents = document.getElementById('IllustItemList');
@@ -170,21 +169,9 @@ String strDesc =  _TEX.T("THeader.Title.Desc");
 
 <article class="Wrapper ThumbList">
 
-	<section
-			id="IllustItemList"
-			class="IllustItemList2Column"
-			style="position: relative; top: 15px;"
-	>
-		<% for (int cnt = 0; cnt<cResults.contentList.size(); cnt++) { %>
-		<%=CCnv.Content2Html2Column(cResults.contentList.get(cnt), checkLogin, bSmartPhone?CCnv.MODE_SP:CCnv.MODE_PC, _TEX, emojiList, CCnv.VIEW_DETAIL, nSpMode)%>
-
-		<% if (false){ %>
-<%--		<% if (checkLogin.m_nPassportId==Common.PASSPORT_OFF && (cnt == 3 || cnt == 9) && bSmartPhone){ %>--%>
-		<div class="IllustItem" style="width: 360px; height: 250px; background: none; border: none;">
-			<%=Util.poipiku_336x280_sp_mid(checkLogin, g_nSafeFilter)%>
-		</div>
-		<%}%>
-
+	<section id="IllustItemList" class="IllustItemList2Column">
+		<%for(CContent cContent: results.contentList) {%>
+			<%=CCnv.Content2Html2Column(cContent, checkLogin, bSmartPhone?CCnv.MODE_SP:CCnv.MODE_PC, _TEX, emojiList, CCnv.VIEW_DETAIL, nSpMode)%>
 		<%}%>
 	</section>
 </article>

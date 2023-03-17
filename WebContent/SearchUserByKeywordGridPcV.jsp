@@ -14,25 +14,25 @@ if (!referer.contains("unrealizm.com")) {
 
 CheckLogin checkLogin = new CheckLogin(request, response);
 
-SearchUserByKeywordC cResults = new SearchUserByKeywordC();
-cResults.getParam(request);
+SearchUserByKeywordC results = new SearchUserByKeywordC();
+results.getParam(request);
 
-if (cResults.m_strKeyword.indexOf("#") == 0) {
-	response.sendRedirect("https://unrealizm.com/SearchTagByKeywordPcV.jsp?KWD=" + URLEncoder.encode(cResults.m_strKeyword.replaceFirst("#", ""), StandardCharsets.UTF_8));
+if (results.m_strKeyword.indexOf("#") == 0) {
+	response.sendRedirect("https://unrealizm.com/SearchTagByKeywordPcV.jsp?KWD=" + URLEncoder.encode(results.m_strKeyword.replaceFirst("#", ""), StandardCharsets.UTF_8));
 	return;
 }
 
-cResults.SELECT_MAX_GALLERY = 45;
+results.SELECT_MAX_GALLERY = 45;
 
-boolean bRtn = cResults.getResults(checkLogin);
-g_strSearchWord = cResults.m_strKeyword;
+boolean bRtn = results.getResults(checkLogin);
+g_strSearchWord = results.m_strKeyword;
 %>
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<%@ include file="/inner/ad/TAdSearchUserPcHeader.jsp"%>
-		<meta name="description" content="<%=Util.toStringHtml(String.format(_TEX.T("SearchUserByKeyword.Title.Desc"), cResults.m_strKeyword))%>" />
+		<meta name="description" content="<%=Util.toStringHtml(String.format(_TEX.T("SearchUserByKeyword.Title.Desc"), results.m_strKeyword))%>" />
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("SearchUserByKeyword.Title")%></title>
 
 		<script type="text/javascript">
@@ -58,9 +58,9 @@ g_strSearchWord = cResults.m_strKeyword;
 
 		<nav class="TabMenuWrapper">
 			<ul class="TabMenu">
-				<li><a class="TabMenuItem" href="/SearchIllustByKeywordPcV.jsp?KWD=<%=cResults.encodedKeyword%>"><%=_TEX.T("Search.Cat.Illust")%></a></li>
-				<li><a class="TabMenuItem" href="/SearchTagByKeywordPcV.jsp?KWD=<%=cResults.encodedKeyword%>"><%=_TEX.T("Search.Cat.Tag")%></a></li>
-				<li><a class="TabMenuItem Selected" href="/SearchUserByKeywordGridPcV.jsp?KWD=<%=cResults.encodedKeyword%>"><%=_TEX.T("Search.Cat.User")%></a></li>
+				<li><a class="TabMenuItem" href="/SearchIllustByKeywordPcV.jsp?KWD=<%=results.encodedKeyword%>"><%=_TEX.T("Search.Cat.Illust")%></a></li>
+				<li><a class="TabMenuItem" href="/SearchTagByKeywordPcV.jsp?KWD=<%=results.encodedKeyword%>"><%=_TEX.T("Search.Cat.Tag")%></a></li>
+				<li><a class="TabMenuItem Selected" href="/SearchUserByKeywordGridPcV.jsp?KWD=<%=results.encodedKeyword%>"><%=_TEX.T("Search.Cat.User")%></a></li>
 			</ul>
 		</nav>
 
@@ -68,11 +68,11 @@ g_strSearchWord = cResults.m_strKeyword;
 
 		<article class="Wrapper GridList">
 			<header class="SearchResultTitle">
-				<h2 class="Keyword">@<%=Util.toStringHtml(cResults.m_strKeyword)%></h2>
+				<h2 class="Keyword">@<%=Util.toStringHtml(results.m_strKeyword)%></h2>
 			</header>
 			<section id="IllustThumbList" class="IllustThumbList">
-				<%for(int nCnt = 0; nCnt<cResults.selectByNicknameUsers.size(); nCnt++) {
-					CUser cUser = cResults.selectByNicknameUsers.get(nCnt);%>
+				<%for(int nCnt = 0; nCnt<results.selectByNicknameUsers.size(); nCnt++) {
+					CUser cUser = results.selectByNicknameUsers.get(nCnt);%>
 					<%=CCnv.toHtmlUserMini(cUser, CCnv.MODE_SP, _TEX, CCnv.SP_MODE_WVIEW)%>
 					<%if(Util.isSmartPhone(request)) {%>
 						<%if(nCnt==13) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
@@ -86,7 +86,7 @@ g_strSearchWord = cResults.m_strKeyword;
 			</section>
 
 			<nav class="PageBar">
-				<%=CPageBar.CreatePageBarSp("/SearchUserByKeywordGridPcV.jsp", "&KWD="+URLEncoder.encode(cResults.m_strKeyword, "UTF-8"), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%=CPageBar.CreatePageBarSp("/SearchUserByKeywordGridPcV.jsp", "&KWD="+URLEncoder.encode(results.m_strKeyword, "UTF-8"), results.m_nPage, results.m_nContentsNum, results.SELECT_MAX_GALLERY)%>
 			</nav>
 		</article>
 

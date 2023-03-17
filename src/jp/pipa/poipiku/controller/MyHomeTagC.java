@@ -32,7 +32,7 @@ public final class MyHomeTagC {
 
 	public int SELECT_MAX_GALLERY = 10;
 	public int SELECT_MAX_EMOJI = GridUtil.SELECT_MAX_EMOJI;
-	public ArrayList<CContent> m_vContentList = new ArrayList<>();
+	public ArrayList<CContent> contentList = new ArrayList<>();
 	public int m_nContentsNum = 0;
 	public int m_nContentsNumTotal = 0;
 	public int m_nEndId = -1;
@@ -135,7 +135,7 @@ public final class MyHomeTagC {
 				content.m_cUser.m_nFollowing = (content.m_nUserId == checkLogin.m_nUserId)?CUser.FOLLOW_HIDE:(resultSet.getInt("follow_user_id")>0)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
 				content.m_strDescriptionTranslated = resultSet.getString("description_translated");
 				m_nEndId = content.m_nContentId;
-				m_vContentList.add(content);
+				contentList.add(content);
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
@@ -143,10 +143,10 @@ public final class MyHomeTagC {
 			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
 
 			// Each Comment
-			GridUtil.getEachComment(connection, m_vContentList);
+			GridUtil.getEachComment(connection, contentList);
 
 			// Bookmark
-			GridUtil.getEachBookmark(connection, m_vContentList, checkLogin);
+			GridUtil.getEachBookmark(connection, contentList, checkLogin);
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();

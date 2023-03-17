@@ -4,7 +4,7 @@
 FollowListC cBlockListResults = new FollowListC();
 cBlockListResults.getParam(request);
 cBlockListResults.m_nMode = 1;
-cBlockListResults.m_nPage = cResults.m_nListPage;
+cBlockListResults.m_nPage = results.m_nListPage;
 cBlockListResults.selectMaxGallery = 30;
 cBlockListResults.getResults(checkLogin);
 %>

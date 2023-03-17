@@ -62,11 +62,11 @@
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 
-RegistNotificationTokenC cResults = new RegistNotificationTokenC();
-cResults.GetParam(request);
+RegistNotificationTokenC results = new RegistNotificationTokenC();
+results.GetParam(request);
 
 int nRtn = -1;
-if( checkLogin.m_bLogin && cResults.m_nUserId == checkLogin.m_nUserId ) {
-	nRtn = cResults.GetResults(checkLogin);
+if( checkLogin.m_bLogin && results.m_nUserId == checkLogin.m_nUserId ) {
+	nRtn = results.GetResults(checkLogin);
 }
 %>{"result":<%=nRtn%>}

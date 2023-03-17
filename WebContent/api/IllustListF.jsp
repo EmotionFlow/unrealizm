@@ -19,11 +19,11 @@ if(!checkLogin.m_bLogin) {
 }
 
 //パラメータの取得
-IllustListC cResults = new IllustListC();
-cResults.getParam(request);
+IllustListC results = new IllustListC();
+results.getParam(request);
 
 //検索結果の取得
-if (checkLogin.m_nUserId!=cResults.m_nUserId || !cResults.getResults(checkLogin, false)) {
+if (checkLogin.m_nUserId!=results.m_nUserId || !results.getResults(checkLogin, false)) {
 	nResult = -2;
 }
 
@@ -37,30 +37,30 @@ try {
 	user.put("result", nResult);
 
 	if (nResult == 0) {
-		user.put("user_id", cResults.m_cUser.m_nUserId);
-		user.put("page_num", cResults.m_nPage);
-		user.put("content_num", cResults.m_nContentsNum);
-		user.put("content_num_total", cResults.m_nContentsNumTotal);
-		user.put("user_name", cResults.m_cUser.m_strNickName);
-		user.put("profile_icon_image_url", Common.GetUrl(cResults.m_cUser.m_strFileName));
-		user.put("profile_header_image_url", Common.GetUrl(cResults.m_cUser.m_strHeaderFileName));
-		user.put("profile_message", cResults.m_cUser.m_strProfile);
-		user.put("follow_num", cResults.m_cUser.m_nFollowNum);
-		user.put("follower_num", cResults.m_cUser.m_nFollowerNum);
+		user.put("user_id", results.m_cUser.m_nUserId);
+		user.put("page_num", results.m_nPage);
+		user.put("content_num", results.m_nContentsNum);
+		user.put("content_num_total", results.m_nContentsNumTotal);
+		user.put("user_name", results.m_cUser.m_strNickName);
+		user.put("profile_icon_image_url", Common.GetUrl(results.m_cUser.m_strFileName));
+		user.put("profile_header_image_url", Common.GetUrl(results.m_cUser.m_strHeaderFileName));
+		user.put("profile_message", results.m_cUser.m_strProfile);
+		user.put("follow_num", results.m_cUser.m_nFollowNum);
+		user.put("follower_num", results.m_cUser.m_nFollowerNum);
 
 		//Twitterリンク
 		String strTwitterUrl=String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
 				URLEncoder.encode(String.format("%s%s %s #%s",
-						cResults.m_cUser.m_strNickName,
+						results.m_cUser.m_strNickName,
 						_TEX.T("Twitter.UserAddition"),
-						String.format(_TEX.T("Twitter.UserPostNum"), cResults.m_nContentsNumTotal),
+						String.format(_TEX.T("Twitter.UserPostNum"), results.m_nContentsNumTotal),
 						_TEX.T("Common.HashTag")), "UTF-8"),
-				URLEncoder.encode("https://unrealizm.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"));
+				URLEncoder.encode("https://unrealizm.com/"+results.m_cUser.m_nUserId+"/", "UTF-8"));
 		user.put("twitter_link", strTwitterUrl);
 
 		//画像の情報(配列)
 		List<Map<String, Object>> imglist = new ArrayList<Map<String, Object>>();
-		for(CContent cContent : cResults.m_vContentList) {
+		for(CContent cContent : results.contentList) {
 			//カテゴリ名設定
 			String strCategory = "";
 			for(int nCategoryId : Common.CATEGORY_ID) {

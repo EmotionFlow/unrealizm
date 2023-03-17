@@ -67,10 +67,10 @@
 		<div class="SettingListTitle"><%=_TEX.T("EditSettingV.HeaderImage")%></div>
 		<div class="SettingBody">
 			<div class="PreviewImgFrame">
-				<%if(cResults.m_cUser.m_strHeaderFileName.equals("/img/default_transparency.gif")) {%>
+				<%if(results.m_cUser.m_strHeaderFileName.equals("/img/default_transparency.gif")) {%>
 				<span class="PreviewMessage"><%=_TEX.T("EditSettingV.Image.NoImage")%></span>
 				<%} else {%>
-				<img class="PreviewImg" src="<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>" />
+				<img class="PreviewImg" src="<%=Common.GetUrl(results.m_cUser.m_strHeaderFileName)%>" />
 				<%}%>
 			</div>
 			<div id="RegistMessage" class="RegistMessage" ><%=_TEX.T("EditSettingV.HeaderImage.Format")%></div>
@@ -91,10 +91,10 @@
 <%--		</div>--%>
 <%--		<div class="SettingBody" <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF) {%>style="opacity: 0.3"<%}%>>--%>
 <%--			<div class="PreviewImgFrame">--%>
-<%--				<%if(cResults.m_cUser.m_strBgFileName.equals("/img/default_transparency.gif")) {%>--%>
+<%--				<%if(results.m_cUser.m_strBgFileName.equals("/img/default_transparency.gif")) {%>--%>
 <%--				<span class="PreviewMessage"><%=_TEX.T("EditSettingV.Image.NoImage")%></span>--%>
 <%--				<%} else {%>--%>
-<%--				<img class="PreviewImg" src="<%=Common.GetUrl(cResults.m_cUser.m_strBgFileName)%>" />--%>
+<%--				<img class="PreviewImg" src="<%=Common.GetUrl(results.m_cUser.m_strBgFileName)%>" />--%>
 <%--				<%}%>--%>
 <%--			</div>--%>
 <%--			<div class="RegistMessage" ><%=_TEX.T("EditSettingV.HeaderImage.Format")%></div>--%>
@@ -121,7 +121,7 @@
 <%--			<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">--%>
 <%--				<div class="RegistMessage" >--%>
 <%--					<div class="onoffswitch OnOff">--%>
-<%--						<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="NgAdMode" value="0" <%if(cResults.m_cUser.m_nAdMode!=CUser.AD_MODE_HIDE){%>checked="checked"<%}%> />--%>
+<%--						<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="NgAdMode" value="0" <%if(results.m_cUser.m_nAdMode!=CUser.AD_MODE_HIDE){%>checked="checked"<%}%> />--%>
 <%--						<label class="onoffswitch-label" for="NgAdMode">--%>
 <%--							<span class="onoffswitch-inner"></span>--%>
 <%--							<span class="onoffswitch-switch"></span>--%>
@@ -145,7 +145,7 @@
 <%--			<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">--%>
 <%--				<div class="RegistMessage" >--%>
 <%--					<div class="onoffswitch OnOff">--%>
-<%--						<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="NgDownload" value="0" <%if(cResults.m_cUser.m_nDownload!=CUser.DOWNLOAD_OFF){%>checked="checked"<%}%> />--%>
+<%--						<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="NgDownload" value="0" <%if(results.m_cUser.m_nDownload!=CUser.DOWNLOAD_OFF){%>checked="checked"<%}%> />--%>
 <%--						<label class="onoffswitch-label" for="NgDownload">--%>
 <%--							<span class="onoffswitch-inner"></span>--%>
 <%--							<span class="onoffswitch-switch"></span>--%>
@@ -165,7 +165,7 @@
 <%--			<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">--%>
 <%--				<div class="RegistMessage" >--%>
 <%--					<div class="onoffswitch OnOff">--%>
-<%--						<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="NgReaction" value="0" <%if(cResults.m_cUser.m_nReaction!=CUser.REACTION_SHOW){%>checked="checked"<%}%> />--%>
+<%--						<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="NgReaction" value="0" <%if(results.m_cUser.m_nReaction!=CUser.REACTION_SHOW){%>checked="checked"<%}%> />--%>
 <%--						<label class="onoffswitch-label" for="NgReaction">--%>
 <%--							<span class="onoffswitch-inner"></span>--%>
 <%--							<span class="onoffswitch-switch"></span>--%>

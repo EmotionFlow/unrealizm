@@ -3,11 +3,11 @@
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 
-UpdateSendEmailModeC cResults = new UpdateSendEmailModeC();
-cResults.getParam(request);
+UpdateSendEmailModeC results = new UpdateSendEmailModeC();
+results.getParam(request);
 
 int nMode = CUser.SEND_EMAIL_ON;
-if(checkLogin.m_bLogin && cResults.m_nUserId == checkLogin.m_nUserId) {
-	nMode = cResults.getResults(checkLogin);
+if(checkLogin.m_bLogin && results.m_nUserId == checkLogin.m_nUserId) {
+	nMode = results.getResults(checkLogin);
 }
 %>{"result": <%=nMode%>}

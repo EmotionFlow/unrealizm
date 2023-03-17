@@ -10,13 +10,13 @@ if (!referer.contains("unrealizm")) {
 
 CheckLogin checkLogin = new CheckLogin(request, response);
 if (!checkLogin.m_bLogin) return;
-GetSearchLogC cResults = new GetSearchLogC();
-cResults.getParam(request);
-int nResult = cResults.getResults(checkLogin);
+GetSearchLogC results = new GetSearchLogC();
+results.getParam(request);
+int nResult = results.getResults(checkLogin);
 %>
 {
 "result": <%=nResult%>,
 "keywords": [
-    <%=cResults.keywords.stream().map(k -> "\"" + k + "\"").collect(Collectors.joining(","))%>
+    <%=results.keywords.stream().map(k -> "\"" + k + "\"").collect(Collectors.joining(","))%>
 ]
 }

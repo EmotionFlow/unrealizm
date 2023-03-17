@@ -2,7 +2,7 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
-SendEmojiC cResults = new SendEmojiC();
-cResults.getParam(request);
-boolean bRtn = cResults.getResults(checkLogin, _TEX);
-%>{"result_num" : <%=(bRtn)?1:0%>, "result" : "<%=CEnc.E(CEmoji.parse(cResults.m_strEmoji))%>", "error_code" : <%=cResults.m_nErrCode%>}
+SendEmojiC results = new SendEmojiC();
+results.getParam(request);
+boolean bRtn = results.getResults(checkLogin, _TEX);
+%>{"result_num" : <%=(bRtn)?1:0%>, "result" : "<%=CEnc.E(CEmoji.parse(results.m_strEmoji))%>", "error_code" : <%=results.m_nErrCode%>}

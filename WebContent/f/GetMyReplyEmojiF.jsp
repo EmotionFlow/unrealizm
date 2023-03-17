@@ -11,11 +11,11 @@ boolean result = false;
 if (!checkLogin.m_bLogin) {
 	sb.append("<span>>ログインしてください</span>");
 } else {
-	GetMyReplyEmojiC cResults = new GetMyReplyEmojiC();
-	cResults.getParam(request);
+	GetMyReplyEmojiC results = new GetMyReplyEmojiC();
+	results.getParam(request);
 
-	if (cResults.getResults(checkLogin)) {
-		sb.append(CEmoji.parse(cResults.myReplyEmoji));
+	if (results.getResults(checkLogin)) {
+		sb.append(CEmoji.parse(results.myReplyEmoji));
 		result = true;
 	}
 }

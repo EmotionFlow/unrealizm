@@ -110,17 +110,17 @@ public final class CCnv {
 		return (cContent.m_nFileNum>1)?String.format("<i class=\"far fa-images\"></i> %d", cContent.m_nFileNum):"";
 	}
 	private static void appendIllustItemCategory(StringBuilder strRtn, final CContent cContent, final String SEARCH_CATEGORY, final ResourceBundleControl _TEX, final int loginUserId){
-		strRtn.append(String.format("<h2 id=\"IllustItemCategory_%d\" class=\"IllustItemCategory\">", cContent.m_nContentId));
+		strRtn.append(String.format("<div id=\"IllustItemCategory_%d\" class=\"IllustItemCategory\">", cContent.m_nContentId));
 		strRtn.append(String.format("<a class=\"Category C%d\" href=\"%s?CD=%s\">%s</a>",
 				cContent.m_nCategoryId, SEARCH_CATEGORY, cContent.m_nCategoryId,
 				_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))));
-		strRtn.append("</h2>");
+		strRtn.append("</div>");
 		if (cContent.m_nRequestId>0) {
-			strRtn.append("<h2 class=\"IllustItemCategory\">");
+			strRtn.append("<div class=\"IllustItemCategory\">");
 			strRtn.append(String.format("<a class=\"Request\" href=\"javascript:void(0)\" onclick=\"dispRequestDlg(%d)\">%s</a>",
 					cContent.m_nRequestId, _TEX.T("Request")
 			));
-			strRtn.append("</h2>");
+			strRtn.append("</div>");
 		}
 	}
 
@@ -168,11 +168,15 @@ public final class CCnv {
 			}
 			strRtn.append(String.format("<a class=\"IllustItemCommandDelete far fa-trash-alt\" href=\"javascript:void(0)\" onclick=\"DeleteContent(%d, %d, %b)\"></a>", nLoginUserId, cContent.m_nContentId, !cContent.m_strTweetId.isEmpty()));
 		} else {
-			// 通報ボタン
-			strRtn.append(String.format("<a class=\"IllustItemCommandInfo fas fa-info-circle\" href=\"%s?ID=%d&TD=%d\"></a>", REPORT_FORM, cContent.m_nUserId, cContent.m_nContentId));
-			if(nLoginUserId==1) {
-				strRtn.append(String.format("<a class=\"IllustItemCommandDelete far fa-trash-alt\" href=\"javascript:void(0)\" onclick=\"DeleteContent(%d, %d, %b)\"></a>", nLoginUserId, cContent.m_nContentId, cContent.m_nUserId==1?true:false));
-			}
+			// ブクマボタン
+			strRtn.append("<div class=\"IllustItemCmd\">");
+			strRtn.append(String.format("<a id=\"IllustItemBookmarkBtn_%d\" class=\"NonFrameBtnBase IllustItemBookmarkBtn\" href=\"javascript:void(0)\" onclick=\"UpdateBookmark(%d, %d);\"><i class=\"%s fa-bookmark\"></i></a>",
+					cContent.m_nContentId,
+					nLoginUserId,
+					cContent.m_nContentId,
+					(cContent.m_nBookmarkState==CContent.BOOKMARK_BOOKMARKING)?"fas":"far"
+					));
+			strRtn.append("</div>");	// IllustItemCmd
 
 			// シェアボタン
 			strRtn.append("<div class=\"IllustItemCmd\">");
@@ -183,15 +187,11 @@ public final class CCnv {
 					));
 			strRtn.append("</div>");    // IllustItemCmd
 
-			// ブクマボタン
-			strRtn.append("<div class=\"IllustItemCmd\">");
-			strRtn.append(String.format("<a id=\"IllustItemBookmarkBtn_%d\" class=\"NonFrameBtnBase IllustItemBookmarkBtn\" href=\"javascript:void(0)\" onclick=\"UpdateBookmark(%d, %d);\"><i class=\"%s fa-bookmark\"></i></a>",
-					cContent.m_nContentId,
-					nLoginUserId,
-					cContent.m_nContentId,
-					(cContent.m_nBookmarkState==CContent.BOOKMARK_BOOKMARKING)?"fas":"far"
-					));
-			strRtn.append("</div>");	// IllustItemCmd
+			// 通報ボタン
+			strRtn.append(String.format("<a class=\"IllustItemCommandInfo fas fa-info-circle\" href=\"%s?ID=%d&TD=%d\"></a>", REPORT_FORM, cContent.m_nUserId, cContent.m_nContentId));
+			if(nLoginUserId==1) {
+				strRtn.append(String.format("<a class=\"IllustItemCommandDelete far fa-trash-alt\" href=\"javascript:void(0)\" onclick=\"DeleteContent(%d, %d, %b)\"></a>", nLoginUserId, cContent.m_nContentId, cContent.m_nUserId==1?true:false));
+			}
 		}
 		strRtn.append("</div>");	// IllustItemCommandSub
 
@@ -223,17 +223,17 @@ public final class CCnv {
 		if (trsExist) {
 			strRtn.append("<div class=\"fas fa-language IllustItemDescTranslation\" onclick=\"toggleIllustItemDesc(this)\"></div>");
 		}
-		strRtn.append("<h1 id=\"IllustItemDesc_%d\" class=\"IllustItemDesc\" %s>".formatted(
+		strRtn.append("<div id=\"IllustItemDesc_%d\" class=\"IllustItemDesc\" %s>".formatted(
 				cContent.m_nContentId,
 				(descShowFirst.isEmpty())?"style=\"display: none;\"":""
 		));
 		strRtn.append(desc);
-		strRtn.append("</h1>");
+		strRtn.append("</div>");
 
 		if (trsExist) {
-			strRtn.append("<h1 class=\"IllustItemDesc\" style=\"display: none;\">");
+			strRtn.append("<div class=\"IllustItemDesc\" style=\"display: none;\">");
 			strRtn.append(Common.AutoLink(Util.toStringHtml(def), cContent.m_nUserId, nMode));
-			strRtn.append("</h1>");
+			strRtn.append("</div>");
 		}
 	}
 
@@ -245,13 +245,13 @@ public final class CCnv {
 			prompt += "...";
 		}
 
-		strRtn.append("<h1 id=\"IllustItemPrompt_%d\" class=\"IllustItemPrompt\" %s onclick=\"DispPromptDlg(%d)\">".formatted(
+		strRtn.append("<div id=\"IllustItemPrompt_%d\" class=\"IllustItemPrompt\" %s onclick=\"DispPromptDlg(%d)\">".formatted(
 				cContent.m_nContentId,
 				(prompt.isEmpty())?"style=\"display: none;\"":"",
 				cContent.m_nContentId
 		));
 		strRtn.append("<i class=\"fas fa-terminal\"></i> " + prompt + " <span class=\"ShowMorePrompt\">" + _TEX.T("Common.IllustItemPrompt.MorePrompt") + "</span>");
-		strRtn.append("</h1>");
+		strRtn.append("</div>");
 	}
 
 	private static HashMap<String, String> getTagNameTranslations(CheckLogin checkLogin, CContent content, List<String> tagNameList) {
@@ -451,13 +451,13 @@ public final class CCnv {
 	public static void appendIllustItemThumb2MiniList(StringBuilder strRtn, CContent cContent) {
 		strRtn.append(
 				"""
-                <a class="IllustItemThumb" href="/%d/%d.html">
-				""".formatted(cContent.m_nUserId, cContent.m_nContentId)
+                <a class="IllustItemThumb" href="/%d/%d.html" style="background-image:url('%s')">
+				""".formatted(cContent.m_nUserId, cContent.m_nContentId, Common.GetUrl(cContent.thumbImgSmallUrl))
 		);
-		strRtn.append(String.format(
-				ILLUST_ITEM_THUMB_IMG_FMT,
-				Common.GetUrl(cContent.thumbImgSmallUrl)
-		));
+//		strRtn.append(String.format(
+//				ILLUST_ITEM_THUMB_IMG_FMT,
+//				Common.GetUrl(cContent.thumbImgSmallUrl)
+//		));
 		strRtn.append("</a>");
 	}
 
@@ -757,7 +757,14 @@ public final class CCnv {
 		strRtn.append(String.format("<div class=\"IllustItem %s\" id=\"IllustItem_%d\">", strThumbCssClass, cContent.m_nContentId));
 
 		// ユーザ名とフォローボタン
-		appendIllustItemUser(strRtn, cContent, nLoginUserId, _TEX, ILLUST_LIST, true, false, true);
+		//appendIllustItemUser(strRtn, cContent, nLoginUserId, _TEX, ILLUST_LIST, true, false, true);
+
+		// 画像orテキスト
+		if (!cContent.nowAvailable() && cContent.m_nUserId == nLoginUserId) {
+			appendMyIllustItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
+		} else {
+			appendContentItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
+		}
 
 		// カテゴリーとコマンド
 		strRtn.append("<div class=\"IllustItemCommand\">");
@@ -777,13 +784,6 @@ public final class CCnv {
 		// 編集
 		if(cContent.m_nUserId==nLoginUserId) {
 			appendIllustItemDescEdit(strRtn, cContent, nMode);
-		}
-
-		// 画像orテキスト
-		if (!cContent.nowAvailable() && cContent.m_nUserId == nLoginUserId) {
-			appendMyIllustItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
-		} else {
-			appendContentItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
 		}
 
 		// 2枚目以降用の場所
@@ -824,34 +824,33 @@ public final class CCnv {
 
 		StringBuilder strRtn = new StringBuilder();
 
-		strRtn.append(String.format("<div class=\"IllustItem %s\" id=\"IllustItem_%d\" style=\"opacity: 0\">", strThumbCssClass, cContent.m_nContentId));
+		strRtn.append(String.format("<div class=\"IllustItem %s\" id=\"IllustItem_%d\" >", strThumbCssClass, cContent.m_nContentId));
 
-		// ユーザ名とフォローボタン
-		appendIllustItemUser(strRtn, cContent, nLoginUserId, _TEX, ILLUST_LIST, false, false, false);
+		// 画像orテキスト
+		appendContentItemThumbMiniList(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
 
 		// カテゴリー
 		appendIllustItemCategory(strRtn, cContent, SEARCH_CATEGORY, _TEX, checkLogin.m_nUserId);
+
+		// リアクション数・プロンプトなどコピー数
+		appendReactionNum(strRtn, cContent, true);
 
 		// プロンプト
 		appendIllustItemPrompt(strRtn, cContent, _TEX);
 
 		// キャプション
-		appendIllustItemDesc(strRtn, cContent, nMode);
-
-		// 画像orテキスト
-		appendContentItemThumbMiniList(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
-
-		// リアクション数・プロンプトなどコピー数
-		appendReactionNum(strRtn, cContent, true);
-
+		//appendIllustItemDesc(strRtn, cContent, nMode);
 
 		// 全て表示ボタン
 //		appendIllustItemExpand(strRtn, cContent, _TEX, nSpMode, true);
 
+		// ユーザ名とフォローボタン
+		appendIllustItemUser(strRtn, cContent, nLoginUserId, _TEX, ILLUST_LIST, false, false, false);
+
 		// 絵文字
-		if(cContent.m_cUser.m_nReaction==CUser.REACTION_SHOW) {
-			appendIllustItemResList(strRtn, cContent, nLoginUserId, vEmoji, nSpMode, _TEX, true);
-		}
+//		if(cContent.m_cUser.m_nReaction==CUser.REACTION_SHOW) {
+//			appendIllustItemResList(strRtn, cContent, nLoginUserId, vEmoji, nSpMode, _TEX, true);
+//		}
 
 		strRtn.append("</div>");	// IllustItem
 
@@ -878,7 +877,7 @@ public final class CCnv {
 			}
 			strRtn.append("""
             <a class="ReactionNumLabel" href="%s">
-            <span class="material-symbols-sharp">favorite</span>
+            <span class="material-symbols-outlined">sentiment_satisfied</span>
             <span id="ReactionNum_%d" class="ReactionNum">%s</span>
             </a>
 			""".formatted(href, cContent.m_nContentId, strReactionNum));
@@ -1218,69 +1217,6 @@ public final class CCnv {
 		}
 		strRtn.append("\">");
 
-		if (pageCategory != PageCategory.MY_BOX) {
-			// ユーザ情報
-			strRtn.append(String.format("<a class=\"IllustUser\" href=\"%s\">", ILLUST_LIST));
-			// 画像
-			strRtn.append(String.format("<span class=\"IllustUserThumb\" style=\"background-image:url('%s_120.jpg')\"></span>", Common.GetUrl(cContent.m_cUser.m_strFileName)));
-			// 名前
-			strRtn.append(String.format("<h2 class=\"IllustUserName\">%s</h2>", Util.toStringHtml(cContent.m_cUser.m_strNickName)));
-			// Pin
-			if (cContent.pinOrder > 0) {
-				strRtn.append("<span class=\"IllustUserPin fas fa-thumbtack\"></span>");
-			}
-			strRtn.append("</a>");    // IllustItemUser
-		}
-
-		// カテゴリ系情報
-		strRtn.append("<span class=\"IllustInfo IllustMeta\">");
-		// カテゴリ
-		strRtn.append(
-				String.format("<a class=\"CategoryInfo\" href=\"%s?CD=%d\"><span class=\"Category C%d\">%s</span></a>",
-						SEARCH_CATEGORY,
-						cContent.m_nCategoryId,
-						cContent.m_nCategoryId,
-						_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))
-				)
-		);
-
-		if (pageCategory == PageCategory.MY_BOX) {
-			// Pin, Note
-			if (pageCategory == PageCategory.MY_BOX && cContent.pinOrder > 0) {
-				strRtn.append("<span class=\"IllustInfoPin fas fa-thumbtack\"></span>");
-			} else if (cContent.m_nUserId == checkLogin.m_nUserId && !cContent.privateNote.isEmpty()) {
-				strRtn.append("<span class=\"IllustInfoPin far fa-sticky-note\" onclick=\"TogglePrivateNote($(this).parent().parent(),'" +
-						Util.toQuotedString(cContent.privateNote, "'") +
-						"')\"></span>");
-			}
-		}
-		strRtn.append("</span>");    // カテゴリ系情報(IllustInfo)
-
-		// プロンプト
-		String prompt = cContent.aiPrompt;
-		if (prompt.length() > 15) {
-			prompt = prompt.substring(0, 15) + "...";
-		}
-		strRtn.append("""
-                <span class="IllustInfoPrompt" onclick="DispPromptDlg(%d)">
-                    <i class="fas fa-terminal"></i> %s
-                    <span class="ShowMorePrompt">more</span>
-                </span>
-				""".formatted(cContent.m_nContentId, prompt));
-		// イラスト情報
-//		strRtn.append(String.format("<a class=\"IllustInfo\" href=\"%s\">", ILLUST_VIEW));
-		strRtn.append("<a class=\"IllustInfo\" href=\"javascript: void(0);\">");
-
-		// キャプション
-		final String description =
-				(cContent.m_strDescriptionTranslated!=null&&!cContent.m_strDescriptionTranslated.isEmpty())
-				? cContent.m_strDescriptionTranslated : cContent.m_strDescription;
-
-		strRtn.append(String.format(
-				"<span class=\"IllustInfoDesc\">%s</span>",
-				Util.toStringHtml(description)
-				)
-		);
 		// サムネイル
 		final String strFileUrl;
 		final boolean bHidden;	// テキストモード用カバー画像表示フラグ
@@ -1293,7 +1229,6 @@ public final class CCnv {
 			bHidden = cContent.isHideThumbImg;
 		}
 
-		strRtn.append("</a>");	// IllustInfo
 
 		if(cContent.m_nEditorId!=Common.EDITOR_TEXT || bHidden) { // イラスト表示もしくはテキストだけど限定画像を表示
 			// 画像
@@ -1350,6 +1285,58 @@ public final class CCnv {
 		}
 		strRtn.append("</span>");	// IllustInfoBottom
 		strRtn.append("</a>");	// IllustThumbImg | IllustThumbText
+
+		// カテゴリ系情報
+		strRtn.append("<span class=\"IllustInfo IllustMeta\">");
+		// カテゴリ
+		strRtn.append(
+				String.format("<a class=\"CategoryInfo\" href=\"%s?CD=%d\"><span class=\"Category C%d\">%s</span></a>",
+						SEARCH_CATEGORY,
+						cContent.m_nCategoryId,
+						cContent.m_nCategoryId,
+						_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))
+				)
+		);
+
+		if (pageCategory == PageCategory.MY_BOX) {
+			// Pin, Note
+			if (pageCategory == PageCategory.MY_BOX && cContent.pinOrder > 0) {
+				strRtn.append("<span class=\"IllustInfoPin fas fa-thumbtack\"></span>");
+			} else if (cContent.m_nUserId == checkLogin.m_nUserId && !cContent.privateNote.isEmpty()) {
+				strRtn.append("<span class=\"IllustInfoPin far fa-sticky-note\" onclick=\"TogglePrivateNote($(this).parent().parent(),'" +
+						Util.toQuotedString(cContent.privateNote, "'") +
+						"')\"></span>");
+			}
+		}
+		strRtn.append("</span>");    // カテゴリ系情報(IllustInfo)
+
+		// プロンプト
+		String prompt = cContent.aiPrompt;
+		if (prompt.length() > 15) {
+			prompt = prompt.substring(0, 15) + "...";
+		}
+		strRtn.append("""
+                <span class="IllustInfoPrompt" onclick="DispPromptDlg(%d)">
+                    <i class="fas fa-terminal"></i> %s
+                    <span class="ShowMorePrompt">more</span>
+                </span>
+				""".formatted(cContent.m_nContentId, prompt));
+		// イラスト情報
+//		strRtn.append(String.format("<a class=\"IllustInfo\" href=\"%s\">", ILLUST_VIEW));
+		strRtn.append("<a class=\"IllustInfo\" href=\"javascript: void(0);\">");
+
+		// キャプション
+		final String description =
+				(cContent.m_strDescriptionTranslated!=null&&!cContent.m_strDescriptionTranslated.isEmpty())
+				? cContent.m_strDescriptionTranslated : cContent.m_strDescription;
+
+		strRtn.append(String.format(
+				"<span class=\"IllustInfoDesc\">%s</span>",
+				Util.toStringHtml(description)
+				)
+		);
+		strRtn.append("</a>");	// IllustInfo
+
 		if (pageCategory == PageCategory.MY_BOX && checkLogin.m_nPassportId==Common.PASSPORT_ON) {
 			final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_SHORT);
 
@@ -1359,6 +1346,20 @@ public final class CCnv {
 			// updated_at
 			final String updatedAt = cContent.updatedAt == null ? "----.--.--" : dateFormat.format(cContent.updatedAt);
 			strRtn.append(String.format("<div class=\"IllustUser DateTime\" style=\"border-bottom:none\"><i class=\"fas fa-pen\"></i> %s</div>",updatedAt));
+		}
+
+		if (pageCategory != PageCategory.MY_BOX) {
+			// ユーザ情報
+			strRtn.append(String.format("<a class=\"IllustUser\" href=\"%s\">", ILLUST_LIST));
+			// 画像
+			strRtn.append(String.format("<span class=\"IllustUserThumb\" style=\"background-image:url('%s_120.jpg')\"></span>", Common.GetUrl(cContent.m_cUser.m_strFileName)));
+			// 名前
+			strRtn.append(String.format("<h2 class=\"IllustUserName\">%s</h2>", Util.toStringHtml(cContent.m_cUser.m_strNickName)));
+			// Pin
+			if (cContent.pinOrder > 0) {
+				strRtn.append("<span class=\"IllustUserPin fas fa-thumbtack\"></span>");
+			}
+			strRtn.append("</a>");    // IllustItemUser
 		}
 		strRtn.append("</div>");	// IllustThumb
 		return strRtn.toString();
@@ -1474,23 +1475,6 @@ public final class CCnv {
 	public static String toHtml(CTag cTag, int nMode,  ResourceBundleControl _TEX, int nSpMode) throws UnsupportedEncodingException {
 		return _toHtml(cTag, nMode, _TEX, nSpMode);
 	}
-
-	/*
-	private static String _toHtmlKeyword(CTag cTag, int nMode,  ResourceBundleControl _TEX, int nSpMode) throws UnsupportedEncodingException {
-		String SEARCH_ILLUST_KEYWORD = "";
-		if(nSpMode==SP_MODE_APP){
-			SEARCH_ILLUST_KEYWORD = "/SearchIllustByKeywordAppV.jsp";
-		}else if(nMode==MODE_SP){
-			SEARCH_ILLUST_KEYWORD = "/SearchIllustByKeywordV.jsp";
-		}else{
-			SEARCH_ILLUST_KEYWORD = "/SearchIllustByKeywordPcV.jsp";
-		}
-		return String.format(
-			"<h2 class=\"TagItem\"><a class=\"TagName\" href=\"%s?KWD=%s\"><i class=\"fas fa-search\"></i> %s</a></h2>",
-			SEARCH_ILLUST_KEYWORD, URLEncoder.encode(cTag.m_strTagTxt, "UTF-8"), Util.toStringHtml(cTag.m_strTagTxt)
-		);
-	}
-	*/
 
 	public static String toHtmlKeyword(CTag cTag, int nMode,  ResourceBundleControl _TEX) throws UnsupportedEncodingException {
 		return _toHtml(cTag, nMode, _TEX, SP_MODE_WVIEW);

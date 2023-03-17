@@ -84,7 +84,7 @@ public class IllustListC {
 
 	public CUser m_cUser = new CUser();
 	public String twitterScreenName;
-	public ArrayList<CContent> m_vContentList = new ArrayList<>();
+	public ArrayList<CContent> contentList = new ArrayList<>();
 	public ArrayList<CTag> m_vCategoryList = new ArrayList<>();
 	public int SELECT_MAX_GALLERY = 15;
 	public boolean m_bOwner = false;
@@ -448,7 +448,7 @@ public class IllustListC {
 			if (m_nPage == 0 && !pinContents.isEmpty()) {
 				offset = 0;
 				limit = SELECT_MAX_GALLERY - pinContents.size();
-				m_vContentList.add(pinContents.get(0));
+				contentList.add(pinContents.get(0));
 			} else {
 				offset = m_nPage * SELECT_MAX_GALLERY - pinContents.size();
 				limit = SELECT_MAX_GALLERY;
@@ -472,7 +472,7 @@ public class IllustListC {
 				cContent.m_cUser.m_strNickName	= Util.toString(user.nickName);
 				cContent.m_cUser.m_strFileName	= Util.toString(user.fileName);
 				cContent.m_strDescriptionTranslated = resultSet.getString("description_translated");
-				m_vContentList.add(cContent);
+				contentList.add(cContent);
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;

@@ -7,28 +7,56 @@ request.setCharacterEncoding("UTF-8");
 // login check
 CheckLogin checkLogin = new CheckLogin(request, response);
 
-String strRequestUri = (String)request.getAttribute("javax.servlet.forward.request_uri");
-String strRequestQuery = (String)request.getAttribute("javax.servlet.forward.query_string");
+String strRequestUri = Util.toString((String)request.getAttribute("javax.servlet.forward.request_uri"));
+String strRequestQuery = Util.toString((String)request.getAttribute("javax.servlet.forward.query_string"));
 
 String strRegistUserFToken = RandomStringUtils.randomAlphanumeric(64);
 session.setAttribute("RegistUserFToken", strRegistUserFToken);
 
-String strMessage = "";
 session.removeAttribute("LoginUri");
-if(strRequestUri != null) {
-	if(strRequestQuery != null) {
+if(!strRequestUri.isEmpty()) {
+	if(!strRequestQuery.isEmpty()) {
 		strRequestUri += "?" + strRequestQuery;
 	}
 	session.setAttribute("LoginUri", strRequestUri);
+}
+
+String strNextUrl = "";
+if(Util.toBoolean(request.getParameter("INQUIRY"))) {
+	strNextUrl = "/";
+} else if(strRequestUri.isEmpty()) {
+	strNextUrl = strRequestUri;
+} else {
+	strNextUrl = "/MyHomePcV.jsp?ID="+checkLogin.m_nUserId;
+}
+
+if (strNextUrl.isEmpty()) {
+	String referer = Util.toString(request.getHeader("Referer"));
+	if (referer.contains("unrealizm.com")) {
+		strNextUrl = referer.replace("https://unrealizm.com", "");
+	} else {
+		strNextUrl = "/";
+	}
+}
+
+String infoMsgKey = null;
+if (strRequestUri.indexOf("/MyHome") == 0) {
+	infoMsgKey = "MyHome";
+} else if(strRequestUri.indexOf("/ActivityList") == 0){
+	infoMsgKey = "ActivityList";
+} else if(strRequestUri.indexOf("/MyIllustList") == 0){
+	infoMsgKey = "MyIllustList";
+} else if(strRequestUri.indexOf("/IllustDetail") == 0){
+	infoMsgKey = "IllustDetail";
 }
 
 %>
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
-		<%@ include file="/inner/THeaderCommon.jsp"%>
-		<title><%=_TEX.T("TopV.ContentsTitle.Login")%></title>
-		<%// ReCAPTCHA.getScriptTag("reCAPTCHAonLoad")%>
+		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<title><%=_TEX.T("TopV.ContentsTitle.Login")%> | <%=_TEX.T("THeader.Title")%></title>
+		<%//=ReCAPTCHA.getScriptTag("reCAPTCHAonLoad")%>
 		<script>
 			function RegistUser() {
 				const strEmail = $.trim($("#RegistEmail").val());
@@ -47,10 +75,9 @@ if(strRequestUri != null) {
 					return false;
 				}
 
-				<%if(false){%>
-				grecaptcha.ready( () => {
-					grecaptcha.execute('<%=ReCAPTCHA.SITE_KEY%>', {action: 'register_app'}).then((reCAPTCHAtoken) => {
-				<%}%>
+				<%--grecaptcha.ready( () => {--%>
+				<%--	grecaptcha.execute('<%=ReCAPTCHA.SITE_KEY%>', {action: 'register_browser'}).then((reCAPTCHAtoken) => {--%>
+						const reCAPTCHAtoken = "";
 						$.ajaxSingle({
 							"type": "post",
 							"data": {
@@ -58,14 +85,14 @@ if(strRequestUri != null) {
 								"EM":strEmail,
 								"PW":strPassword,
 								"TK":"<%=strRegistUserFToken%>",
-								<%//"RTK":reCAPTCHAtoken,%>
+								"RTK":reCAPTCHAtoken,
 							},
-							"url": "/api/RegistUserF.jsp",
+							"url": "/f/RegistUserF.jsp",
 							"dataType": "json",
-							"success": function(data) {
+							"success": (data) => {
 								if(data.result>0) {
 									DispMsg('<%=_TEX.T("LoginV.Success.Regist.Message")%>');
-									sendObjectMessage("restart");
+									location.href = "<%=strNextUrl%>";
 								} else if(data.result===<%=UserAuthUtil.ERROR_USER_EXIST%>) {
 									DispMsg('<%=_TEX.T("LoginV.Faild.Regist.ExistEmail")%>');
 								} else {
@@ -76,33 +103,30 @@ if(strRequestUri != null) {
 								DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
 							}
 						});
-				<%if(false){%>
-					});
-				});
-				<%}%>
+				// 	});
+				// });
 				return false;
 			}
 
 			function LoginUser() {
 				const strEmail = $.trim($("#LoginEmail").val());
 				const strPassword = $.trim($("#LoginPassword").val());
-				<%if(false){%>
-				grecaptcha.ready( () => {
-					grecaptcha.execute('<%=ReCAPTCHA.SITE_KEY%>', {action: 'login_app'}).then((reCAPTCHAtoken) => {
-				<%}%>
+				<%--grecaptcha.ready( () => {--%>
+				<%--	grecaptcha.execute('<%=ReCAPTCHA.SITE_KEY%>', {action: 'login_browser'}).then((reCAPTCHAtoken) => {--%>
+						const reCAPTCHAtoken = "";
 						$.ajaxSingle({
 							"type": "post",
 							"data": {
 								"EM":strEmail,
 								"PW":strPassword,
-								<%//"RTK": reCAPTCHAtoken,%>
+								"RTK": reCAPTCHAtoken,
 							},
-							"url": "/api/LoginUserF.jsp",
+							"url": "/f/LoginUserF.jsp",
 							"dataType": "json",
 							"success": function(data) {
 								if(data.result>0) {
 									DispMsg('<%=_TEX.T("LoginV.Success.Message")%>');
-									sendObjectMessage("restart");
+									location.href = "<%=strNextUrl%>";
 								} else {
 									DispMsg('<%=_TEX.T("LoginV.Faild.Message")%>');
 								}
@@ -111,21 +135,20 @@ if(strRequestUri != null) {
 								DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
 							}
 						});
-				<%if(false){%>
-					});
-				});
-				<%}%>
+				// 	});
+				// });
 				return false;
 			}
 
-			<%if(false){%>
 			function reCAPTCHAonLoad() {
 				let badge = $(".grecaptcha-badge");
-				badge.css("bottom", "50px");
-				// badge.css("left", "54px");
+				<%if(Util.isSmartPhone(request)){%>
+				badge.css("bottom", "52px");
+				//badge.css("left", "54px");
 				badge.css("position", "fixed");
+				$(".Footer").css("margin-top", "90px");
+				<%}%>
 			}
-			<%}%>
 		</script>
 		<style>
 		.Wrapper {width: 360px;}
@@ -133,42 +156,97 @@ if(strRequestUri != null) {
 		#RegistForm {display: block; float: left; width: 100%;}
 		#LoginForm {display: none; float: left; width: 100%;}
 		.SettingList .SettingListItem {color: #000;}
-		.SettingList .BtnBase {border: 1px solid #fff; background: #3498db; color: #000;}
-		.SettingList .BtnBase.Selected, .SettingList .BtnBase:hover {border: 1px solid #3498db; background: #fff; color: #3498db;}
 		</style>
 	</head>
 
 	<body>
+		<%@ include file="/inner/TMenuPc.jsp"%>
 		<div id="DispMsg"></div>
 		<article class="Wrapper">
-			<div class="SettingList" style="margin-top: 50px;">
+			<div class="SettingList" style="margin-top: 30px;">
 				<div class="SettingListItem">
+					<%if(infoMsgKey != null){%>
+					<div class="LoginFormInfoMsg"><%=_TEX.T("LoginFormV.Info." + infoMsgKey)%></div>
+					<%}%>
+					<div style="text-align: center;">
+						<div style="margin-bottom: 10px;"><%=_TEX.T("LoginFormV.Label.RegisterByTwitter")%></div>
+						<form method="post" name="login_from_twitter_loginfromemailpcv_00" action="/LoginFormTwitter.jsp">
+							<input id="login_from_twitter_loginfromemailpcv_callback_00" type="hidden" name="CBPATH" value="<%=strNextUrl%>"/>
+
+							<a class="BtnBase AnalogicoInfoRegistBtn"
+							   style="margin: 10px 0 10px 0"
+							   href="javascript:login_from_twitter_loginfromemailpcv_00.submit()">
+								<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Unrealizm.Info.Login")%>
+							</a>
+
+							<div style="font-size: 9px;">
+								<a  style="text-decoration: underline;"
+									href="javascript:void(0)"
+									onclick="$('#twitter_authorize_info').show(); $('#login_from_twitter_loginfromemailpcv_callback_00_auth').prop('checked',true);">
+									<i class="fas fa-info-circle"></i> <%=_TEX.T("LoginFormV.TwitterAuthInfo01")%>
+								</a>
+								<div id="twitter_authorize_info" style="display: none; margin-top: 10px;">
+									<div>
+										<input id="login_from_twitter_loginfromemailpcv_callback_00_auth" type="checkbox" name="AUTH" value="authorize"/>
+										<label for="login_from_twitter_loginfromemailpcv_callback_00_auth"><%=_TEX.T("LoginFormV.TwitterAuthInfo02")%></label>
+									</div>
+									<div style="text-align: left;">
+										<p><%=_TEX.T("LoginFormV.TwitterAuthInfo03")%></p>
+										<p><%=_TEX.T("LoginFormV.TwitterAuthInfo04")%></p>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+
+					<div class="LoginFormSeparator">
+						<div class="SeparatorLine"></div>
+						<div class="SeparatorLabel">or</div>
+						<div class="SeparatorLine"></div>
+					</div>
+
+					<script>
+						function toggleEmailForm() {
+							if ($('#RegistForm').css('display') === 'block') {
+								$('#RegistForm').slideUp();
+								$('#LoginForm').slideDown();
+								if(!$('#LoginEmail').val())$('#LoginEmail').val($('#RegistEmail').val());
+								if(!$('#LoginPassword').val())$('#LoginPassword').val($('#RegistPassword').val());
+							} else {
+								$('#LoginForm').slideUp();
+								$('#RegistForm').slideDown();
+							}
+						}
+					</script>
 					<form id="RegistForm" onsubmit="return RegistUser()">
-						<div class="RegistItem">
-							<div class="SettingListTitle"><%=_TEX.T("LoginFormV.Label.Regist")%></div>
-						</div>
 						<div class="SettingBody">
 							<div class="SettingBodyTxt" style="margin-top: 10px;">
+								<span class="typcn typcn-mail"></span>
 								<%=_TEX.T("LoginFormV.Label.Email")%>
 							</div>
 							<input id="RegistEmail" class="SettingBodyTxt" type="email" />
 							<div class="SettingBodyTxt" style="margin-top: 10px;">
+								<i class="fas fa-key"></i>
 								<%=_TEX.T("LoginFormV.Label.Password")%>
 							</div>
 							<input id="RegistPassword" class="SettingBodyTxt" type="password" />
 							<div class="RegistItem">
 								<div class="SettingBodyTxt" style="margin-top: 10px;">
+									<i class="fas fa-user"></i>
 									<%=_TEX.T("LoginFormV.Label.Nickname")%>
 									<span style="font-size: 9px;"> (<%=_TEX.T("LoginFormV.Label.Nickname.Info")%>)</span>
 								</div>
 								<input id="RegistNickname" class="SettingBodyTxt" type="text" />
-								<div style="margin-top: 20px; text-align: center;">
+								<div style="text-align: center;">
 									<div id="UserNameMessage" class="RegistMessage" style="color: red;">&nbsp;</div>
-									<input class="BtnBase Rev SettingBodyCmdRegist" type="submit" value="<%=_TEX.T("LoginFormV.Button.Regist")%>" />
+									<input class="BtnBase SettingBodyCmdRegist" type="submit" value="<%=_TEX.T("LoginFormV.Button.Regist")%>" />
 								</div>
-								<div style="margin-top: 15px; text-align: center;">
+								<div style="margin-top: 10px; text-align: center;">
 									<div class="RegistMessage"></div>
-									<a href="javascript:void(0);" onclick="$('#RegistForm').slideUp();$('#LoginForm').slideDown();"><i class="fas fa-sign-in-alt"></i> <%=_TEX.T("LoginFormV.Label.Login")%></a>
+									<a href="javascript:void(0);"
+									   onclick="toggleEmailForm();">
+										<i class="fas fa-sign-in-alt"></i> <%=_TEX.T("LoginFormV.Label.Login")%>
+									</a>
 								</div>
 							</div>
 						</div>
@@ -176,7 +254,7 @@ if(strRequestUri != null) {
 
 					<form id="LoginForm" onsubmit="return LoginUser()">
 						<div class="LoginItem">
-							<div class="SettingListTitle"><%=_TEX.T("LoginFormV.Label.Login")%></div>
+							<div class="SettingListTitle" style="margin-top: 0"><%=_TEX.T("LoginFormV.Label.Login")%></div>
 						</div>
 						<div class="SettingBody">
 							<div class="SettingBodyTxt" style="margin-top: 10px;">
@@ -187,18 +265,18 @@ if(strRequestUri != null) {
 								<%=_TEX.T("LoginFormV.Label.Password")%>
 							</div>
 							<input id="LoginPassword" class="SettingBodyTxt" type="password" />
-							<div class="LoginItem">
+							<div class="SettingListItem">
 								<div style="margin-top: 20px; text-align: center;">
+									<input class="BtnBase SettingBodyCmdRegist" type="submit" value="<%=_TEX.T("LoginFormV.Button.Login")%>" />
 									<div id="UserNameMessage" class="RegistMessage" style="color: red;">&nbsp;</div>
-									<input class="BtnBase Rev SettingBodyCmdRegist" type="submit" value="<%=_TEX.T("LoginFormV.Button.Login")%>" />
 								</div>
 								<div style="margin-top: 15px; text-align: center;">
+									<a href="javascript:void(0);" onclick="toggleEmailForm()"><i class="fas fa-user-plus"></i> <%=_TEX.T("LoginFormV.Label.Regist")%></a>
 									<div class="RegistMessage"></div>
-									<a href="javascript:void(0);" onclick="$('#LoginForm').slideUp();$('#RegistForm').slideDown();"><i class="fas fa-user-plus"></i> <%=_TEX.T("LoginFormV.Label.Regist")%></a>
 								</div>
 								<div style="margin-top: 10px; text-align: center;">
-									<div class="RegistMessage"></div>
 									<a href="/ForgetPasswordPcV.jsp"><%=_TEX.T("LoginFormV.Button.ForgotPassword")%></a>
+									<div class="RegistMessage"></div>
 								</div>
 							</div>
 						</div>
@@ -206,5 +284,7 @@ if(strRequestUri != null) {
 				</div>
 			</div>
 		</article><!--Wrapper-->
+
+		<%@ include file="/inner/TFooterBase.jsp"%>
 	</body>
 </html>

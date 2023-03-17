@@ -3,11 +3,11 @@
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 
-UpdateUserWaveEnableC cResults = new UpdateUserWaveEnableC();
-cResults.getParam(request);
+UpdateUserWaveEnableC results = new UpdateUserWaveEnableC();
+results.getParam(request);
 
 boolean rtn = false;
 if(checkLogin.m_bLogin) {
-	rtn = cResults.getResults(checkLogin);
+	rtn = results.getResults(checkLogin);
 }
 %>{"result":<%=rtn?Common.API_OK:Common.API_NG%>}

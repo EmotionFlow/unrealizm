@@ -19,11 +19,11 @@ if(!checkLogin.m_bLogin) {
 }
 
 //パラメータの取得
-MyEditSettingC cResults = new MyEditSettingC();
-cResults.getParam(request);
+MyEditSettingC results = new MyEditSettingC();
+results.getParam(request);
 
 //検索結果の取得
-if (!cResults.getResults(checkLogin)) {
+if (!results.getResults(checkLogin)) {
 	nResult = -2;
 }
 
@@ -42,43 +42,43 @@ try {
 
 	if (nResult == 0) {
 		//Twitterの情報
-		if (cResults.m_cUser.m_strTwitterScreenName.isEmpty()) {
+		if (results.m_cUser.m_strTwitterScreenName.isEmpty()) {
 			user.put("twitter_link_info", null);
 		} else {
 			twitter = new HashMap<String, Object>();
-			if (cResults.m_cUser.m_nAutoTweetWeekDay == -1 && cResults.m_cUser.m_nAutoTweetTime == -1) {
+			if (results.m_cUser.m_nAutoTweetWeekDay == -1 && results.m_cUser.m_nAutoTweetTime == -1) {
 				twitter.put("tweet_regularly_enabled", false);
 			} else {
 				twitter.put("tweet_regularly_enabled", true);
 			}
-			twitter.put("twitter_account_name", cResults.m_cUser.m_strTwitterScreenName);
-			twitter.put("tweet_day", cResults.m_cUser.m_nAutoTweetWeekDay);
-			twitter.put("tweet_time", cResults.m_cUser.m_nAutoTweetTime);
-			twitter.put("default_tweet_message", cResults.m_cUser.m_strAutoTweetDesc);
-			twitter.put("tweet_with_thumbnail_enabled", cResults.m_cUser.m_nAutoTweetThumbNum);
+			twitter.put("twitter_account_name", results.m_cUser.m_strTwitterScreenName);
+			twitter.put("tweet_day", results.m_cUser.m_nAutoTweetWeekDay);
+			twitter.put("tweet_time", results.m_cUser.m_nAutoTweetTime);
+			twitter.put("default_tweet_message", results.m_cUser.m_strAutoTweetDesc);
+			twitter.put("tweet_with_thumbnail_enabled", results.m_cUser.m_nAutoTweetThumbNum);
 			user.put("twitter_link_info", twitter);
 		}
 
-		user.put("user_name", cResults.m_cUser.m_strNickName);
-		user.put("profile_icon_image_url", Common.GetUrl(cResults.m_cUser.m_strFileName));
-		user.put("profile_message", cResults.m_cUser.m_strProfile);
-		if(cResults.m_cUser.m_strHeaderFileName.equals("/img/default_transparency.gif")) {
+		user.put("user_name", results.m_cUser.m_strNickName);
+		user.put("profile_icon_image_url", Common.GetUrl(results.m_cUser.m_strFileName));
+		user.put("profile_message", results.m_cUser.m_strProfile);
+		if(results.m_cUser.m_strHeaderFileName.equals("/img/default_transparency.gif")) {
 			user.put("profile_header_image_url", "");
 		} else {
-			user.put("profile_header_image_url", Common.GetUrl(cResults.m_cUser.m_strHeaderFileName));
+			user.put("profile_header_image_url", Common.GetUrl(results.m_cUser.m_strHeaderFileName));
 		}
-		if(cResults.m_cUser.m_strBgFileName.equals("/img/default_transparency.gif")) {
+		if(results.m_cUser.m_strBgFileName.equals("/img/default_transparency.gif")) {
 			user.put("profile_bg_image_url", "");
 		} else {
-			user.put("profile_bg_image_url", Common.GetUrl(cResults.m_cUser.m_strBgFileName));
+			user.put("profile_bg_image_url", Common.GetUrl(results.m_cUser.m_strBgFileName));
 		}
-		user.put("ng_ad_mode", cResults.m_cUser.m_nAdMode);
-		user.put("ng_download", cResults.m_cUser.m_nDownload);
-		user.put("ng_reaction", cResults.m_cUser.m_nReaction);
-		user.put("mute_keyword", cResults.m_cUser.m_strMuteKeyword);
-		user.put("email_address", cResults.m_cUser.m_strEmail);
-		user.put("new_email_address", cResults.m_strNewEmail);
-		user.put("email_address_confirmed", !cResults.m_bUpdate);
+		user.put("ng_ad_mode", results.m_cUser.m_nAdMode);
+		user.put("ng_download", results.m_cUser.m_nDownload);
+		user.put("ng_reaction", results.m_cUser.m_nReaction);
+		user.put("mute_keyword", results.m_cUser.m_strMuteKeyword);
+		user.put("email_address", results.m_cUser.m_strEmail);
+		user.put("new_email_address", results.m_strNewEmail);
+		user.put("email_address_confirmed", !results.m_bUpdate);
 		user.put("terms_of_service_url", "/RuleS.jsp");
 		user.put("guidelines_url", "/GuideLineV.jsp");
 		user.put("privacy_policy_url", "/PrivacyPolicyS.jsp");

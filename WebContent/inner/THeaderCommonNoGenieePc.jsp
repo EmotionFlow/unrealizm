@@ -12,6 +12,7 @@
 <link rel="icon" href="/favicon.ico" />
 <link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <link href="/css/TBase-45.css" type="text/css" rel="stylesheet" />
 <link href="/css/TMaking-222.css" type="text/css" rel="stylesheet" />
 <link href="/css/TBasePc-84.css" type="text/css" rel="stylesheet" />
@@ -28,9 +29,9 @@
 <%@ include file="/inner/TGoogleAnalytics.jsp"%>
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9388519601000159" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <%if(Util.isSmartPhone(request)) {%>
-<meta name="viewport" content="width=360" />
 <%} else {%>
 <link href="/css/TPcAppend-91.css" type="text/css" rel="stylesheet" />
 <%}%>

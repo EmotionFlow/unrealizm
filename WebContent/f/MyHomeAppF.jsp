@@ -5,21 +5,21 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 if(!checkLogin.m_bLogin) return;
 boolean bSmartPhone = Util.isSmartPhone(request);
 
-MyHomeC cResults = new MyHomeC();
-cResults.getParam(request);
+MyHomeC results = new MyHomeC();
+results.getParam(request);
 checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 
-boolean bRtn = cResults.getResults(checkLogin);
+boolean bRtn = results.getResults(checkLogin);
 ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 StringBuilder sbHtml = new StringBuilder();
-for(int nCnt = 0; nCnt<cResults.contentList.size(); nCnt++) {
-	CContent cContent = cResults.contentList.get(nCnt);
-	sbHtml.append(CCnv.Content2Html(cContent, checkLogin, cResults.mode, _TEX, vResult, cResults.viewMode, CCnv.SP_MODE_APP));
+for(int nCnt = 0; nCnt<results.contentList.size(); nCnt++) {
+	CContent cContent = results.contentList.get(nCnt);
+	sbHtml.append(CCnv.Content2Html(cContent, checkLogin, results.mode, _TEX, vResult, results.viewMode, CCnv.SP_MODE_APP));
 	if(nCnt==5 && bSmartPhone) {
 		sbHtml.append(Util.poipiku_336x280_sp_mid(checkLogin, g_nSafeFilter));
 	}
 }
 %>{
-"end_id" : <%=cResults.lastContentId%>,
+"end_id" : <%=results.lastContentId%>,
 "html" : "<%=CEnc.E(sbHtml.toString())%>"
 }

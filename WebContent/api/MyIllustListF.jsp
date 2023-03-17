@@ -12,16 +12,16 @@ if(!checkLogin.m_bLogin) {
 	nResult = -1;
 }
 
-IllustListC cResults = new IllustListC();
-cResults.getParam(request);
+IllustListC results = new IllustListC();
+results.getParam(request);
 
-if (checkLogin.m_nUserId!=cResults.m_nUserId) {
+if (checkLogin.m_nUserId!=results.m_nUserId) {
 	nResult = -2;
 }
 
-cResults.m_bDispUnPublished = true;
+results.m_bDispUnPublished = true;
 
-if (!cResults.getResults(checkLogin, false)) {
+if (!results.getResults(checkLogin, false)) {
 	nResult = -2;
 }
 
@@ -33,30 +33,30 @@ try {
 	result.put("result", nResult);
 
 	if (nResult == 0) {
-		result.put("user_id", cResults.m_cUser.m_nUserId);
-		result.put("page_num", cResults.m_nPage);
-		result.put("content_num", cResults.m_nContentsNum);
-		result.put("content_num_total", cResults.m_nContentsNumTotal);
-		result.put("user_name", cResults.m_cUser.m_strNickName);
-		result.put("profile_icon_image_url", Common.GetUrl(cResults.m_cUser.m_strFileName));
-		result.put("profile_header_image_url", Common.GetUrl(cResults.m_cUser.m_strHeaderFileName));
-		result.put("profile_message", cResults.m_cUser.m_strProfile);
-		result.put("follow_num", cResults.m_cUser.m_nFollowNum);
-		result.put("follower_num", cResults.m_cUser.m_nFollowerNum);
+		result.put("user_id", results.m_cUser.m_nUserId);
+		result.put("page_num", results.m_nPage);
+		result.put("content_num", results.m_nContentsNum);
+		result.put("content_num_total", results.m_nContentsNumTotal);
+		result.put("user_name", results.m_cUser.m_strNickName);
+		result.put("profile_icon_image_url", Common.GetUrl(results.m_cUser.m_strFileName));
+		result.put("profile_header_image_url", Common.GetUrl(results.m_cUser.m_strHeaderFileName));
+		result.put("profile_message", results.m_cUser.m_strProfile);
+		result.put("follow_num", results.m_cUser.m_nFollowNum);
+		result.put("follower_num", results.m_cUser.m_nFollowerNum);
 
 		String strTwitterUrl=String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
-				URLEncoder.encode(String.format(_TEX.T("MyIllustListV.TweetMyBox.Tweet.Msg"), cResults.m_cUser.m_strNickName), "UTF-8"),
-				URLEncoder.encode(Common.GetUnrealizmUrl("/"+cResults.m_cUser.m_nUserId+"/"), "UTF-8"));
+				URLEncoder.encode(String.format(_TEX.T("MyIllustListV.TweetMyBox.Tweet.Msg"), results.m_cUser.m_strNickName), "UTF-8"),
+				URLEncoder.encode(Common.GetUnrealizmUrl("/"+results.m_cUser.m_nUserId+"/"), "UTF-8"));
 		result.put("twitter_link", strTwitterUrl);
 
 		List<String> myTagList = new ArrayList<>();
-		for(CTag tag : cResults.m_vCategoryList){
+		for(CTag tag : results.m_vCategoryList){
 			myTagList.add(tag.m_strTagTxt);
 		}
 		result.put("mytag_list", myTagList);
 
 		List<Map<String, Object>> contentList = new ArrayList<>();
-		for(CContent cContent : cResults.m_vContentList) {
+		for(CContent cContent : results.contentList) {
 			String strCategory = "";
 			for(int nCategoryId : Common.CATEGORY_ID) {
 				if (nCategoryId==cContent.m_nCategoryId) {

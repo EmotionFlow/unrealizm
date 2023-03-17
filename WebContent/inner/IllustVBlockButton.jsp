@@ -4,7 +4,7 @@
 		var bBlocked = $("#UserInfoCmdBlock").hasClass('Selected');
 		$.ajaxSingle({
 			"type": "post",
-			"data": { "UID": <%=checkLogin.m_nUserId%>, "IID": <%=cResults.m_cUser.m_nUserId%>, "CHK": (bBlocked)?0:1 },
+			"data": { "UID": <%=checkLogin.m_nUserId%>, "IID": <%=results.m_cUser.m_nUserId%>, "CHK": (bBlocked)?0:1 },
 			"url": "/f/UpdateBlockF.jsp",
 			"dataType": "json",
 			"success": function(data) {
@@ -32,19 +32,19 @@
 </script>
 <%if(!checkLogin.m_bLogin) {%>
 <a id="UserInfoCmdBlock" class="typcn typcn-cancel UserInfoCmdBlock" href="/"></a>
-<%} else if(cResults.m_bOwner){
+<%} else if(results.m_bOwner){
 	// 何も表示しない
-} else if(cResults.m_bBlocking){ // ブロックしている %>
+} else if(results.m_bBlocking){ // ブロックしている %>
 <span id="UserInfoCmdBlock"
 	  class="typcn typcn-cancel BtnBase UserInfoCmdBlock Selected"
 	  style="text-shadow: none;"
 	  onclick="UpdateBlock()">
 					<span id="UserInfoCmdBlockLabel"><%=_TEX.T("IllustV.Unblocking")%></span>
 				</span>
-<%} else if(cResults.m_bBlocked){ // ブロックされている%>
+<%} else if(results.m_bBlocked){ // ブロックされている%>
 <span id="UserInfoCmdBlock" class="typcn typcn-cancel UserInfoCmdBlock" onclick="UpdateBlock()"></span>
 <span class="UserInfoCmdBlocked"><span><%=_TEX.T("IllustV.Blocked")%></span></span>
-<%} else if(cResults.m_bFollow){%>
+<%} else if(results.m_bFollow){%>
 <span id="UserInfoCmdBlock" class="typcn typcn-cancel UserInfoCmdBlock " onclick="UpdateBlock()"></span>
 <%} else {%>
 <span id="UserInfoCmdBlock" class="typcn typcn-cancel UserInfoCmdBlock" onclick="UpdateBlock()"></span>

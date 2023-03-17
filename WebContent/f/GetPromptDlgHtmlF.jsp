@@ -8,9 +8,9 @@ if (!referer.contains("unrealizm")) {
 }
 
 CheckLogin checkLogin = new CheckLogin(request, response);
-GetPromptC cResults = new GetPromptC();
-cResults.getParam(request);
-boolean result = cResults.getResults(checkLogin);
+GetPromptC results = new GetPromptC();
+results.getParam(request);
+boolean result = results.getResults(checkLogin);
 if (!result) return;
 %>
 <style>
@@ -64,27 +64,27 @@ if (!result) return;
 </style>
 <div class="PromptDlg">
     <h2 class="PromptDlgTitle"><%=_TEX.T("PromptDlg.Model")%> :
-    <span class="PromptDlgModelName"><%=_TEX.T(String.format("Category.C%d", cResults.categoryId))%></span>
+    <span class="PromptDlgModelName"><%=_TEX.T(String.format("Category.C%d", results.categoryId))%></span>
     </h2>
 
     <h2 class="PromptDlgTitle"><%=_TEX.T("PromptDlg.Prompt")%></h2>
-    <textarea readonly id="PromptDlgPrompt" class="PromptDlgInfo Prompt" style="margin-top: 5px;"><%=cResults.prompt%></textarea>
-    <span id="PromptDlgCopyPromptBtn" class="PromptDlgCopyBtn" onclick="copyAiParam(<%=cResults.ownerUserId%>, <%=cResults.contentId%>, 'PromptDlgPrompt', this, null)"><i class="far fa-clone"></i> <%=_TEX.T("PromptDlg.CopyPrompt")%> </span>
+    <textarea readonly id="PromptDlgPrompt" class="PromptDlgInfo Prompt" style="margin-top: 5px;"><%=results.prompt%></textarea>
+    <span id="PromptDlgCopyPromptBtn" class="PromptDlgCopyBtn" onclick="copyAiParam(<%=results.ownerUserId%>, <%=results.contentId%>, 'PromptDlgPrompt', this, null)"><i class="far fa-clone"></i> <%=_TEX.T("PromptDlg.CopyPrompt")%> </span>
 
     <h2 class="PromptDlgTitle"><%=_TEX.T("PromptDlg.NegativePrompt")%></h2>
-    <textarea readonly id="PromptDlgNegativePrompt" class="PromptDlgInfo NegativePrompt" style="margin-top: 5px;"><%=cResults.negativePrompt%></textarea>
-    <span id="PromptDlgCopyNegativePromptBtn" class="PromptDlgCopyBtn" onclick="copyAiParam(<%=cResults.ownerUserId%>, <%=cResults.contentId%>, 'PromptDlgNegativePrompt', this, null)"><i class="far fa-clone"></i> <%=_TEX.T("PromptDlg.CopyNegativePrompt")%> </span>
+    <textarea readonly id="PromptDlgNegativePrompt" class="PromptDlgInfo NegativePrompt" style="margin-top: 5px;"><%=results.negativePrompt%></textarea>
+    <span id="PromptDlgCopyNegativePromptBtn" class="PromptDlgCopyBtn" onclick="copyAiParam(<%=results.ownerUserId%>, <%=results.contentId%>, 'PromptDlgNegativePrompt', this, null)"><i class="far fa-clone"></i> <%=_TEX.T("PromptDlg.CopyNegativePrompt")%> </span>
 
     <h2 class="PromptDlgTitle" style="margin-top: 4px;"><%=_TEX.T("PromptDlg.Params")%></h2>
-    <textarea readonly id="PromptDlgParams" class="PromptDlgInfo OtherParams" style="margin-top: 5px;"><%=cResults.otherParams%></textarea>
-    <span id="PromptDlgCopyParamBtn" class="PromptDlgCopyBtn" onclick="copyAiParam(<%=cResults.ownerUserId%>, <%=cResults.contentId%>, 'PromptDlgParams', this, null)"><i class="far fa-clone"></i> <%=_TEX.T("PromptDlg.CopyParams")%> </span>
+    <textarea readonly id="PromptDlgParams" class="PromptDlgInfo OtherParams" style="margin-top: 5px;"><%=results.otherParams%></textarea>
+    <span id="PromptDlgCopyParamBtn" class="PromptDlgCopyBtn" onclick="copyAiParam(<%=results.ownerUserId%>, <%=results.contentId%>, 'PromptDlgParams', this, null)"><i class="far fa-clone"></i> <%=_TEX.T("PromptDlg.CopyParams")%> </span>
 
     <h2 class="PromptDlgTitle" style="margin-top: 4px;"><%=_TEX.T("PromptDlg.Generate")%> <i class="fas fa-external-link-alt"></i></h2>
     <div class="PromptDlgGo">
         <%for (int i=0; i<Common.CATEGORY_ID.length; i++) {
             if (Common.CATEGORY_ID[i] == Common.CATEGORY_ID_OTHER) continue;
         %>
-        <a onclick="copyAiParam(<%=cResults.ownerUserId%>, <%=cResults.contentId%>, 'PromptDlgPrompt', this, '<%=Common.CATEGORY_SITE[Common.CATEGORY_ID[i]]%>')" href="javascript: void(0)"><%=_TEX.T("Category.C" + Common.CATEGORY_ID[i])%></a>
+        <a onclick="copyAiParam(<%=results.ownerUserId%>, <%=results.contentId%>, 'PromptDlgPrompt', this, '<%=Common.CATEGORY_SITE[Common.CATEGORY_ID[i]]%>')" href="javascript: void(0)"><%=_TEX.T("Category.C" + Common.CATEGORY_ID[i])%></a>
         <%}%>
     </div>
 </div>

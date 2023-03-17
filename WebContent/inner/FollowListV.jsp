@@ -13,13 +13,13 @@ if(!checkLogin.m_bLogin) {
 	return;
 }
 
-FollowListC cResults = new FollowListC();
-cResults.getParam(request);
-cResults.m_nMode = followMode;
-boolean bRtn = cResults.getResults(checkLogin);
+FollowListC results = new FollowListC();
+results.getParam(request);
+results.m_nMode = followMode;
+boolean bRtn = results.getResults(checkLogin);
 
 final String title;
-if (cResults.m_nMode == FollowListC.MODE_FOLLOWING) {
+if (results.m_nMode == FollowListC.MODE_FOLLOWING) {
 	title = _TEX.T("FollowListV.Title");
 } else {
 	title = _TEX.T("FollowerListV.Title");
@@ -38,7 +38,7 @@ final boolean isSmartPhone = Util.isSmartPhone(request);
 		<%}%>
 		<title>follow</title>
 		<script>
-			let lastUserId = <%=cResults.endId%>;
+			let lastUserId = <%=results.endId%>;
 
 			const loadingSpinner = {
 				appendTo: "#IllustThumbList",
@@ -51,7 +51,7 @@ final boolean isSmartPhone = Util.isSmartPhone(request);
 				appendLoadingSpinner(loadingSpinner.appendTo, loadingSpinner.className);
 				return $.ajax({
 					"type": "post",
-					"data": {"ID": <%=cResults.userId%> ,"SD": lastUserId, "PG": 0},
+					"data": {"ID": <%=results.userId%> ,"SD": lastUserId, "PG": 0},
 					"dataType": "json",
 					<%if(followMode == FollowListC.MODE_FOLLOWING){%>
 					"url": "/<%=isApp?"api":"f"%>/FollowListF.jsp",
@@ -80,6 +80,7 @@ final boolean isSmartPhone = Util.isSmartPhone(request);
 			}
 
 			$(function(){
+				$('#MenuMe').addClass('Selected');
 				initContents();
 			});
 		</script>
@@ -91,18 +92,18 @@ final boolean isSmartPhone = Util.isSmartPhone(request);
 		<%}%>
 		<article class="Wrapper GridList">
 			<div class="FollowListHeader">
-				<a class="FollowListTitle" href="/<%=cResults.userId%>">
+				<a class="FollowListTitle" href="/<%=results.userId%>">
 					<i class="FollowListBackLink fas fa-arrow-left"></i>
 				</a>
-				<%=cResults.nickName%> <%=title%>
+				<%=results.nickName%> <%=title%>
 			</div>
 			<%if(isSmartPhone){%>
 			<div id="IllustThumbList" class="IllustThumbList">
 			<%}else{%>
 			<section id="IllustThumbList" class="IllustThumbList">
 			<%}%>
-				<%for(int nCnt = 0; nCnt<cResults.userList.size(); nCnt++) {
-					CUser cUser = cResults.userList.get(nCnt);%>
+				<%for(int nCnt = 0; nCnt<results.userList.size(); nCnt++) {
+					CUser cUser = results.userList.get(nCnt);%>
 
 					<%if(isSmartPhone){%>
 						<%if(isApp){%>

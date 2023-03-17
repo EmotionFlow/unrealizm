@@ -20,23 +20,23 @@
 		font-size: 11px;
 	}
 </style>
-<% String myBoxKeyword = Util.toStringHtml(cResults.searchKeyword); %>
+<% String myBoxKeyword = Util.toStringHtml(results.searchKeyword); %>
 <nav id="SortFilterMenu" class="SortFilterMenu" <%=isGridPc ? "style=\"width:400px;margin:0 auto;\"" : ""%>>
 	<div>
 		<span class="SortMenuIcon" onclick="showMyBoxSortFilterSubMenu('SortMenu');">
 			<%
 				String sortMenuIconClass = "";
 				String sortMenuDirectionIcon = null;
-				if (cResults.sortBy == IllustListC.SortBy.None) {
+				if (results.sortBy == IllustListC.SortBy.None) {
 					sortMenuIconClass = "fas fa-sort-amount-down";
-				} else if (cResults.sortBy == IllustListC.SortBy.Description) {
-					sortMenuIconClass = cResults.sortOrderAsc ? "fas fa-sort-alpha-down" : "fas fa-sort-alpha-up";
-				} else if (cResults.sortBy == IllustListC.SortBy.CreatedAt) {
+				} else if (results.sortBy == IllustListC.SortBy.Description) {
+					sortMenuIconClass = results.sortOrderAsc ? "fas fa-sort-alpha-down" : "fas fa-sort-alpha-up";
+				} else if (results.sortBy == IllustListC.SortBy.CreatedAt) {
 					sortMenuIconClass = "far fa-calendar WithDirection";
-					sortMenuDirectionIcon = cResults.sortOrderAsc ? "fas fa-sort-up" : "fas fa-sort-down";
-				} else if (cResults.sortBy == IllustListC.SortBy.UpdatedAt) {
+					sortMenuDirectionIcon = results.sortOrderAsc ? "fas fa-sort-up" : "fas fa-sort-down";
+				} else if (results.sortBy == IllustListC.SortBy.UpdatedAt) {
 					sortMenuIconClass = "fas fa-pen WithDirection";
-					sortMenuDirectionIcon = cResults.sortOrderAsc ? "fas fa-sort-up" : "fas fa-sort-down";
+					sortMenuDirectionIcon = results.sortOrderAsc ? "fas fa-sort-up" : "fas fa-sort-down";
 				}
 			%>
 			<%if(sortMenuDirectionIcon!=null){%><i class="SortDirection <%=sortMenuDirectionIcon%>"></i><%}%>
@@ -47,7 +47,7 @@
 <nav id="SortFilterSubMenu" class="SortFilterSubMenu" <%=isGridPc ? "style=\"width:500px;margin:0 auto;\"" : ""%>>
 	<div id="SortMenu" class="SortMenu" style="display: none;">
 		<%
-			keyValues = cResults.getParamKeyValueMap();
+			keyValues = results.getParamKeyValueMap();
 			keyValues.remove("PG");
 			keyValues.remove("SBY");
 			keyValues.remove("SASC");
@@ -59,7 +59,7 @@
 		   href="<%=String.format("%s?%s", thisPagePath,
 					   			strCgiParam +
 					   			"&SBY=" + IllustListC.SortBy.Description.getCode() +
-					   			cResults.getSortAscParam(IllustListC.SortBy.Description))
+					   			results.getSortAscParam(IllustListC.SortBy.Description))
 					   			%>"></a>
 	</div>
 </nav>

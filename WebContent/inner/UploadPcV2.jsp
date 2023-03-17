@@ -216,7 +216,7 @@ if (requestId > 0) {
 				<div class="TimeLineIllustCmd">
 					<span id="file-drop-area"></span>
 					<span id="TotalSize" class="TotalSize">(jpeg|png|gif, <%=Common.UPLOAD_FILE_MAX[checkLogin.m_nPassportId]%>files, total <%=Common.UPLOAD_FILE_TOTAL_SIZE[checkLogin.m_nPassportId]%>MByte)</span>
-					<div id="TimeLineAddImage" class="SelectImageBtn BtnBase Rev">
+					<div id="TimeLineAddImage" class="SelectImageBtn BtnBase">
 						<i class="far fa-images"></i>
 						<span id="UploadBtn"><%=_TEX.T("UploadFilePc.SelectImg")%></span>
 					</div>
@@ -225,7 +225,7 @@ if (requestId > 0) {
 				<div class="TimeLineIllustCmd">
 					<div id="PasteZone" class="PasteZone"></div>
 					<span id="TotalSize" class="TotalSize">(multi ver. 0.2beta. 10pastes)</span>
-					<div id="TimeLineAddImage" class="SelectImageBtn BtnBase Rev" contenteditable>
+					<div id="TimeLineAddImage" class="SelectImageBtn BtnBase" contenteditable>
 						<i class="fas fa-paste"></i>
 						<%=(Util.isSmartPhone(request))?_TEX.T("UploadFilePc.PasteImg.SP"):_TEX.T("UploadFilePc.PasteImg")%>
 					</div>

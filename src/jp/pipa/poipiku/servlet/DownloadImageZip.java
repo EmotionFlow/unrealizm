@@ -45,18 +45,18 @@ public class DownloadImageZip extends HttpServlet {
 		CheckLogin checkLogin = new CheckLogin(request, response);
 		if(!checkLogin.m_bLogin) return;
 
-		CDownloadImageFile cResults = new CDownloadImageFile();
+		CDownloadImageFile results = new CDownloadImageFile();
 
-		if(!cResults.getParam(request)) return;
-		if(!cResults.getResults(checkLogin)) return;
+		if(!results.getParam(request)) return;
+		if(!results.getResults(checkLogin)) return;
 
 		response.setContentType("application/zip");
-		response.setHeader("Content-Disposition", String.format("attachment;filename=\"%d.zip\"", cResults.m_nContentId));
+		response.setHeader("Content-Disposition", String.format("attachment;filename=\"%d.zip\"", results.m_nContentId));
 		response.setHeader("Content-Transfer-Encoding", "binary");
 
 		OutputStream outStream = response.getOutputStream();
 		ZipOutputStream zipOutStream = new ZipOutputStream(outStream);
-		for(String file_name : cResults.m_vContentList) {
+		for(String file_name : results.contentList) {
 			try {
 				String ext = ImageUtil.getExt(getServletContext().getRealPath(file_name));
 				File file = new File(getServletContext().getRealPath(file_name));
@@ -107,7 +107,7 @@ public class DownloadImageZip extends HttpServlet {
 			return bRtn;
 		}
 
-		public ArrayList<String> m_vContentList = new ArrayList<String>();
+		public ArrayList<String> contentList = new ArrayList<String>();
 		public boolean getResults(CheckLogin checkLogin) {
 			boolean bResult = false;
 			DataSource dsPostgres = null;
@@ -129,14 +129,14 @@ public class DownloadImageZip extends HttpServlet {
 				if (cResSet.next()) {
 					String file_name = Util.toString(cResSet.getString("file_name"));
 					if(!file_name.isEmpty()) {
-						m_vContentList.add(file_name);
+						contentList.add(file_name);
 					}
 				}
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
 
 				// 存在確認
-				if(m_vContentList.isEmpty()) return false;
+				if(contentList.isEmpty()) return false;
 
 				// append image
 				strSql = "SELECT * FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id ASC LIMIT 1000";
@@ -146,7 +146,7 @@ public class DownloadImageZip extends HttpServlet {
 				while (cResSet.next()) {
 					String file_name = Util.toString(cResSet.getString("file_name"));
 					if(!file_name.isEmpty()) {
-						m_vContentList.add(file_name);
+						contentList.add(file_name);
 					}
 				}
 				cResSet.close();cResSet=null;

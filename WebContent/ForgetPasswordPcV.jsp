@@ -129,7 +129,7 @@ session.setAttribute("SendPasswordFToken", strSendPasswordFToken);
 						</div>
 					</div>
 					<div class="SettingBodyCmd">
-						<a class="BtnBase Rev SettingBodyCmdSendBtn" href="javascript:void(0)" onclick="SendPassword()"><%=_TEX.T("LoginFormV.Button.EmailForget")%></a>
+						<a class="BtnBase SettingBodyCmdSendBtn" href="javascript:void(0)" onclick="SendPassword()"><%=_TEX.T("LoginFormV.Button.EmailForget")%></a>
 					</div>
 				</div>
 			</div>

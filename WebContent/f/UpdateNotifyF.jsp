@@ -3,9 +3,9 @@
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 
-UpdateNotifyC cResults = new UpdateNotifyC();
-cResults.GetParam(request);
-cResults.m_nUserId = checkLogin.m_nUserId;
+UpdateNotifyC results = new UpdateNotifyC();
+results.GetParam(request);
+results.m_nUserId = checkLogin.m_nUserId;
 
-boolean bRtn = cResults.GetResults(checkLogin);
+boolean bRtn = results.GetResults(checkLogin);
 %>{"result":0}

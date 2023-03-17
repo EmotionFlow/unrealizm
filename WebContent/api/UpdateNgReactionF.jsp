@@ -3,11 +3,11 @@
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 
-UpdateNgReactionC cResults = new UpdateNgReactionC();
-cResults.getParam(request);
+UpdateNgReactionC results = new UpdateNgReactionC();
+results.getParam(request);
 
 int nMode = CUser.REACTION_SHOW;
-if(checkLogin.m_bLogin && cResults.m_nUserId == checkLogin.m_nUserId) {
-	nMode = cResults.getResults(checkLogin);
+if(checkLogin.m_bLogin && results.m_nUserId == checkLogin.m_nUserId) {
+	nMode = results.getResults(checkLogin);
 }
 %>{"result": <%=nMode%>}

@@ -26,7 +26,7 @@ public class SearchUserByTagC {
 
 
 	public int SELECT_MAX_GALLERY = 36;
-	public ArrayList<CUser> m_vContentList = new ArrayList<CUser>();
+	public ArrayList<CUser> contentList = new ArrayList<CUser>();
 	public int m_nContentsNum = 0;
 
 	public boolean getResults(CheckLogin checkLogin) {
@@ -85,7 +85,7 @@ public class SearchUserByTagC {
 			cState.setInt(idx++, SELECT_MAX_GALLERY);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
-				m_vContentList.add(new CUser(cResSet));
+				contentList.add(new CUser(cResSet));
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;

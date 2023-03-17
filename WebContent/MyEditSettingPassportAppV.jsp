@@ -5,9 +5,9 @@ String strDebug = "";
 
 //login check
 CheckLogin checkLogin = new CheckLogin(request, response);
-MyEditSettingC cResults = new MyEditSettingC();
-cResults.getParam(request);
-cResults.getResults(checkLogin);
+MyEditSettingC results = new MyEditSettingC();
+results.getParam(request);
+results.getResults(checkLogin);
 %>
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
@@ -56,7 +56,7 @@ cResults.getResults(checkLogin);
 			<div class="SettingList" style="background: #fff;">
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("MyEditSettingPassportV.Title")%></div>
-					<%{Passport.Status passportStatus = cResults.m_cPassport.status;%>
+					<%{Passport.Status passportStatus = results.m_cPassport.status;%>
 					<div class="SettingBody">
 						<%if(passportStatus == Passport.Status.NotYet || passportStatus == Passport.Status.InActive) {%>
 						<%//_TEX.T("MyEditSettingPassportV.Text")%>

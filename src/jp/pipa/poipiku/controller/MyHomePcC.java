@@ -36,7 +36,7 @@ public final class MyHomePcC {
 
 	static public final int SELECT_MAX_GALLERY = 15;
 	static public final int SELECT_MAX_EMOJI = GridUtil.SELECT_MAX_EMOJI;
-	public ArrayList<CContent> m_vContentList = new ArrayList<>();
+	public ArrayList<CContent> contentList = new ArrayList<>();
 	public int m_nContentsNum = 0;
 	public int m_nContentsNumTotal = 0;
 	public int m_nEndId = -1;
@@ -192,7 +192,7 @@ public final class MyHomePcC {
 					cContent.m_nRequestId = resultSet.getInt("request_id");
 					cContent.m_strDescriptionTranslated = resultSet.getString("description_translated");
 					m_nEndId = cContent.m_nContentId;
-					m_vContentList.add(cContent);
+					contentList.add(cContent);
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
@@ -201,12 +201,12 @@ public final class MyHomePcC {
 			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
 
 			if (!m_bNoContents) {
-				if (!m_vContentList.isEmpty()) {
+				if (!contentList.isEmpty()) {
 					// Each Comment
-					GridUtil.getEachComment(connection, m_vContentList);
+					GridUtil.getEachComment(connection, contentList);
 
 					// Bookmark
-					GridUtil.getEachBookmark(connection, m_vContentList, checkLogin);
+					GridUtil.getEachBookmark(connection, contentList, checkLogin);
 				}
 				// Recommended Request Creators
 //				m_vRecommendedRequestCreatorList = RecommendedUsers.getRequestCreators(m_nSelectRecommendedListNum, checkLogin, connection);

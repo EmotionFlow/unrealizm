@@ -13,9 +13,9 @@ if(!checkLogin.m_bLogin) {
 	return;
 }
 
-ReactionListC cResults = new ReactionListC();
-cResults.getParam(request);
-boolean bRtn = cResults.getResults(checkLogin);
+ReactionListC results = new ReactionListC();
+results.getParam(request);
+boolean bRtn = results.getResults(checkLogin);
 
 final boolean isSmartPhone = Util.isSmartPhone(request);
 
@@ -30,7 +30,7 @@ final boolean isSmartPhone = Util.isSmartPhone(request);
 		<%}%>
 		<title>follow</title>
 		<script>
-			let lastCommentId = <%=cResults.endId%>;
+			let lastCommentId = <%=results.endId%>;
 
 			const loadingSpinner = {
 				appendTo: "#IllustThumbList",
@@ -43,7 +43,7 @@ final boolean isSmartPhone = Util.isSmartPhone(request);
 				appendLoadingSpinner(loadingSpinner.appendTo, loadingSpinner.className);
 				return $.ajax({
 					"type": "post",
-					"data": {"UID": <%=cResults.ownerUserId%>,  "CID": <%=cResults.contentId%> ,"SD": lastCommentId},
+					"data": {"UID": <%=results.ownerUserId%>,  "CID": <%=results.contentId%> ,"SD": lastCommentId},
 					"dataType": "json",
 					"url": "/<%=isApp?"api":"f"%>/ReactionListF.jsp",
 				}).then((data) => {
@@ -79,13 +79,13 @@ final boolean isSmartPhone = Util.isSmartPhone(request);
 		<%}%>
 		<article class="Wrapper GridList">
 			<div class="FollowListHeader">
-				<a class="FollowListTitle" href="/<%=cResults.ownerUserId%>/<%=cResults.contentId%>.html">
+				<a class="FollowListTitle" href="/<%=results.ownerUserId%>/<%=results.contentId%>.html">
 					<i class="FollowListBackLink fas fa-arrow-left"></i>
 				</a>
 				<%=_TEX.T("ReactionListV.Title")%>
 			</div>
 			<section id="IllustThumbList" class="IllustThumbList">
-				<%=CCnv.toReactionDetailListHtml(cResults.reactionDetails, checkLogin, _TEX, isSmartPhone)%>
+				<%=CCnv.toReactionDetailListHtml(results.reactionDetails, checkLogin, _TEX, isSmartPhone)%>
 			</section>
 		</article>
 		<%@ include file="/inner/TFooter.jsp"%>

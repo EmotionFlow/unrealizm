@@ -4,13 +4,13 @@
 CheckLogin checkLogin = new CheckLogin(request, response);
 boolean isApp = false;
 
-MyIllustListC cResults = new MyIllustListC();
-cResults.getParam(request);
-cResults.SELECT_MAX_GALLERY = 45;
+MyIllustListC results = new MyIllustListC();
+results.getParam(request);
+results.SELECT_MAX_GALLERY = 45;
 
 // ログインせずにUIDを指定した場合、間違ってマイボックスのURLを聞いてアクセスしている可能性がある
-if(!checkLogin.m_bLogin && cResults.m_nUserId>=1) {
-	response.sendRedirect("/" + cResults.m_nUserId);
+if(!checkLogin.m_bLogin && results.m_nUserId>=1) {
+	response.sendRedirect("/" + results.m_nUserId);
 	return;
 }
 
@@ -20,39 +20,42 @@ if(!checkLogin.m_bLogin) {
 	return;
 }
 
-if(cResults.m_nUserId < 0){
+if(results.m_nUserId < 0){
 	// パラメータなしだったら自分のマイボックス
-	cResults.m_nUserId = checkLogin.m_nUserId;
-} else if(checkLogin.m_nUserId != cResults.m_nUserId) {
+	results.m_nUserId = checkLogin.m_nUserId;
+} else if(checkLogin.m_nUserId != results.m_nUserId) {
 	// 自分と異なるuserIdが指定されていたら、その人のトップへ遷移。
-	response.sendRedirect("/"+cResults.m_nUserId);
+	response.sendRedirect("/"+results.m_nUserId);
 	return;
 }
 
-cResults.m_bDispUnPublished = true;
-if(!cResults.getResults(checkLogin) || !cResults.m_bOwner) {
+results.m_bDispUnPublished = true;
+if(!results.getResults(checkLogin) || !results.m_bOwner) {
 	response.sendRedirect("/NotFoundV.jsp");
 	return;
 }
-String strUrl = "https://unrealizm.com/"+cResults.m_cUser.m_nUserId+"/";
-String strTitle = Util.toStringHtml(String.format(_TEX.T("IllustListPc.Title"), cResults.m_cUser.m_strNickName)) + " | " + _TEX.T("THeader.Title");
-String strDesc = String.format(_TEX.T("IllustListPc.Title.Desc"), Util.toStringHtml(cResults.m_cUser.m_strNickName), cResults.m_nContentsNumTotal);
-String strFileUrl = cResults.m_cUser.m_strFileName;
+String strUrl = "https://unrealizm.com/"+results.m_cUser.m_nUserId+"/";
+String strTitle = Util.toStringHtml(String.format(_TEX.T("IllustListPc.Title"), results.m_cUser.m_strNickName)) + " | " + _TEX.T("THeader.Title");
+String strDesc = String.format(_TEX.T("IllustListPc.Title.Desc"), Util.toStringHtml(results.m_cUser.m_strNickName), results.m_nContentsNumTotal);
+String strFileUrl = results.m_cUser.m_strFileName;
 if(strFileUrl.isEmpty()) strFileUrl="/img/icon-512x512.png";
-String strEncodedKeyword = URLEncoder.encode(cResults.m_strTagKeyword, "UTF-8");
-g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_cUser.m_nAdMode==CUser.AD_MODE_SHOW);
+String strEncodedKeyword = URLEncoder.encode(results.m_strTagKeyword, "UTF-8");
+g_bShowAd = (results.m_cUser.m_nPassportId==Common.PASSPORT_OFF || results.m_cUser.m_nAdMode==CUser.AD_MODE_SHOW);
 
 Map<String, String> keyValues;
 String strCgiParam = "";
 final String thisPagePath = "/MyIllustListGridPcV.jsp";
 
+boolean bSmartPhone = Util.isSmartPhone(request);
+ArrayList<String> emojiList = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
+final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 %>
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommonNoindexPc.jsp"%>
 		<%@ include file="/inner/ad/TAdGridPcHeader.jsp"%>
-		<title><%=cResults.m_cUser.m_strNickName%></title>
+		<title><%=results.m_cUser.m_strNickName%></title>
 		<%@ include file="/inner/TTweetMyBox.jsp"%>
 		<%@ include file="/inner/TSwitchUser.jsp"%>
 		<%@ include file="/inner/TWaveMessageDlg.jsp"%>
@@ -69,8 +72,8 @@ final String thisPagePath = "/MyIllustListGridPcV.jsp";
 		</script>
 
 		<style>
-		<%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>
-		.UserInfo {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');}
+		<%if(!results.m_cUser.m_strHeaderFileName.isEmpty()){%>
+		.UserInfo {background-image: url('<%=Common.GetUrl(results.m_cUser.m_strHeaderFileName)%>');}
 		<%}%>
 		.HeaderSetting {text-align: center; position: absolute; top: 12px; right: 10px;}
 		.NoContents {display: block; padding: 250px 0; width: 100%; text-align: center;}
@@ -81,10 +84,10 @@ final String thisPagePath = "/MyIllustListGridPcV.jsp";
 		.MyBoxSearch .MyBoxSearchBtn:hover {border: solid 1px #fff; background-color: #3498db; color: #000;}
 		</style>
 
-		<%if(cResults.m_cUser.m_nPassportId>=Common.PASSPORT_ON && !cResults.m_cUser.m_strBgFileName.isEmpty()) {%>
+		<%if(results.m_cUser.m_nPassportId>=Common.PASSPORT_ON && !results.m_cUser.m_strBgFileName.isEmpty()) {%>
 		<style>
 			body {
-				background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strBgFileName)%>');
+				background-image: url('<%=Common.GetUrl(results.m_cUser.m_strBgFileName)%>');
 				background-repeat: repeat;
 				background-position: 50% top;
 				background-attachment: fixed;
@@ -179,12 +182,12 @@ final String thisPagePath = "/MyIllustListGridPcV.jsp";
 			<div class="UserInfo Float">
 				<div class="UserInfoBg"></div>
 				<section class="UserInfoUser">
-					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/<%=cResults.m_cUser.m_nUserId%>/"></a>
-					<h2 class="UserInfoUserName"><a href="/<%=cResults.m_cUser.m_nUserId%>/"><%=cResults.m_cUser.m_strNickName%></a></h2>
-					<%if(cResults.twitterScreenName != null && !cResults.twitterScreenName.isEmpty()) {%>
-					<h3 class="UserInfoProfile"><a class="fab fa-twitter" href="https://twitter.com/<%=cResults.twitterScreenName%>">@<%=cResults.twitterScreenName%></a></h3>
+					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(results.m_cUser.m_strFileName)%>')" href="/<%=results.m_cUser.m_nUserId%>/"></a>
+					<h2 class="UserInfoUserName"><a href="/<%=results.m_cUser.m_nUserId%>/"><%=results.m_cUser.m_strNickName%></a></h2>
+					<%if(results.twitterScreenName != null && !results.twitterScreenName.isEmpty()) {%>
+					<h3 class="UserInfoProfile"><a class="fab fa-twitter" href="https://twitter.com/<%=results.twitterScreenName%>">@<%=results.twitterScreenName%></a></h3>
 					<%}%>
-					<h3 class="UserInfoProfile"><%=Common.AutoLink(Util.toStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_PC)%></h3>
+					<h3 class="UserInfoProfile"><%=Common.AutoLink(Util.toStringHtml(results.m_cUser.m_strProfile), results.m_cUser.m_nUserId, CCnv.MODE_PC)%></h3>
 					<span class="UserInfoCmd">
 						<span class="TweetMyBox">
 							<a id="OpenTweetMyBoxDlgBtn" href="javascript:void(0);" class="BtnBase">
@@ -198,7 +201,7 @@ final String thisPagePath = "/MyIllustListGridPcV.jsp";
 				</section>
 
 				<%if(false){%>
-<%--				<%if(cResults.myWaves != null && !cResults.myWaves.isEmpty()){%>--%>
+<%--				<%if(results.myWaves != null && !results.myWaves.isEmpty()){%>--%>
 				<section class="WaveList Pc">
 					<span class="WaveListTitle Pc">
 						<%=_TEX.T("MyIllustListV.Wave.Received")%>
@@ -211,7 +214,7 @@ final String thisPagePath = "/MyIllustListGridPcV.jsp";
 				<%}%>
 
 				<%if(false){%>
-<%--				<%if(cResults.replyWaves != null && !cResults.replyWaves.isEmpty()){%>--%>
+<%--				<%if(results.replyWaves != null && !results.replyWaves.isEmpty()){%>--%>
 				<section class="WaveList">
 					<span class="WaveListTitle">
 						<%=_TEX.T("MyIllustListV.Wave.Reply")%>
@@ -223,17 +226,17 @@ final String thisPagePath = "/MyIllustListGridPcV.jsp";
 				<%}%>
 
 				<section class="UserInfoState">
-					<a class="UserInfoStateItem Selected" href="/<%=cResults.m_cUser.m_nUserId%>/">
+					<a class="UserInfoStateItem Selected" href="/<%=results.m_cUser.m_nUserId%>/">
 						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.ContentNum")%></span>
-						<span class="UserInfoStateItemNum"><%=cResults.m_nContentsNumTotal%></span>
+						<span class="UserInfoStateItemNum"><%=results.m_nContentsNumTotal%></span>
 					</a>
-					<a class="UserInfoStateItem" href="/FollowListPcV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>">
+					<a class="UserInfoStateItem" href="/FollowListPcV.jsp?ID=<%=results.m_cUser.m_nUserId%>">
 						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.Follow")%></span>
-						<span class="UserInfoStateItemNum"><%=cResults.m_cUser.m_nFollowNum%></span>
+						<span class="UserInfoStateItemNum"><%=results.m_cUser.m_nFollowNum%></span>
 					</a>
-					<a class="UserInfoStateItem" href="/FollowerListPcV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>">
+					<a class="UserInfoStateItem" href="/FollowerListPcV.jsp?ID=<%=results.m_cUser.m_nUserId%>">
 						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.Follower")%></span>
-						<span class="UserInfoStateItemNum"><%=cResults.m_cUser.m_nFollowerNum%></span>
+						<span class="UserInfoStateItemNum"><%=results.m_cUser.m_nFollowerNum%></span>
 					</a>
 				</section>
 			</div>
@@ -244,23 +247,19 @@ final String thisPagePath = "/MyIllustListGridPcV.jsp";
 			<% boolean isGridPc = true; %>
 			<%@include file="/inner/TSortFilterNavigation.jsp"%>
 
-			<%if(cResults.m_vCategoryList.size()>0) {%>
+			<%if(results.m_vCategoryList.size()>0) {%>
 			<nav id="TagMenu" class="TagMenu">
-				<a class="BtnBase TagBtn <%if(cResults.m_strTagKeyword.isEmpty()){%> Selected<%}%>" href="/MyIllustListPcV.jsp"><%=_TEX.T("Category.All")%></a>
-				<%for(CTag cTag : cResults.m_vCategoryList) {%>
-				<a class="BtnBase TagBtn <%if(cTag.m_strTagTxt.equals(cResults.m_strTagKeyword)){%> Selected<%}%>" href="/MyIllustListPcV.jsp?ID=<%=cResults.m_nUserId%>&KWD=<%=URLEncoder.encode(cTag.m_strTagTxt, "UTF-8")%>"><%=Util.toDescString(cTag.m_strTagTxt)%></a>
+				<a class="BtnBase TagBtn <%if(results.m_strTagKeyword.isEmpty()){%> Selected<%}%>" href="/MyIllustListPcV.jsp"><%=_TEX.T("Category.All")%></a>
+				<%for(CTag cTag : results.m_vCategoryList) {%>
+				<a class="BtnBase TagBtn <%if(cTag.m_strTagTxt.equals(results.m_strTagKeyword)){%> Selected<%}%>" href="/MyIllustListPcV.jsp?ID=<%=results.m_nUserId%>&KWD=<%=URLEncoder.encode(cTag.m_strTagTxt, "UTF-8")%>"><%=Util.toDescString(cTag.m_strTagTxt)%></a>
 				<%}%>
 			</nav>
 			<%}%>
-
-			<section id="IllustThumbList" class="IllustThumbList">
-				<%if(cResults.m_vContentList.size()>0){%>
-					<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-						CContent cContent = cResults.m_vContentList.get(nCnt);%>
-						<%=CCnv.toMyBoxThumbHtml(cContent, checkLogin, CCnv.MODE_PC, CCnv.SP_MODE_WVIEW, _TEX)%>
-<%--						<%if(nCnt==3){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_1.jsp"%><%}%>--%>
-<%--						<%if(nCnt==19){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_2.jsp"%><%}%>--%>
-<%--						<%if(nCnt==35){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_3.jsp"%><%}%>--%>
+			
+			<section id="IllustThumbList" class="IllustItemList2Column">
+				<%if(results.contentList.size()>0){%>
+					<%for(CContent cContent: results.contentList) {%>
+						<%=CCnv.Content2Html2Column(cContent, checkLogin, bSmartPhone?CCnv.MODE_SP:CCnv.MODE_PC, _TEX, emojiList, CCnv.VIEW_DETAIL, nSpMode)%>
 					<%}%>
 				<%}else{%>
 					<span class="NoContents"><%=_TEX.T("IllustListV.NoContents.Me")%></span>
@@ -269,11 +268,11 @@ final String thisPagePath = "/MyIllustListGridPcV.jsp";
 
 			<nav class="PageBar">
 				<%
-					keyValues = cResults.getParamKeyValueMap();
+					keyValues = results.getParamKeyValueMap();
 					keyValues.remove("PG");
 					strCgiParam = "&" + Common.getCgiParamStr(keyValues);
 				%>
-				<%=CPageBar.CreatePageBarSp(thisPagePath, strCgiParam, cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%=CPageBar.CreatePageBarSp(thisPagePath, strCgiParam, results.m_nPage, results.m_nContentsNum, results.SELECT_MAX_GALLERY)%>
 				<%
 					keyValues.clear();
 				%>

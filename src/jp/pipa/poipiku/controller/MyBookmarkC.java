@@ -22,7 +22,7 @@ public class MyBookmarkC {
 	}
 
 	public int selectMaxGallery = 36;
-	public ArrayList<CContent> m_vContentList = new ArrayList<>();
+	public ArrayList<CContent> contentList = new ArrayList<>();
 	public int endId = -1;
 	public int contentsNum = 0;
 
@@ -76,7 +76,7 @@ public class MyBookmarkC {
 					content.m_cUser.m_strNickName	= Util.toString(user.nickName);
 					content.m_cUser.m_strFileName	= Util.toString(user.fileName);
 					endId = resultSet.getInt("bookmark_id");
-					m_vContentList.add(content);
+					contentList.add(content);
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;

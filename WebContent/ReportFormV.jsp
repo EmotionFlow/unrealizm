@@ -7,17 +7,14 @@ int nContentId	= Util.toInt(request.getParameter("TD"));
 
 // login check
 CheckLogin checkLogin = new CheckLogin(request, response);
+
+boolean bMobile = Util.isSmartPhone(request);
 %>
 <!DOCTYPE html>
-<html lang="<%=_TEX.getLangStr()%>">
+<html lang="ja">
 	<head>
-		<%@ include file="/inner/THeaderCommon.jsp"%>
+		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title>問題の報告</title>
-		<style>
-			.SettingBodyCmdRegist {
-				min-width: 60px;
-			}
-		</style>
 	</head>
 	<script>
 		$.ajaxSetup({
@@ -48,6 +45,8 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 
 	<body>
 		<div id="DispMsg"></div>
+		<%@ include file="/inner/TMenuPc.jsp"%>
+
 		<article class="Wrapper">
 			<div class="SettingList">
 				<div class="SettingListItem" style="margin-top: 50px;">
@@ -56,7 +55,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 						<div class="SettingBodyTxt" style="margin-top: 30px;">
 							問題点を具体的に記載してください。
 						</div>
-						<textarea id="ReportDesc" class="SettingBodyTxt" type="text"></textarea>
+						<textarea id="ReportDesc" class="SettingBodyTxt"></textarea>
 						<div class="SettingBodyCmd" style="margin-top: 30px;">
 							<div id="ProfileTextMessage" class="RegistMessage" ></div>
 							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="Login()">送信する</a>
@@ -65,5 +64,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 				</div>
 			</div>
 		</article><!--Wrapper-->
+
+		<%@ include file="/inner/TFooter.jsp"%>
 	</body>
 </html>

@@ -10,9 +10,9 @@ if(!checkLogin.m_bLogin) {
 	return;
 }
 
-MyHomeTagPcC cResults = new MyHomeTagPcC();
-cResults.getParam(request);
-boolean bRtn = cResults.getResults(checkLogin);
+MyHomeTagPcC results = new MyHomeTagPcC();
+results.getParam(request);
+boolean bRtn = results.getResults(checkLogin);
 ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 %>
 <!DOCTYPE html>
@@ -89,7 +89,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 							URLEncoder.encode(String.format("%s%s %s #%s",
 									checkLogin.m_strNickName,
 									_TEX.T("Twitter.UserAddition"),
-									String.format(_TEX.T("Twitter.UserPostNum"), cResults.m_nContentsNumTotal),
+									String.format(_TEX.T("Twitter.UserPostNum"), results.m_nContentsNumTotal),
 									_TEX.T("Common.HashTag")), "UTF-8"),
 							URLEncoder.encode("https://unrealizm.com/"+checkLogin.m_nUserId+"/", "UTF-8"));
 					%>
@@ -110,20 +110,20 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 			</aside>
 
 			<section id="IllustItemList" class="IllustItemList">
-				<%if(cResults.m_vContentList.size()<=0) {%>
+				<%if(results.contentList.size()<=0) {%>
 				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 150px 10px 50px 10px; text-align: center; box-sizing: border-box;">
 					タグをフォローするとここに最新情報が表示されるようになります。
 				</div>
 				<%}%>
 
-				<%for(CContent cContent : cResults.m_vContentList) { %>
+				<%for(CContent cContent : results.contentList) { %>
 					<%= CCnv.Content2Html(cContent, checkLogin, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_WVIEW)%>
 				<%}%>
 			</section>
 			<%@ include file="/inner/TShowDetail.jsp"%>
 
 			<nav class="PageBar">
-				<%=CPageBar.CreatePageBarSp("/MyHomeTagPcV.jsp", "", cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%=CPageBar.CreatePageBarSp("/MyHomeTagPcV.jsp", "", results.m_nPage, results.m_nContentsNum, results.SELECT_MAX_GALLERY)%>
 			</nav>
 		</article>
 		<%@ include file="/inner/TFooterSingleAd.jsp"%>

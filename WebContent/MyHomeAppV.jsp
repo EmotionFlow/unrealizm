@@ -10,11 +10,11 @@ if(!checkLogin.m_bLogin) {
 	return;
 }
 
-MyHomeC cResults = new MyHomeC();
-cResults.getParam(request);
+MyHomeC results = new MyHomeC();
+results.getParam(request);
 checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 
-boolean bRtn = cResults.getResults(checkLogin);
+boolean bRtn = results.getResults(checkLogin);
 ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 %>
 <!DOCTYPE html>
@@ -31,7 +31,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 		<%@ include file="/inner/TTwitterFollowerLimitInfo.jsp"%>
 
 		<script>
-		var g_nEndId = <%=cResults.lastContentId%>;
+		var g_nEndId = <%=results.lastContentId%>;
 		var g_bAdding = false;
 		function addContents() {
 			if(g_bAdding) return;
@@ -84,18 +84,18 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 	<body>
 		<article class="Wrapper">
 
-			<%if(cResults.systemInfo !=null) {%>
-			<div class="SystemInfo" id="SystemInfo_<%=cResults.systemInfo.m_nContentId%>">
-				<a class="SystemInfoTitle" href="/IllustViewAppV.jsp?ID=2&TD=<%=cResults.systemInfo.m_nContentId%>"><i class="fas fa-bullhorn"></i></a>
-				<a class="SystemInfoDate" href="/IllustViewAppV.jsp?ID=2&TD=<%=cResults.systemInfo.m_nContentId%>"><%=(new SimpleDateFormat("YYYY MM/dd")).format(cResults.systemInfo.m_timeUploadDate)%></a>
-				<a class="SystemInfoDesc" href="/IllustViewAppV.jsp?ID=2&TD=<%=cResults.systemInfo.m_nContentId%>"><%=Util.toStringHtml(cResults.systemInfo.m_strDescription)%></a>
-				<a class="SystemInfoClose" href="javascript:void(0)" onclick="$('#SystemInfo_<%=cResults.systemInfo.m_nContentId%>').hide();setCookie('<%=Common.UNREALIZM_INFO%>', '<%=cResults.systemInfo.m_nContentId%>')"><i class="fas fa-times"></i></a>
+			<%if(results.systemInfo !=null) {%>
+			<div class="SystemInfo" id="SystemInfo_<%=results.systemInfo.m_nContentId%>">
+				<a class="SystemInfoTitle" href="/IllustViewAppV.jsp?ID=2&TD=<%=results.systemInfo.m_nContentId%>"><i class="fas fa-bullhorn"></i></a>
+				<a class="SystemInfoDate" href="/IllustViewAppV.jsp?ID=2&TD=<%=results.systemInfo.m_nContentId%>"><%=(new SimpleDateFormat("YYYY MM/dd")).format(results.systemInfo.m_timeUploadDate)%></a>
+				<a class="SystemInfoDesc" href="/IllustViewAppV.jsp?ID=2&TD=<%=results.systemInfo.m_nContentId%>"><%=Util.toStringHtml(results.systemInfo.m_strDescription)%></a>
+				<a class="SystemInfoClose" href="javascript:void(0)" onclick="$('#SystemInfo_<%=results.systemInfo.m_nContentId%>').hide();setCookie('<%=Common.UNREALIZM_INFO%>', '<%=results.systemInfo.m_nContentId%>')"><i class="fas fa-times"></i></a>
 			</div>
 			<%}%>
 
 			<%@ include file="/inner/TAdPoiPassHeaderAppV.jsp"%>
 
-			<%if(Util.needUpdate(cResults.version)) {%>
+			<%if(Util.needUpdate(results.version)) {%>
 			<div class="UpdateInfo">
 				<div class="UpdateInfoMsg"><%=_TEX.T("UpdateInfo.Msg")%></div>
 				<%if(Util.isIOS(request)){%>
@@ -108,7 +108,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 
 			<%@ include file="/inner/TAdEvent_top_rightV.jsp"%>
 
-			<%if(cResults.contentList.size()<=0) {%>
+			<%if(results.contentList.size()<=0) {%>
 			<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 50px 10px 50px 10px; text-align: center; box-sizing: border-box;">
 				<%=_TEX.T("MyHome.FirstMsg")%>
 				<br />
@@ -117,20 +117,20 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 			<%}%>
 			<section id="IllustItemList" class="IllustItemList">
 				<%	int nCnt;
-					for(nCnt=0; nCnt<cResults.contentList.size(); nCnt++) {
-						CContent cContent = cResults.contentList.get(nCnt);%>
+					for(nCnt=0; nCnt<results.contentList.size(); nCnt++) {
+						CContent cContent = results.contentList.get(nCnt);%>
 						<%=CCnv.Content2Html(cContent, checkLogin, CCnv.MODE_SP, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_APP)%>
 
-						<%if(nCnt==7 && cResults.recommendedRequestCreatorList !=null && !cResults.recommendedRequestCreatorList.isEmpty()) {%>
+						<%if(nCnt==7 && results.recommendedRequestCreatorList !=null && !results.recommendedRequestCreatorList.isEmpty()) {%>
 						<h2 class="IllustItemListRecommendedTitle"><%=_TEX.T("MyHome.Recommended.RequestCreators")%></h2>
-						<%for (CUser recommendedUser: cResults.recommendedRequestCreatorList){%>
+						<%for (CUser recommendedUser: results.recommendedRequestCreatorList){%>
 						<%=CCnv.toHtmlUserMini(recommendedUser, 1, _TEX, CCnv.SP_MODE_APP)%>
 						<%}%>
 						<%}%>
 
-						<%if(nCnt==6 && cResults.recommendedUserList !=null && !cResults.recommendedUserList.isEmpty()) {%>
+						<%if(nCnt==6 && results.recommendedUserList !=null && !results.recommendedUserList.isEmpty()) {%>
 						<h2 class="IllustItemListRecommendedTitle"><%=_TEX.T("MyHome.Recommended.Users")%></h2>
-						<%for (CUser recommendedUser: cResults.recommendedUserList){%>
+						<%for (CUser recommendedUser: results.recommendedUserList){%>
 						<%=CCnv.toHtmlUserMini(recommendedUser, 1, _TEX, CCnv.SP_MODE_APP)%>
 						<%}%>
 						<%}%>
@@ -140,16 +140,16 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 						<%}%>
 				<%}%>
 
-				<%if(nCnt<=7 && cResults.recommendedRequestCreatorList !=null && !cResults.recommendedRequestCreatorList.isEmpty()) {%>
+				<%if(nCnt<=7 && results.recommendedRequestCreatorList !=null && !results.recommendedRequestCreatorList.isEmpty()) {%>
 				<h2 class="IllustItemListRecommendedTitle"><%=_TEX.T("MyHome.Recommended.RequestCreators")%></h2>
-				<%for (CUser recommendedUser: cResults.recommendedRequestCreatorList){%>
+				<%for (CUser recommendedUser: results.recommendedRequestCreatorList){%>
 				<%=CCnv.toHtmlUserMini(recommendedUser, 1, _TEX, CCnv.SP_MODE_APP)%>
 				<%}%>
 				<%}%>
 
-				<%if(nCnt<=6 && cResults.recommendedUserList !=null && !cResults.recommendedUserList.isEmpty()) {%>
+				<%if(nCnt<=6 && results.recommendedUserList !=null && !results.recommendedUserList.isEmpty()) {%>
 				<h2 class="IllustItemListRecommendedTitle"><%=_TEX.T("MyHome.Recommended.Users")%></h2>
-				<%for (CUser recommendedUser: cResults.recommendedUserList){%>
+				<%for (CUser recommendedUser: results.recommendedUserList){%>
 				<%=CCnv.toHtmlUserMini(recommendedUser, 1, _TEX, CCnv.SP_MODE_APP)%>
 				<%}%>
 				<%}%>

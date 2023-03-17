@@ -5,19 +5,19 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 
 if(!checkLogin.m_bLogin) return;
 
-CheckNotifyC cResults = new CheckNotifyC();
-cResults.m_nUserId = checkLogin.m_nUserId;
-cResults.GetResults();
+CheckNotifyC results = new CheckNotifyC();
+results.m_nUserId = checkLogin.m_nUserId;
+results.GetResults();
 %>{
-"check_comment":<%=cResults.m_nCheckComment%>,
-"check_comment_reply":<%=cResults.m_nCheckCommentReply%>,
+"check_comment":<%=results.m_nCheckComment%>,
+"check_comment_reply":<%=results.m_nCheckCommentReply%>,
 "check_follow":0,
 "check_heart":0,
-"check_request":<%=cResults.m_nCheckRequest%>,
-"check_gift":<%=cResults.m_nCheckGift%>,
-"check_wave_emoji":<%=cResults.m_nCheckWaveEmoji%>,
-"check_wave_emoji_message":<%=cResults.m_nCheckWaveEmojiMessage%>,
-"check_wave_emoji_message_reply":<%=cResults.m_nCheckWaveEmojiMessageReply%>,
+"check_request":<%=results.m_nCheckRequest%>,
+"check_gift":<%=results.m_nCheckGift%>,
+"check_wave_emoji":<%=results.m_nCheckWaveEmoji%>,
+"check_wave_emoji_message":<%=results.m_nCheckWaveEmojiMessage%>,
+"check_wave_emoji_message_reply":<%=results.m_nCheckWaveEmojiMessageReply%>,
 "notify_comment":0,
 "notify_follow":0,
 "notify_heart":0,
